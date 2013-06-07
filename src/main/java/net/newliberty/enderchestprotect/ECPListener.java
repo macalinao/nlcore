@@ -1,4 +1,4 @@
-package net.nl.ecp;
+package net.newliberty.enderchestprotect;
 
 import java.io.File;
 import java.util.HashMap;
@@ -22,11 +22,11 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
-public class ChestListener
+public class ECPListener
         implements Listener {
     private EnderChestProtect plugin;
 
-    public ChestListener(EnderChestProtect plugin) {
+    public ECPListener(EnderChestProtect plugin) {
         this.plugin = plugin;
     }
 
@@ -145,8 +145,3 @@ public class ChestListener
         p.openInventory(inventory);
     }
 }
-
-/* Location:           /Users/simplyianm/Desktop/EnderChestProtect.jar
- * Qualified Name:     net.nl.ecp.ChestListener
- * JD-Core Version:    0.6.2
- */

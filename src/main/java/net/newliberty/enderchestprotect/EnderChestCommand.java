@@ -1,4 +1,4 @@
-package net.nl.ecp;
+package net.newliberty.enderchestprotect;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,10 +13,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class Commands implements CommandExecutor {
+public class EnderChestCommand implements CommandExecutor {
     private EnderChestProtect plugin;
 
-    public Commands(EnderChestProtect plugin) {
+    public EnderChestCommand(EnderChestProtect plugin) {
         this.plugin = plugin;
     }
 

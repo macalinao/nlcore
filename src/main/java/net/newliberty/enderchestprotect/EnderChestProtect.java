@@ -1,42 +1,36 @@
-package net.nl.ecp;
+package net.newliberty.enderchestprotect;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.World;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnderChestProtect extends JavaPlugin {
     private Map<String, Location> selectedChest = new HashMap();
 
-    public Map<String, ArrayList<Location>> chestLocations = new HashMap();
+    public Map<String, List<Location>> chestLocations = new HashMap<String, List<Location>>();
 
     public Map<String, Long> clearChests = new HashMap();
 
     public HashMap<String, Long> cooldowns = new HashMap();
 
+    @Override
     public void onEnable() {
-        getCommand("enderchest").setExecutor(new Commands(this));
-        getServer().getPluginManager().registerEvents(new ChestListener(this), this);
+        getCommand("enderchest").setExecutor(new EnderChestCommand(this));
+        Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
         loadChestLocations();
-        getLogger().info("has been enabled");
-    }
-
-    public void onDisable() {
-        getLogger().info("has been disabled");
     }
 
     public void loadChestLocations() {
@@ -68,20 +62,20 @@ public class EnderChestProtect extends JavaPlugin {
 
     public void addChestLocation(String p, Location loc) {
         if (chestLocations.containsKey(p)) {
-            ((ArrayList) chestLocations.get(p)).add(loc);
+            chestLocations.get(p).add(loc);
         } else {
             chestLocations.put(p, new ArrayList());
-            ((ArrayList) chestLocations.get(p)).add(loc);
+            chestLocations.get(p).add(loc);
         }
     }
 
     public void removeChestLocation(String p, Location loc) {
-        ((ArrayList) chestLocations.get(p)).remove(((ArrayList) chestLocations.get(p)).indexOf(loc));
+        chestLocations.get(p).remove(chestLocations.get(p).indexOf(loc));
     }
 
     public int getChestCount(Player p) {
         if (chestLocations.containsKey(p.getName())) {
-            return ((ArrayList) chestLocations.get(p.getName())).size();
+            return chestLocations.get(p.getName()).size();
         }
         return 0;
     }
