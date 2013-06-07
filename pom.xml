@@ -4,9 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>EnderChestProtect</groupId>
-    <artifactId>EnderChestProtect</artifactId>
+    <groupId>net.new-liberty</groupId>
+    <artifactId>enderchestprotect</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>bukkit-repo</id>
+            <url>http://repo.bukkit.org/content/groups/public/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -15,5 +22,8 @@
             <version>1.5.1-R0.3-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
+	
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+    </build>
 </project>
