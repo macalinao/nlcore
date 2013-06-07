@@ -1,0 +1,8 @@
+name: EnderChestProtect
+main: net.nl.ecp.EnderChestProtect
+version: 1.0
+depends: [Factions]
+commands:
+  enderchest:
+    desciption: Main  ECP command
+    usage: /enderchest <args>
