@@ -44,14 +44,14 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (plugin.getChestCount(p) >= plugin.getAllowedChestCount(p)) {
+        if (plugin.getChests(p).size() >= plugin.getAllowedChestCount(p)) {
             p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
             e.setCancelled(true);
             return;
         }
 
         plugin.createChest(e.getPlayer().getName(), e.getBlock().getLocation());
-        e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + plugin.getChestCount(e.getPlayer()) + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
+        e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + plugin.getChests(e.getPlayer()).size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -112,6 +112,7 @@ public class ECPListener implements Listener {
             return;
         }
         getSelectedChest(e.getPlayer()).save(e.getInventory());
+        selectedChests.remove(e.getPlayer().getName());
     }
 
     @EventHandler
@@ -133,6 +134,7 @@ public class ECPListener implements Listener {
         }
 
         e.getPlayer().closeInventory();
+        selectedChests.remove(e.getPlayer().getName());
     }
 
     @EventHandler

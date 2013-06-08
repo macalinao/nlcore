@@ -28,75 +28,78 @@ public class EnderChestCommand implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            Location loc;
             if (args[0].equalsIgnoreCase("list")) {
-                if ((plugin.chestLocations.get(sender.getName()) != null) && (!((ArrayList) plugin.chestLocations.get(sender.getName())).isEmpty())) {
-                    int i = 0;
-                    sender.sendMessage(ChatColor.BLUE + "Here are the locations of your Protected EnderChests:");
-                    sender.sendMessage(ChatColor.BLUE + "Chests in " + ChatColor.RED + "red " + ChatColor.BLUE + "are in the Nether");
-                    for (Iterator localIterator = ((ArrayList) plugin.chestLocations.get(sender.getName())).iterator(); localIterator.hasNext();) {
-                        loc = (Location) localIterator.next();
-                        i++;
-                        if (loc.getWorld().getName().equalsIgnoreCase("world_nether")) {
-                            sender.sendMessage(ChatColor.RED.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
-                        } else {
-                            sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
-                        }
-                    }
-                } else {
-                    sender.sendMessage(ChatColor.RED + "You do not have any Protected EnderChests!");
-                }
+                listChests(sender);
             } else if (args[0].equalsIgnoreCase("clear")) {
-                if ((plugin.chestLocations.get(sender.getName()) != null) && (!((ArrayList) plugin.chestLocations.get(sender.getName())).isEmpty())) {
-                    sender.sendMessage(ChatColor.BLUE + "This will remove and clear any Protected EnderChests you have! This process is not reversable! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
-                    sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds");
-                    clearChests.put(sender.getName(), Long.valueOf(System.currentTimeMillis()));
-                } else {
-                    sender.sendMessage(ChatColor.RED + "You do not have any Protected EnderChests!");
+                if (plugin.getChests(sender.getName()).isEmpty()) {
+                    sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
+                    return true;
                 }
+
+                sender.sendMessage(ChatColor.BLUE + "This will remove and clear any Protected EnderChests you have! This process is not reversable! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
+                sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds");
+                clearChests.put(sender.getName(), Long.valueOf(System.currentTimeMillis()));
             } else if (args[0].equalsIgnoreCase("confirm")) {
-                if (clearChests.containsKey(sender.getName())) {
-                    if (System.currentTimeMillis() - ((Long) clearChests.get(sender.getName())).longValue() <= 30000L) {
-                        for (Location l : plugin.chestLocations.get(sender.getName())) {
-                            File f = new File(plugin.getDataFolder(), l.toString() + ".yml");
-                            l.getBlock().setType(Material.AIR);
-                            plugin.destroyChest(l);
-                            f.delete();
-                        }
-                        sender.sendMessage(ChatColor.BLUE + "Your Protected EnderChests have been successfully cleared");
-                        clearChests.remove(sender.getName());
-                    } else {
-                        sender.sendMessage(ChatColor.RED + "Your prompt has timed out. Type /enderchest clear to try again!");
-                        clearChests.remove(sender.getName());
-                    }
-                } else {
+                if (!clearChests.containsKey(sender.getName())) {
                     sender.sendMessage(ChatColor.RED + "You have nothing to confirm!");
+                    return true;
+                }
+
+                if (System.currentTimeMillis() - ((Long) clearChests.get(sender.getName())).longValue() <= 30000L) {
+                    for (EnderChest ec : plugin.getChests(sender.getName())) {
+                        plugin.destroyChest(ec.getLocation());
+                    }
+                    sender.sendMessage(ChatColor.BLUE + "Your Protected EnderChests have been successfully cleared");
+                    clearChests.remove(sender.getName());
+                } else {
+                    sender.sendMessage(ChatColor.RED + "Your prompt has timed out. Type /enderchest clear to try again!");
+                    clearChests.remove(sender.getName());
                 }
             } else {
                 sender.sendMessage(ChatColor.BLUE + "Invalid arguments! " + ChatColor.RED + "/enderchest [list/clear]");
             }
         } else if (args.length == 2) {
-            if ((args[0].equalsIgnoreCase("list")) && (sender.hasPermission("nlenderchest.admin"))) {
-                String playerName = args[1];
-                if ((plugin.chestLocations.get(playerName) != null) && (!((ArrayList) plugin.chestLocations.get(playerName)).isEmpty())) {
-                    int i = 0;
-                    sender.sendMessage(ChatColor.BLUE + "Here are the locations of " + ChatColor.GOLD + playerName + "'s " + ChatColor.BLUE + "protected Ender Chests:");
-                    sender.sendMessage(ChatColor.BLUE + "Chests in " + ChatColor.RED + "red " + ChatColor.BLUE + "are in the Nether");
-                    for (Location loc : plugin.chestLocations.get(playerName)) {
-                        i++;
-                        if (loc.getWorld().getName().equalsIgnoreCase("world_nether")) {
-                            sender.sendMessage(ChatColor.RED.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
-                        } else {
-                            sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
-                        }
-                    }
-                } else {
-                    sender.sendMessage(ChatColor.RED + "That player has no Protected EnderChests! Warning, case sensitive!");
-                }
-            } else {
-                sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
+            if (!sender.hasPermission("nlenderchest.admin")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission!");
+                return true;
             }
+
+            listChests(sender, args[1]);
         }
         return true;
+    }
+
+    private void listChests(CommandSender sender) {
+        listChests(sender, null);
+    }
+
+    private void listChests(CommandSender sender, String player) {
+        boolean self = player != null;
+        if (player == null) {
+            player = sender.getName();
+        }
+
+        if (plugin.getChests(player).isEmpty()) {
+            if (self) {
+                sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
+            } else {
+                sender.sendMessage(ChatColor.RED + player + " doesn't have any protected Ender Chests! (Name is case sensitive.)");
+            }
+            return;
+        }
+
+        sender.sendMessage(ChatColor.BLUE + "Here are the locations of " + (self ? "your" : "the") + " protected Ender Chests:");
+        sender.sendMessage(ChatColor.BLUE + "Chests in " + ChatColor.RED + "red " + ChatColor.BLUE + "are in the nether.");
+
+        int i = 0;
+        for (EnderChest ec : plugin.getChests(player)) {
+            Location loc = ec.getLocation();
+            i++;
+            if (ec.getLocation().getWorld().getName().equalsIgnoreCase("world_nether")) {
+                sender.sendMessage(ChatColor.RED.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
+            } else {
+                sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
+            }
+        }
     }
 }

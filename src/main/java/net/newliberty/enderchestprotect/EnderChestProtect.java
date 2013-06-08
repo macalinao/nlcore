@@ -2,13 +2,13 @@ package net.newliberty.enderchestprotect;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,8 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnderChestProtect extends JavaPlugin {
-    public Map<String, List<Location>> chestLocations = new HashMap<String, List<Location>>();
-
     private Map<String, EnderChest> chests = new HashMap<String, EnderChest>();
 
     @Override
@@ -99,20 +97,18 @@ public class EnderChestProtect extends JavaPlugin {
         return chests.get(loc.toString());
     }
 
-    /**
-     * Counts the number of chests the player owns.
-     *
-     * @param p
-     * @return
-     */
-    public int getChestCount(Player p) {
-        int count = 0;
+    public List<EnderChest> getChests(Player p) {
+        return getChests(p.getName());
+    }
+
+    public List<EnderChest> getChests(String p) {
+        List<EnderChest> ret = new ArrayList<EnderChest>();
         for (EnderChest chest : chests.values()) {
-            if (chest.getOwner().equals(p.getName())) {
-                count++;
+            if (chest.getOwner().equals(p)) {
+                ret.add(chest);
             }
         }
-        return count;
+        return ret;
     }
 
     /**
