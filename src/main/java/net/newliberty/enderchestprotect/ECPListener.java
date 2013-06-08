@@ -17,6 +17,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class ECPListener implements Listener {
@@ -83,14 +85,16 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onChestOpen(PlayerInteractEvent e) {
-        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
+
         Block block = e.getClickedBlock();
-        if (block.getType() != Material.ENDER_CHEST) {
+        if (!block.getType().equals(Material.ENDER_CHEST)) {
             return;
         }
+
         e.setCancelled(true);
 
         EnderChest ec = plugin.getChest(block.getLocation());
@@ -103,7 +107,7 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler
-    public void onChestClose(InventoryCloseEvent e) {
+    public void onInventoryClose(InventoryCloseEvent e) {
         if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
             return;
         }
@@ -111,7 +115,7 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler
-    public void onChestInventoryClick(InventoryClickEvent e) {
+    public void onInventoryClick(InventoryClickEvent e) {
         if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
             return;
         }
@@ -129,6 +133,16 @@ public class ECPListener implements Listener {
         }
 
         e.getPlayer().closeInventory();
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        selectedChest.remove(e.getPlayer().getName());
+    }
+
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent e) {
+        selectedChest.remove(e.getPlayer().getName());
     }
 
     private EnderChest getSelectedChest(HumanEntity player) {
