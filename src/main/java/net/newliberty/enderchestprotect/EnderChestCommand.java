@@ -31,30 +31,9 @@ public class EnderChestCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("list")) {
                 listChests(sender);
             } else if (args[0].equalsIgnoreCase("clear")) {
-                if (plugin.getChests(sender.getName()).isEmpty()) {
-                    sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
-                    return true;
-                }
-
-                sender.sendMessage(ChatColor.BLUE + "This will remove and clear any Protected EnderChests you have! This process is not reversable! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
-                sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds");
-                clearChests.put(sender.getName(), Long.valueOf(System.currentTimeMillis()));
+                clearChests(sender);
             } else if (args[0].equalsIgnoreCase("confirm")) {
-                if (!clearChests.containsKey(sender.getName())) {
-                    sender.sendMessage(ChatColor.RED + "You have nothing to confirm!");
-                    return true;
-                }
-
-                if (System.currentTimeMillis() - ((Long) clearChests.get(sender.getName())).longValue() <= 30000L) {
-                    for (EnderChest ec : plugin.getChests(sender.getName())) {
-                        plugin.destroyChest(ec.getLocation());
-                    }
-                    sender.sendMessage(ChatColor.BLUE + "Your Protected EnderChests have been successfully cleared");
-                    clearChests.remove(sender.getName());
-                } else {
-                    sender.sendMessage(ChatColor.RED + "Your prompt has timed out. Type /enderchest clear to try again!");
-                    clearChests.remove(sender.getName());
-                }
+                confirmChests(sender);
             } else {
                 sender.sendMessage(ChatColor.BLUE + "Invalid arguments! " + ChatColor.RED + "/enderchest [list/clear]");
             }
@@ -100,6 +79,35 @@ public class EnderChestCommand implements CommandExecutor {
             } else {
                 sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
             }
+        }
+    }
+
+    private void clearChests(CommandSender sender) {
+        if (plugin.getChests(sender.getName()).isEmpty()) {
+            sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
+            return;
+        }
+
+        sender.sendMessage(ChatColor.BLUE + "This will remove and clear any Protected EnderChests you have! This process is not reversable! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
+        sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds");
+        clearChests.put(sender.getName(), Long.valueOf(System.currentTimeMillis()));
+    }
+
+    private void confirmChests(CommandSender sender) {
+        if (!clearChests.containsKey(sender.getName())) {
+            sender.sendMessage(ChatColor.RED + "You have nothing to confirm!");
+            return;
+        }
+
+        if (System.currentTimeMillis() - ((Long) clearChests.get(sender.getName())).longValue() <= 30000L) {
+            for (EnderChest ec : plugin.getChests(sender.getName())) {
+                plugin.destroyChest(ec.getLocation());
+            }
+            sender.sendMessage(ChatColor.BLUE + "Your Protected EnderChests have been successfully cleared");
+            clearChests.remove(sender.getName());
+        } else {
+            sender.sendMessage(ChatColor.RED + "Your prompt has timed out. Type /enderchest clear to try again!");
+            clearChests.remove(sender.getName());
         }
     }
 }
