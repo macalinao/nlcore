@@ -22,7 +22,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class ECPListener implements Listener {
-    private Map<String, EnderChest> selectedChest = new HashMap<String, EnderChest>();
+    private Map<String, EnderChest> selectedChests = new HashMap<String, EnderChest>();
 
     private EnderChestProtect plugin;
 
@@ -31,7 +31,7 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChestPlace(BlockPlaceEvent e) {
+    public void onBlockPlace(BlockPlaceEvent e) {
         if (!e.getBlock().getType().equals(Material.ENDER_CHEST)) {
             return;
         }
@@ -55,7 +55,7 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChestBreak(BlockBreakEvent e) {
+    public void onBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getType() != Material.ENDER_CHEST) {
             return;
         }
@@ -137,19 +137,19 @@ public class ECPListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
-        selectedChest.remove(e.getPlayer().getName());
+        selectedChests.remove(e.getPlayer().getName());
     }
 
     @EventHandler
     public void onPlayerKick(PlayerKickEvent e) {
-        selectedChest.remove(e.getPlayer().getName());
+        selectedChests.remove(e.getPlayer().getName());
     }
 
     private EnderChest getSelectedChest(HumanEntity player) {
-        return selectedChest.get(player.getName());
+        return selectedChests.get(player.getName());
     }
 
     private void setSelectedChest(Player p, EnderChest loc) {
-        selectedChest.put(p.getName(), loc);
+        selectedChests.put(p.getName(), loc);
     }
 }

@@ -1,8 +1,9 @@
 name: EnderChestProtect
-main: net.nl.ecp.EnderChestProtect
-version: 1.0
-depends: [Factions]
+main: net.newliberty.enderchestprotect.EnderChestProtect
+version: 2.0
+author: AlbireoX
+
 commands:
   enderchest:
-    desciption: Main  ECP command
+    desciption: Main ECP command
     usage: /enderchest <args>
