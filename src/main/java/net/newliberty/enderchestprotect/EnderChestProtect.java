@@ -133,23 +133,4 @@ public class EnderChestProtect extends JavaPlugin {
         }
         return -1;
     }
-
-    /**
-     * Checks if the given player can place more chests.
-     *
-     * @param p
-     * @return
-     */
-    public boolean canPlaceChests(Player p) {
-        if (getAllowedChestCount(p) == -1) {
-            p.sendMessage(ChatColor.RED + "You are not allowed to place Ender Chests.");
-            return false;
-        }
-
-        if (getChestCount(p) >= getAllowedChestCount(p)) {
-            p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
-            return false;
-        }
-        return true;
-    }
 }

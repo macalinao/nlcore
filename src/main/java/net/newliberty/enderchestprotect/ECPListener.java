@@ -33,7 +33,16 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (!plugin.canPlaceChests(e.getPlayer())) {
+        Player p = e.getPlayer();
+
+        if (plugin.getAllowedChestCount(p) == -1) {
+            p.sendMessage(ChatColor.RED + "You are not allowed to place Ender Chests.");
+            e.setCancelled(true);
+            return;
+        }
+
+        if (plugin.getChestCount(p) >= plugin.getAllowedChestCount(p)) {
+            p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
             e.setCancelled(true);
             return;
         }
