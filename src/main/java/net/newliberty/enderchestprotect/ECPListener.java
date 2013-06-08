@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -106,7 +107,7 @@ public class ECPListener implements Listener {
         if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
             return;
         }
-        getSelectedChest(e.getPlayer().getName()).save(e.getInventory());
+        getSelectedChest(e.getPlayer()).save(e.getInventory());
     }
 
     @EventHandler
@@ -114,7 +115,7 @@ public class ECPListener implements Listener {
         if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
             return;
         }
-        getSelectedChest(e.getWhoClicked().getName()).save(e.getInventory());
+        getSelectedChest(e.getWhoClicked()).save(e.getInventory());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -124,14 +125,14 @@ public class ECPListener implements Listener {
         }
 
         if (e.getPlayer().getOpenInventory().getTitle().equalsIgnoreCase("ProtectedEnderChest")) {
-            getSelectedChest(e.getPlayer().getName()).save(e.getPlayer().getOpenInventory().getTopInventory());
+            getSelectedChest(e.getPlayer()).save(e.getPlayer().getOpenInventory().getTopInventory());
         }
 
         e.getPlayer().closeInventory();
     }
 
-    private EnderChest getSelectedChest(String player) {
-        return selectedChest.get(player);
+    private EnderChest getSelectedChest(HumanEntity player) {
+        return selectedChest.get(player.getName());
     }
 
     private void setSelectedChest(Player p, EnderChest loc) {
