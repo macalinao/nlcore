@@ -24,6 +24,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 public class ECPListener implements Listener {
     private Map<String, EnderChest> selectedChests = new HashMap<String, EnderChest>();
 
+    private Map<String, Long> cooldowns = new HashMap<String, Long>();
+
     private EnderChestProtect plugin;
 
     public ECPListener(EnderChestProtect plugin) {
@@ -94,8 +96,14 @@ public class ECPListener implements Listener {
         if (!block.getType().equals(Material.ENDER_CHEST)) {
             return;
         }
-
         e.setCancelled(true);
+
+        // Wait 2 seconds before opening another chest
+        int cooldown = 2000;
+        if ((cooldowns.containsKey(e.getPlayer().getName())) && (cooldowns.get(e.getPlayer().getName()) + cooldown - System.currentTimeMillis() > 0L)) {
+            return;
+        }
+        cooldowns.put(e.getPlayer().getName(), Long.valueOf(System.currentTimeMillis()));
 
         EnderChest ec = plugin.getChest(block.getLocation());
         if (!ec.canOpen(e.getPlayer())) {
