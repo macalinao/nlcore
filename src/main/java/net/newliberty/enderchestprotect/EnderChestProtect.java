@@ -20,7 +20,7 @@ public class EnderChestProtect extends JavaPlugin {
     public Map<String, List<Location>> chestLocations = new HashMap<String, List<Location>>();
 
     private Map<String, EnderChest> chests = new HashMap<String, EnderChest>();
-    
+
     @Override
     public void onEnable() {
         getCommand("enderchest").setExecutor(new EnderChestCommand(this));
@@ -32,11 +32,9 @@ public class EnderChestProtect extends JavaPlugin {
      * Loads all chests.
      */
     private void loadChestLocations() {
-        if (!getDataFolder().exists()) {
-            return;
-        }
+        getDataFolder().mkdirs();
+
         for (File file : getDataFolder().listFiles()) {
-            FileConfiguration chestConfig = YamlConfiguration.loadConfiguration(file);
             World world = getServer().getWorld(file.getName().substring(file.getName().indexOf("CraftWorld{name=") + 16, file.getName().indexOf("},x=")));
             int x = Integer.parseInt(file.getName().substring(file.getName().indexOf("},x=") + 4, file.getName().indexOf(".0,y=")));
             int y = Integer.parseInt(file.getName().substring(file.getName().indexOf(",y=") + 3, file.getName().indexOf(".0,z=")));
@@ -56,16 +54,13 @@ public class EnderChestProtect extends JavaPlugin {
     private EnderChest loadChest(Location loc) {
         File file = getFile(loc);
 
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                Logger.getLogger(EnderChestProtect.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            file.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(EnderChestProtect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         FileConfiguration chestFile = YamlConfiguration.loadConfiguration(file);
-
         return new EnderChest(this, chestFile.getString("owner"), loc);
     }
 
@@ -113,7 +108,9 @@ public class EnderChestProtect extends JavaPlugin {
     public int getChestCount(Player p) {
         int count = 0;
         for (EnderChest chest : chests.values()) {
-            count++;
+            if (chest.getOwner().equals(p.getName())) {
+                count++;
+            }
         }
         return count;
     }
