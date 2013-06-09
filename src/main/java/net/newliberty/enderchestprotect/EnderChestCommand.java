@@ -9,7 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class EnderChestCommand implements CommandExecutor {
-    private Map<String, Long> clearChests = new HashMap<String, Long>();
+    private Map<String, ClearChestTimer> clearChests = new HashMap<String, ClearChestTimer>();
 
     private EnderChestProtect plugin;
 
@@ -23,23 +23,26 @@ public class EnderChestCommand implements CommandExecutor {
             return true;
         }
 
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("list")) {
-                listChests(sender);
-            } else if (args[0].equalsIgnoreCase("clear")) {
-                clearChests(sender);
-            } else if (args[0].equalsIgnoreCase("confirm")) {
-                confirmChests(sender);
+        String action = args[0];
+
+        if (action.equalsIgnoreCase("list")) {
+            if (args.length == 2) {
+                listChests(sender, args[1]);
             } else {
-                sender.sendMessage(ChatColor.BLUE + "Invalid arguments! " + ChatColor.RED + "/enderchest [list/clear]");
+                listChests(sender);
             }
-        } else if (args.length == 2) {
-            if (!sender.hasPermission("nlenderchest.admin")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission!");
-                return true;
+        } else if (args[0].equalsIgnoreCase("clear")) {
+            if (args.length == 2) {
+                clearChests(sender, args[1]);
+            } else {
+                clearChests(sender);
             }
 
-            listChests(sender, args[1]);
+        } else if (args[0].equalsIgnoreCase("confirm")) {
+            confirmChests(sender);
+
+        } else {
+            sender.sendMessage(ChatColor.BLUE + "Invalid arguments! " + ChatColor.RED + "/enderchest [list/clear]");
         }
         return true;
     }
@@ -49,6 +52,13 @@ public class EnderChestCommand implements CommandExecutor {
     }
 
     private void listChests(CommandSender sender, String player) {
+        if (!sender.getName().equals(player)) {
+            if (!sender.hasPermission("nlenderchest.admin")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission!");
+                return;
+            }
+        }
+
         boolean self = player != null;
         if (player == null) {
             player = sender.getName();
@@ -79,31 +89,73 @@ public class EnderChestCommand implements CommandExecutor {
     }
 
     private void clearChests(CommandSender sender) {
-        if (plugin.getChests(sender.getName()).isEmpty()) {
+        clearChests(sender, sender.getName());
+    }
+
+    private void clearChests(CommandSender sender, String player) {
+        if (!sender.getName().equals(player)) {
+            if (!sender.hasPermission("nlenderchest.admin")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission!");
+                return;
+            }
+        }
+
+        if (plugin.getChests(player).isEmpty()) {
             sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
             return;
         }
 
-        sender.sendMessage(ChatColor.BLUE + "This will remove and clear any Protected EnderChests you have! This process is not reversable! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
-        sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds");
-        clearChests.put(sender.getName(), Long.valueOf(System.currentTimeMillis()));
+        sender.sendMessage(ChatColor.BLUE + "This will remove and clear any protected Ender Chests you have! This process is not reversible! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
+        sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds.");
+        clearChests.put(sender.getName(), new ClearChestTimer(sender.getName()));
     }
 
     private void confirmChests(CommandSender sender) {
-        if (!clearChests.containsKey(sender.getName())) {
+        ClearChestTimer timer = clearChests.get(sender.getName());
+
+        if (timer == null) {
             sender.sendMessage(ChatColor.RED + "You have nothing to confirm!");
             return;
         }
 
-        if (System.currentTimeMillis() - ((Long) clearChests.get(sender.getName())).longValue() <= 30000L) {
-            for (EnderChest ec : plugin.getChests(sender.getName())) {
-                plugin.destroyChest(ec.getLocation());
-            }
-            sender.sendMessage(ChatColor.BLUE + "Your Protected EnderChests have been successfully cleared");
-            clearChests.remove(sender.getName());
-        } else {
+        if (timer.isExpired()) {
             sender.sendMessage(ChatColor.RED + "Your prompt has timed out. Type /enderchest clear to try again!");
             clearChests.remove(sender.getName());
+            return;
+        }
+
+        sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
+        clearChests.remove(sender.getName());
+
+
+    }
+
+    private class ClearChestTimer {
+        private final String player;
+
+        private final long expire;
+
+        public ClearChestTimer(String player) {
+            this.player = player;
+            this.expire = System.currentTimeMillis() + 30000L;
+        }
+
+        public String getPlayer() {
+            return player;
+        }
+
+        public long getExpire() {
+            return expire;
+        }
+
+        public boolean isExpired() {
+            return System.currentTimeMillis() >= expire;
+        }
+
+        public void clearChests() {
+            for (EnderChest ec : plugin.getChests(player)) {
+                plugin.destroyChest(ec.getLocation());
+            }
         }
     }
 }
