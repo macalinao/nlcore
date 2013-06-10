@@ -1,4 +1,4 @@
-package net.newliberty.enderchestprotect;
+package net.new_liberty.enderchestprotect;
 
 import java.util.HashMap;
 import java.util.Map;

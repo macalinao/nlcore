@@ -1,4 +1,4 @@
-package net.newliberty.enderchestprotect;
+package net.new_liberty.enderchestprotect;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -133,16 +133,17 @@ public class ECPListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTeleport(PlayerTeleportEvent e) {
-        if (e.getPlayer().getInventory() == null) {
+        Player p = e.getPlayer();
+        if (p.getInventory() == null) {
             return;
         }
 
-        if (e.getPlayer().getOpenInventory().getTitle().equalsIgnoreCase("ProtectedEnderChest")) {
-            getSelectedChest(e.getPlayer()).save(e.getPlayer().getOpenInventory().getTopInventory());
+        if (p.getOpenInventory().getTitle().equalsIgnoreCase("ProtectedEnderChest")) {
+            getSelectedChest(p).save(p.getOpenInventory().getTopInventory());
         }
 
-        e.getPlayer().closeInventory();
-        selectedChests.remove(e.getPlayer().getName());
+        p.closeInventory();
+        selectedChests.remove(p.getName());
     }
 
     @EventHandler
