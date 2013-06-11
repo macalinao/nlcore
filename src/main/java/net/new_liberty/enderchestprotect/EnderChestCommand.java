@@ -107,7 +107,7 @@ public class EnderChestCommand implements CommandExecutor {
 
         sender.sendMessage(ChatColor.BLUE + "This will remove and clear any protected Ender Chests you have! This process is not reversible! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
         sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds.");
-        clearChests.put(sender.getName(), new ClearChestTimer(sender.getName()));
+        clearChests.put(sender.getName(), new ClearChestTimer(player));
     }
 
     private void confirmChests(CommandSender sender) {
