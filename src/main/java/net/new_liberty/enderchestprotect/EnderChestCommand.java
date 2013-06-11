@@ -124,10 +124,9 @@ public class EnderChestCommand implements CommandExecutor {
             return;
         }
 
+        timer.clearChests();
         sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
         clearChests.remove(sender.getName());
-
-
     }
 
     private class ClearChestTimer {
