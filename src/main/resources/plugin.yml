@@ -1,0 +1,11 @@
+name: NoEnderpearls
+description: Removes Ender Pearls from a server.
+author: AlbireoX
+version: 1.0
+
+main: net.new_liberty.noenderpearls.NoEnderpearls
+
+permissions:
+    noenderpearls.bypass:
+        description: Allows bypassing of Ender Pearl restrictions.
+
