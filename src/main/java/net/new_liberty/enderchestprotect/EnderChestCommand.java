@@ -52,16 +52,16 @@ public class EnderChestCommand implements CommandExecutor {
     }
 
     private void listChests(CommandSender sender, String player) {
+        boolean self = player != null;
+        if (player == null) {
+            player = sender.getName();
+        }
+
         if (!sender.getName().equals(player)) {
             if (!sender.hasPermission("nlenderchest.admin")) {
                 sender.sendMessage(ChatColor.RED + "You don't have permission!");
                 return;
             }
-        }
-
-        boolean self = player != null;
-        if (player == null) {
-            player = sender.getName();
         }
 
         if (plugin.getChests(player).isEmpty()) {
