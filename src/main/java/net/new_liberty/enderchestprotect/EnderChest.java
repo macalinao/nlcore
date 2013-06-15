@@ -59,28 +59,13 @@ public class EnderChest {
     }
 
     /**
-     * Checks if the player can break the chest open.
+     * Checks if this Ender Chest contains items.
      *
-     * @param p
      * @return
      */
-    public boolean canBreak(Player p) {
-        if (owner == null) {
-            return true;
-        }
-
-        if (!owner.equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
-            p.sendMessage(ChatColor.BLUE + "This is not your Protected EnderChest. It belongs to " + ChatColor.GOLD + owner);
-            return false;
-        }
-
+    public boolean hasItems() {
         FileConfiguration chestFile = YamlConfiguration.loadConfiguration(plugin.getFile(loc));
-        if (chestFile.getConfigurationSection("inventory") != null) {
-            p.sendMessage(ChatColor.RED + "You cannot break this chest while there are items in it!");
-            return false;
-        }
-
-        return true;
+        return chestFile.getConfigurationSection("inventory") != null;
     }
 
     /**

@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,12 +66,23 @@ public class ECPListener implements Listener {
 
         Location loc = e.getBlock().getLocation();
 
+        Player p = e.getPlayer();
         EnderChest ec = plugin.getChest(loc);
-        if (!ec.getOwner().equals(e.getPlayer().getName())) {
-            return;
-        }
 
-        if (!ec.canBreak(e.getPlayer())) {
+        if (ec.getOwner() != null) {
+            if (!ec.getOwner().equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
+                p.sendMessage(ChatColor.BLUE + "This is not your protected Ender Chest. It belongs to " + ChatColor.GOLD + ec.getOwner());
+                e.setCancelled(true);
+                return;
+            }
+
+            if (ec.hasItems()) {
+                p.sendMessage(ChatColor.RED + "You cannot break this chest while there are items in it!");
+                e.setCancelled(true);
+                return;
+            }
+        } else {
+            p.sendMessage(ChatColor.RED + "This Ender Chest belongs to no one.");
             e.setCancelled(true);
             return;
         }
