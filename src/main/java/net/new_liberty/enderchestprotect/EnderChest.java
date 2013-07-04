@@ -132,7 +132,7 @@ public class EnderChest {
      * @return
      */
     public boolean hasItems() {
-        return getContents() != null;
+        return getContents() != null || "".equals(getContents());
     }
 
     /**
