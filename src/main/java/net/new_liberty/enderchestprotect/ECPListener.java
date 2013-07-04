@@ -118,7 +118,7 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (p.hasPermission("nlenderchest.admin")) {
+        if (!ec.getOwner().equals(p.getName())) {
             p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner + ".");
         }
 
@@ -126,6 +126,7 @@ public class ECPListener implements Listener {
             ec.updateExpiryTime();
             p.sendMessage(ChatColor.YELLOW + "The protection on this chest has been renewed.");
         }
+
         ec.open(e.getPlayer());
     }
 
