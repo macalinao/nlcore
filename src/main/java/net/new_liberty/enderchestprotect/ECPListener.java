@@ -160,7 +160,7 @@ public class ECPListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onTeleport(PlayerTeleportEvent e) {
         Player p = e.getPlayer();
-        if (p.getInventory() == null) {
+        if (p.getOpenInventory() == null) {
             return;
         }
 
