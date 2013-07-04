@@ -15,6 +15,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -148,6 +150,26 @@ public class ECPListener implements Listener {
 
         checkInventory(p.getOpenInventory().getTopInventory());
         p.closeInventory();
+    }
+
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent e) {
+        Player p = e.getPlayer();
+        if (p.getOpenInventory() == null) {
+            return;
+        }
+
+        checkInventory(p.getOpenInventory().getTopInventory());
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        if (p.getOpenInventory() == null) {
+            return;
+        }
+
+        checkInventory(p.getOpenInventory().getTopInventory());
     }
 
     /**
