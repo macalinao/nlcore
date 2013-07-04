@@ -17,6 +17,7 @@ public class EnderChestCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
             sender.sendMessage(ChatColor.BLUE + "Invalid arguments! " + ChatColor.RED + "/enderchest [list/clear]");
@@ -152,9 +153,7 @@ public class EnderChestCommand implements CommandExecutor {
         }
 
         public void clearChests() {
-            for (EnderChest ec : plugin.getChests(player)) {
-                plugin.destroyChest(ec.getLocation());
-            }
+            plugin.destroyChests(player);
         }
     }
 }

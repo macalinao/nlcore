@@ -1,46 +1,39 @@
 package net.new_liberty.enderchestprotect;
 
-import java.io.File;
-import java.io.IOException;
+import com.simplyian.easydb.EasyDB;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnderChestProtect extends JavaPlugin {
-    private Map<String, EnderChest> chests = new HashMap<String, EnderChest>();
-
     @Override
     public void onEnable() {
+        if (!EasyDB.getDb().isValid()) {
+            getLogger().log(Level.SEVERE, "Invalid database credentials; plugin loading halted.");
+            return;
+        }
+
+        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS enderchests ("
+                + "id INT(10) NOT NULL AUTO_INCREMENT,"
+                + "owner VARCHAR(16) NOT NULL,"
+                + "world VARCHAR(255) NOT NULL,"
+                + "x INT(10) NOT NULL,"
+                + "y INT(10) NOT NULL,"
+                + "z INT(10) NOT NULL,"
+                + "contents TEXT,"
+                + "expiry_time TIMESTAMP NOT_NULL,"
+                + "PRIMARY KEY (id));");
+
         getCommand("enderchest").setExecutor(new EnderChestCommand(this));
         Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
-        loadChestLocations();
-    }
-
-    /**
-     * Loads all chests.
-     */
-    private void loadChestLocations() {
-        getDataFolder().mkdirs();
-
-        for (File file : getDataFolder().listFiles()) {
-            World world = getServer().getWorld(file.getName().substring(file.getName().indexOf("CraftWorld{name=") + 16, file.getName().indexOf("},x=")));
-            int x = Integer.parseInt(file.getName().substring(file.getName().indexOf("},x=") + 4, file.getName().indexOf(".0,y=")));
-            int y = Integer.parseInt(file.getName().substring(file.getName().indexOf(",y=") + 3, file.getName().indexOf(".0,z=")));
-            int z = Integer.parseInt(file.getName().substring(file.getName().indexOf(",z=") + 3, file.getName().indexOf(".0,pitch=")));
-
-            EnderChest e = loadChest(new Location(world, x, y, z));
-            chests.put(e.getLocation().toString(), e);
-        }
     }
 
     /**
@@ -49,17 +42,15 @@ public class EnderChestProtect extends JavaPlugin {
      * @param loc
      * @return
      */
-    private EnderChest loadChest(Location loc) {
-        File file = getFile(loc);
+    public EnderChest getChest(final Location loc) {
+        return EasyDB.getDb().query("SELECT * FROM enderchests WHERE world = ? AND x = ? AND y = ? AND z = ?", new ResultSetHandler<EnderChest>() {
+            @Override
+            public EnderChest handle(ResultSet rs) throws SQLException {
+                rs.next();
 
-        try {
-            file.createNewFile();
-        } catch (IOException ex) {
-            Logger.getLogger(EnderChestProtect.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        FileConfiguration chestFile = YamlConfiguration.loadConfiguration(file);
-        return new EnderChest(this, chestFile.getString("owner"), loc);
+                return new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"));
+            }
+        }, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
 
     /**
@@ -70,57 +61,42 @@ public class EnderChestProtect extends JavaPlugin {
      * @return
      */
     public EnderChest createChest(String owner, Location loc) {
-        EnderChest ec = new EnderChest(this, owner, loc);
-        chests.put(loc.toString(), ec);
-        ec.save();
-        return ec;
-    }
-
-    /**
-     * Destroys a chest.
-     *
-     * @param loc
-     */
-    public void destroyChest(Location loc) {
-        EnderChest ec = getChest(loc);
-        chests.remove(loc.toString());
-        ec.destroy();
-    }
-
-    /**
-     * Gets the chest at the given location.
-     *
-     * @param loc
-     * @return
-     */
-    public EnderChest getChest(Location loc) {
-        return chests.get(loc.toString());
+        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z) VALUES (?, ?, ?, ?, ?)", owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        return getChest(loc);
     }
 
     public List<EnderChest> getChests(Player p) {
         return getChests(p.getName());
     }
 
+    /**
+     * Gets all of the Ender Chests of a player.
+     *
+     * @param p
+     * @return
+     */
     public List<EnderChest> getChests(String p) {
-        List<EnderChest> ret = new ArrayList<EnderChest>();
-        for (EnderChest chest : chests.values()) {
-            if (chest.getOwner().equals(p)) {
-                ret.add(chest);
+        return EasyDB.getDb().query("SELECT * FROM enderchests WHERE owner = ?", new ResultSetHandler<List<EnderChest>>() {
+            @Override
+            public List<EnderChest> handle(ResultSet rs) throws SQLException {
+                List<EnderChest> ret = new ArrayList<EnderChest>();
+                while (rs.next()) {
+                    String worldStr = rs.getString("world");
+                    World world = Bukkit.getWorld(worldStr);
+                    Location loc = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
+                    ret.add(new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents")));
+                }
+                return ret;
             }
-        }
-        return ret;
+        }, p);
     }
 
     /**
-     * Gets the name of the chest file at the given location.
+     * Gets the amount of chests a given player is allowed to have.
      *
-     * @param loc
+     * @param p
      * @return
      */
-    public File getFile(Location loc) {
-        return new File(getDataFolder(), loc.toString() + ".yml"); // VEHL PLS THIS SUCKS
-    }
-
     public int getAllowedChestCount(Player p) {
         for (int i = 15; i > 0; i--) {
             if (p.hasPermission("nlenderchest.place." + i)) {
@@ -128,5 +104,14 @@ public class EnderChestProtect extends JavaPlugin {
             }
         }
         return -1;
+    }
+
+    /**
+     * Destroys all of a player's chests.
+     *
+     * @param player
+     */
+    public void destroyChests(String player) {
+        EasyDB.getDb().update("DELETE FROM enderchests WHERE owner = ?", player);
     }
 }

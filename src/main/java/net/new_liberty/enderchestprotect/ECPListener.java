@@ -95,7 +95,7 @@ public class ECPListener implements Listener {
             e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken your protected Ender Chest.");
         }
 
-        plugin.destroyChest(loc);
+        ec.destroy();
         e.setCancelled(true);
     }
 
