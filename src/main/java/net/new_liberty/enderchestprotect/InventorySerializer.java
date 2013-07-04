@@ -26,11 +26,10 @@ public class InventorySerializer {
         YamlConfiguration chestFile = new YamlConfiguration();
         chestFile.loadFromString(s);
 
-        if (chestFile.getConfigurationSection("inventory") != null) {
-            for (int i = 0; i < inv.getSize(); i++) {
-                if (chestFile.get("inventory." + i) != null) {
-                    inv.setItem(i, (ItemStack) chestFile.get("inventory." + i));
-                }
+        for (int i = 0; i < inv.getSize(); i++) {
+            Object o = chestFile.get(Integer.toString(i));
+            if (o != null) {
+                inv.setItem(i, (ItemStack) o);
             }
         }
     }
