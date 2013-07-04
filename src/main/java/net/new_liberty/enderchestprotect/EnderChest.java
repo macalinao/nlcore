@@ -99,7 +99,7 @@ public class EnderChest {
     /**
      * Updates the expiry time of this Ender Chest.
      */
-    public void updateExpiry() {
+    public void updateExpiryTime() {
         Timestamp newTime = new Timestamp(getExpiryTime().getTime() + (plugin.getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
         EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
         dirty = true;
