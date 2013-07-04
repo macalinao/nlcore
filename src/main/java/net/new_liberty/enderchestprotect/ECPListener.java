@@ -1,5 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -64,20 +66,18 @@ public class ECPListener implements Listener {
         Player p = e.getPlayer();
         EnderChest ec = plugin.getECManager().getChest(loc);
 
-        if (ec.getOwner() != null) {
-            if (!ec.getOwner().equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
-                p.sendMessage(ChatColor.BLUE + "This is not your protected Ender Chest. It belongs to " + ChatColor.GOLD + ec.getOwner());
-                e.setCancelled(true);
-                return;
-            }
+        // Check if we can access the Ender Chest
+        boolean canAccess = ec.getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || ec.isExpired();
+        if (!canAccess) {
+            p.sendMessage(ChatColor.RED + "You cannot access this Ender Chest as it belongs to " + ChatColor.GOLD + ec.getOwner());
+            p.sendMessage(ec.getExpiryInfoMessage());
+            e.setCancelled(true);
+            return;
+        }
 
-            if (ec.hasItems()) {
-                p.sendMessage(ChatColor.RED + "You cannot break this chest while there are items in it!");
-                e.setCancelled(true);
-                return;
-            }
-        } else {
-            p.sendMessage(ChatColor.RED + "This Ender Chest belongs to no one.");
+        // Yes we can
+        if (ec.hasItems()) {
+            p.sendMessage(ChatColor.RED + "You cannot break this chest while there are items in it!");
             e.setCancelled(true);
             return;
         }
@@ -110,13 +110,11 @@ public class ECPListener implements Listener {
 
         Player p = e.getPlayer();
         String owner = ec.getOwner();
-        if (owner == null) {
-            p.sendMessage(ChatColor.RED + "This Ender Chest belongs to no one and cannot be opened.");
-            return;
-        }
 
-        if (!owner.equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
+        boolean canAccess = ec.getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || ec.isExpired();
+        if (!canAccess) {
             p.sendMessage(ChatColor.BLUE + "You cannot use this Ender Chest as it belongs to " + ChatColor.GOLD + owner + ".");
+            p.sendMessage(ec.getExpiryInfoMessage());
             return;
         }
 

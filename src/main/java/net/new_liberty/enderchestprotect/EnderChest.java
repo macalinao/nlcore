@@ -4,12 +4,11 @@ import com.simplyian.easydb.EasyDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import org.apache.commons.dbutils.ResultSetHandler;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -18,6 +17,8 @@ import org.bukkit.inventory.Inventory;
  * Object to manipulate an Ender Chest in an object-oriented fashion.
  */
 public class EnderChest {
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("MMMM d, yyyy hh:mm aaa");
+
     private EnderChestProtect plugin;
 
     private final int id;
@@ -105,12 +106,28 @@ public class EnderChest {
     }
 
     /**
-     * Updates the expiry time of this Ender Chest.
+     * Checks if this Ender Chest's protection is expired.
+     *
+     * @return
      */
-    public void updateExpiryTime() {
+    public boolean isExpired() {
+        return getExpiryTime().before(new Timestamp(System.currentTimeMillis()));
+    }
+
+    /**
+     * Updates the expiry time of this Ender Chest.
+     *
+     * @return The new expiry time.
+     */
+    public Timestamp updateExpiryTime() {
         Timestamp newTime = new Timestamp(System.currentTimeMillis() + (plugin.getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
         EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
         dirty = true;
+        return newTime;
+    }
+
+    public String getExpiryInfoMessage() {
+        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.BLUE + DATE_FORMAT.format(getExpiryTime()) + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
     }
 
     /**
