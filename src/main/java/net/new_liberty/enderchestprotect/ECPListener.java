@@ -84,7 +84,7 @@ public class ECPListener implements Listener {
 
         if (ec.getOwner() == null) {
             e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken a protected Ender Chest belonging to " + ChatColor.GOLD + "nobody" + ChatColor.BLUE + ". ?!??!?!?!");
-        } else if (e.getPlayer().hasPermission("nlenderchest.admin")) {
+        } else if (!e.getPlayer().getName().equals(ec.getOwner())) {
             e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken a protected Ender Chest belonging to " + ChatColor.GOLD + ec.getOwner() + ".");
         } else {
             e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken your protected Ender Chest.");
