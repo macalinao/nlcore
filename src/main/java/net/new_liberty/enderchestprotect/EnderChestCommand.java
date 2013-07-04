@@ -1,15 +1,17 @@
 package net.new_liberty.enderchestprotect;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class EnderChestCommand implements CommandExecutor {
-    private Map<String, ClearChestTimer> clearChests = new HashMap<String, ClearChestTimer>();
+    private Map<String, ClearChestTimer> clearChests = new ConcurrentHashMap<String, ClearChestTimer>();
 
     private EnderChestProtect plugin;
 
@@ -52,8 +54,8 @@ public class EnderChestCommand implements CommandExecutor {
         listChests(sender, null);
     }
 
-    private void listChests(CommandSender sender, String player) {
-        boolean self = player != null;
+    private void listChests(final CommandSender sender, String player) {
+        final boolean self = player != null;
         if (player == null) {
             player = sender.getName();
         }
@@ -65,28 +67,36 @@ public class EnderChestCommand implements CommandExecutor {
             }
         }
 
-        if (plugin.getChests(player).isEmpty()) {
-            if (self) {
-                sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
-            } else {
-                sender.sendMessage(ChatColor.RED + player + " doesn't have any protected Ender Chests! (Name is case sensitive.)");
-            }
-            return;
-        }
+        final String thePlayer = player;
+        (new BukkitRunnable() {
+            @Override
+            public void run() {
+                List<EnderChest> chests = plugin.getChests(thePlayer);
 
-        sender.sendMessage(ChatColor.BLUE + "Here are the locations of " + (self ? "your" : "the") + " protected Ender Chests:");
-        sender.sendMessage(ChatColor.BLUE + "Chests in " + ChatColor.RED + "red " + ChatColor.BLUE + "are in the nether.");
+                if (chests.isEmpty()) {
+                    if (self) {
+                        sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
+                    } else {
+                        sender.sendMessage(ChatColor.RED + thePlayer + " doesn't have any protected Ender Chests! (Name is case sensitive.)");
+                    }
+                    return;
+                }
 
-        int i = 0;
-        for (EnderChest ec : plugin.getChests(player)) {
-            Location loc = ec.getLocation();
-            i++;
-            if (ec.getLocation().getWorld().getName().equalsIgnoreCase("world_nether")) {
-                sender.sendMessage(ChatColor.RED.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
-            } else {
-                sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
+                sender.sendMessage(ChatColor.BLUE + "Here are the locations of " + (self ? "your" : "the") + " protected Ender Chests:");
+                sender.sendMessage(ChatColor.BLUE + "Chests in " + ChatColor.RED + "red " + ChatColor.BLUE + "are in the nether.");
+
+                int i = 0;
+                for (EnderChest ec : chests) {
+                    Location loc = ec.getLocation();
+                    i++;
+                    if (ec.getLocation().getWorld().getName().equalsIgnoreCase("world_nether")) {
+                        sender.sendMessage(ChatColor.RED.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
+                    } else {
+                        sender.sendMessage(ChatColor.BLUE.toString() + i + ". x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ());
+                    }
+                }
             }
-        }
+        }).runTaskAsynchronously(plugin);
     }
 
     private void clearChests(CommandSender sender) {
@@ -111,8 +121,8 @@ public class EnderChestCommand implements CommandExecutor {
         clearChests.put(sender.getName(), new ClearChestTimer(player));
     }
 
-    private void confirmChests(CommandSender sender) {
-        ClearChestTimer timer = clearChests.get(sender.getName());
+    private void confirmChests(final CommandSender sender) {
+        final ClearChestTimer timer = clearChests.get(sender.getName());
 
         if (timer == null) {
             sender.sendMessage(ChatColor.RED + "You have nothing to confirm!");
@@ -125,9 +135,14 @@ public class EnderChestCommand implements CommandExecutor {
             return;
         }
 
-        timer.clearChests();
-        sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
-        clearChests.remove(sender.getName());
+        (new BukkitRunnable() {
+            @Override
+            public void run() {
+                timer.clearChests();
+                sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
+                clearChests.remove(sender.getName());
+            }
+        }).runTaskAsynchronously(plugin);
     }
 
     private class ClearChestTimer {
