@@ -69,30 +69,6 @@ public class EnderChest {
     }
 
     /**
-     * Checks if the given player can open the chest.
-     *
-     * @param p
-     * @return
-     */
-    public boolean canOpen(Player p) {
-        if (owner == null) {
-            p.sendMessage(ChatColor.RED + "This EnderChest belongs to no one, and cannot be opened.");
-            return false;
-        }
-
-        if (!owner.equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
-            p.sendMessage(ChatColor.BLUE + "You cannot use this Ender Chest as it belongs to " + ChatColor.GOLD + owner + ".");
-            return false;
-        }
-
-        if (p.hasPermission("nlenderchest.admin")) {
-            p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner);
-        }
-
-        return true;
-    }
-
-    /**
      * Saves the file.
      */
     public void save() {

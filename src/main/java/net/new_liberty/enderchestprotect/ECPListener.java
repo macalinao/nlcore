@@ -119,8 +119,21 @@ public class ECPListener implements Listener {
         cooldowns.put(e.getPlayer().getName(), Long.valueOf(System.currentTimeMillis()));
 
         EnderChest ec = plugin.getChest(block.getLocation());
-        if (!ec.canOpen(e.getPlayer())) {
+
+        Player p = e.getPlayer();
+        String owner = ec.getOwner();
+        if (owner == null) {
+            p.sendMessage(ChatColor.RED + "This Ender Chest belongs to no one and cannot be opened.");
             return;
+        }
+
+        if (!owner.equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
+            p.sendMessage(ChatColor.BLUE + "You cannot use this Ender Chest as it belongs to " + ChatColor.GOLD + owner + ".");
+            return;
+        }
+
+        if (p.hasPermission("nlenderchest.admin")) {
+            p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner + ".");
         }
 
         setSelectedChest(e.getPlayer(), ec);
