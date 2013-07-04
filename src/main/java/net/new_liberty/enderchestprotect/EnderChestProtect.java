@@ -21,6 +21,10 @@ public class EnderChestProtect extends JavaPlugin {
             return;
         }
 
+        // Save the config
+        saveDefaultConfig();
+        reloadConfig();
+
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS enderchests ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
                 + "owner VARCHAR(16) NOT NULL,"
@@ -48,7 +52,7 @@ public class EnderChestProtect extends JavaPlugin {
             public EnderChest handle(ResultSet rs) throws SQLException {
                 rs.next();
 
-                return new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"));
+                return new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_date"));
             }
         }, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
@@ -84,7 +88,7 @@ public class EnderChestProtect extends JavaPlugin {
                     String worldStr = rs.getString("world");
                     World world = Bukkit.getWorld(worldStr);
                     Location loc = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
-                    ret.add(new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents")));
+                    ret.add(new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_date")));
                 }
                 return ret;
             }

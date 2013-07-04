@@ -1,6 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,12 +25,15 @@ public class EnderChest {
 
     private final String inventory;
 
-    public EnderChest(EnderChestProtect plugin, int id, String owner, Location loc, String inventory) {
+    private final Timestamp expiry;
+
+    public EnderChest(EnderChestProtect plugin, int id, String owner, Location loc, String inventory, Timestamp expiry) {
         this.plugin = plugin;
         this.id = id;
         this.owner = owner;
         this.loc = loc;
         this.inventory = inventory;
+        this.expiry = expiry;
     }
 
     public String getOwner() {
@@ -38,6 +42,18 @@ public class EnderChest {
 
     public Location getLocation() {
         return loc;
+    }
+
+    public Timestamp getExpiry() {
+        return expiry;
+    }
+
+    /**
+     * Updates the expiry time of this Ender Chest.
+     */
+    public void updateExpiry() {
+        Timestamp newTime = new Timestamp(expiry.getTime() + (plugin.getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
+        EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
     }
 
     public String getLocationString() {
