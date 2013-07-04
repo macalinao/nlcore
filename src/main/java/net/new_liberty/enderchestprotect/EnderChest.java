@@ -46,10 +46,12 @@ public class EnderChest {
 
     public void open(Player p) {
         Inventory inv = Bukkit.createInventory(p, 27, "ProtectedEnderChest");
-        try {
-            InventorySerializer.loadFromString(inventory, inv);
-        } catch (InvalidConfigurationException ex) {
-            plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + getLocationString() + "! Fix soon or " + owner + " will be mad!");
+        if (inventory != null) {
+            try {
+                InventorySerializer.loadFromString(inventory, inv);
+            } catch (InvalidConfigurationException ex) {
+                plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + getLocationString() + "! Fix soon or " + owner + " will be mad!");
+            }
         }
         p.openInventory(inv);
     }
