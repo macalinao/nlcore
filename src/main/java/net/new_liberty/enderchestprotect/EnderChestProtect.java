@@ -29,7 +29,7 @@ public class EnderChestProtect extends JavaPlugin {
                 + "y INT(10) NOT NULL,"
                 + "z INT(10) NOT NULL,"
                 + "contents TEXT,"
-                + "expiry_time TIMESTAMP NOT_NULL,"
+                + "expiry_time TIMESTAMP NOT NULL,"
                 + "PRIMARY KEY (id));");
 
         getCommand("enderchest").setExecutor(new EnderChestCommand(this));
