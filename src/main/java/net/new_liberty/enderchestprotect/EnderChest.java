@@ -132,14 +132,7 @@ public class EnderChest {
      * @return
      */
     public boolean hasItems() {
-        return contents != null;
-    }
-
-    /**
-     * Saves the chest with no contents.
-     */
-    public void save() {
-        save(null);
+        return getContents() != null;
     }
 
     /**
@@ -148,8 +141,9 @@ public class EnderChest {
      * @param inv
      */
     public void save(Inventory inv) {
-        String contents = (inv == null ? null : InventorySerializer.writeToString(inv));
-        EasyDB.getDb().update("UPDATE enderchests SET contents = ? WHERE id = ?", contents, id);
+        String theContents = (inv == null ? null : InventorySerializer.writeToString(inv));
+        EasyDB.getDb().update("UPDATE enderchests SET contents = ? WHERE id = ?", theContents, id);
+        dirty = true;
     }
 
     /**
