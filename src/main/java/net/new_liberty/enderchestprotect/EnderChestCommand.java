@@ -135,14 +135,9 @@ public class EnderChestCommand implements CommandExecutor {
             return;
         }
 
-        (new BukkitRunnable() {
-            @Override
-            public void run() {
-                timer.clearChests();
-                sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
-                clearChests.remove(sender.getName());
-            }
-        }).runTaskAsynchronously(plugin);
+        timer.clearChests();
+        sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
+        clearChests.remove(sender.getName());
     }
 
     private class ClearChestTimer {
@@ -168,7 +163,9 @@ public class EnderChestCommand implements CommandExecutor {
         }
 
         public void clearChests() {
-            plugin.destroyChests(player);
+            for (EnderChest ec : plugin.getChests(player)) {
+                ec.destroy();
+            }
         }
     }
 }

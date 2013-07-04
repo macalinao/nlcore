@@ -4,6 +4,7 @@ import com.simplyian.easydb.EasyDB;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -84,5 +85,6 @@ public class EnderChest {
      */
     public void destroy() {
         EasyDB.getDb().update("DELETE FROM enderchests WHERE id = ?", id);
+        loc.getBlock().setType(Material.AIR);
     }
 }

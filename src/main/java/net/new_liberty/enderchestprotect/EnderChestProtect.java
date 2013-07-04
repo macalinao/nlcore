@@ -105,13 +105,4 @@ public class EnderChestProtect extends JavaPlugin {
         }
         return -1;
     }
-
-    /**
-     * Destroys all of a player's chests.
-     *
-     * @param player
-     */
-    public void destroyChests(String player) {
-        EasyDB.getDb().update("DELETE FROM enderchests WHERE owner = ?", player);
-    }
 }
