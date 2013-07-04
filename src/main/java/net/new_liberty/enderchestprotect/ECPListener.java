@@ -1,13 +1,12 @@
 package net.new_liberty.enderchestprotect;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,6 +40,7 @@ public class ECPListener implements Listener {
         }
 
         Player p = e.getPlayer();
+        String pn = p.getName();
 
         if (plugin.getAllowedChestCount(p) == -1) {
             p.sendMessage(ChatColor.RED + "You are not allowed to place Ender Chests.");
@@ -48,14 +48,15 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (plugin.getChests(p).size() >= plugin.getAllowedChestCount(p)) {
+        List<EnderChest> chests = plugin.getChests(pn);
+        if (chests.size() >= plugin.getAllowedChestCount(p)) {
             p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
             e.setCancelled(true);
             return;
         }
 
         plugin.createChest(e.getPlayer().getName(), e.getBlock().getLocation());
-        e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + plugin.getChests(e.getPlayer()).size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
+        e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + chests.size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

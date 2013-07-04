@@ -1,72 +1,123 @@
 package net.new_liberty.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 /**
- * Object to manipulate an Ender Chest in an object-oriented fashion. These
- * objects should not be stored.
+ * Object to manipulate an Ender Chest in an object-oriented fashion.
  */
 public class EnderChest {
     private EnderChestProtect plugin;
 
     private final int id;
 
-    private final String owner;
+    /**
+     * If true, getter operations will reload the data from the database.
+     */
+    private boolean dirty = false;
 
-    private final Location loc;
+    private String owner;
 
-    private final String inventory;
+    private Location loc;
 
-    private final Timestamp expiry;
+    private String contents;
 
-    public EnderChest(EnderChestProtect plugin, int id, String owner, Location loc, String inventory, Timestamp expiry) {
+    private Timestamp expiryTime;
+
+    public EnderChest(EnderChestProtect plugin, int id) {
         this.plugin = plugin;
         this.id = id;
+    }
+
+    public void repopulate() {
+        EasyDB.getDb().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<Object>() {
+            @Override
+            public Object handle(ResultSet rs) throws SQLException {
+                rs.next();
+                setData(rs);
+                return null;
+            }
+        }, id);
+    }
+
+    void setData(ResultSet rs) throws SQLException {
+        setData(rs.getString("owner"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("contents"), rs.getTimestamp("expiry_time"));
+    }
+
+    void setData(String owner, Location loc, String contents, Timestamp expiryTime) {
         this.owner = owner;
         this.loc = loc;
-        this.inventory = inventory;
-        this.expiry = expiry;
+        this.contents = contents;
+        this.expiryTime = expiryTime;
+    }
+
+    void setData(String owner, String world, int x, int y, int z, String contents, Timestamp expiryTime) {
+        World w = Bukkit.getWorld(world);
+        loc = new Location(w, x, y, z);
+        setData(owner, loc, contents, expiryTime);
     }
 
     public String getOwner() {
+        if (dirty) {
+            repopulate();
+        }
         return owner;
     }
 
     public Location getLocation() {
+        if (dirty) {
+            repopulate();
+        }
         return loc;
     }
 
-    public Timestamp getExpiry() {
-        return expiry;
+    public String getContents() {
+        if (dirty) {
+            repopulate();
+        }
+        return contents;
+    }
+
+    public Timestamp getExpiryTime() {
+        if (dirty) {
+            repopulate();
+        }
+        return expiryTime;
     }
 
     /**
      * Updates the expiry time of this Ender Chest.
      */
     public void updateExpiry() {
-        Timestamp newTime = new Timestamp(expiry.getTime() + (plugin.getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
+        Timestamp newTime = new Timestamp(getExpiryTime().getTime() + (plugin.getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
         EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
+        dirty = true;
     }
 
-    public String getLocationString() {
-        return loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
-    }
-
+    /**
+     * Opens this EnderChest for the given player.
+     *
+     * @param p
+     */
     public void open(Player p) {
         Inventory inv = Bukkit.createInventory(p, 27, "ProtectedEnderChest");
-        if (inventory != null) {
+        if (getContents() != null) {
             try {
-                InventorySerializer.loadFromString(inventory, inv);
+                InventorySerializer.loadFromString(contents, inv);
             } catch (InvalidConfigurationException ex) {
-                plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + getLocationString() + "! Fix soon or " + owner + " will be mad!");
+                String locStr = loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
+                plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + locStr + "! Fix soon or " + owner + " will be mad!");
             }
         }
         p.openInventory(inv);
@@ -78,7 +129,7 @@ public class EnderChest {
      * @return
      */
     public boolean hasItems() {
-        return inventory != null;
+        return contents != null;
     }
 
     /**

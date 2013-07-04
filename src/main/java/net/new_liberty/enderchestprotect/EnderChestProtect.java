@@ -50,9 +50,12 @@ public class EnderChestProtect extends JavaPlugin {
         return EasyDB.getDb().query("SELECT * FROM enderchests WHERE world = ? AND x = ? AND y = ? AND z = ?", new ResultSetHandler<EnderChest>() {
             @Override
             public EnderChest handle(ResultSet rs) throws SQLException {
-                rs.next();
-
-                return new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_date"));
+                if (!rs.next()) {
+                    return null;
+                };
+                EnderChest ec = new EnderChest(EnderChestProtect.this, rs.getInt("id"));
+                ec.setData(rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_time"));
+                return ec;
             }
         }, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
@@ -69,10 +72,6 @@ public class EnderChestProtect extends JavaPlugin {
         return getChest(loc);
     }
 
-    public List<EnderChest> getChests(Player p) {
-        return getChests(p.getName());
-    }
-
     /**
      * Gets all of the Ender Chests of a player.
      *
@@ -85,10 +84,9 @@ public class EnderChestProtect extends JavaPlugin {
             public List<EnderChest> handle(ResultSet rs) throws SQLException {
                 List<EnderChest> ret = new ArrayList<EnderChest>();
                 while (rs.next()) {
-                    String worldStr = rs.getString("world");
-                    World world = Bukkit.getWorld(worldStr);
-                    Location loc = new Location(world, rs.getInt("x"), rs.getInt("y"), rs.getInt("z"));
-                    ret.add(new EnderChest(EnderChestProtect.this, rs.getInt("id"), rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_date")));
+                    EnderChest ec = new EnderChest(EnderChestProtect.this, rs.getInt("id"));
+                    ec.setData(rs);
+                    ret.add(ec);
                 }
                 return ret;
             }
