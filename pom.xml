@@ -4,14 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>EnderChestProtect</name>
     <groupId>net.new_liberty</groupId>
     <artifactId>enderchestprotect</artifactId>
     <version>2.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <url>http://new-liberty.net</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <repositories>
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
+            <id>nl-repo</id>
+            <url>http://nexus.new-liberty.net/content/groups/public/</url>
         </repository>
     </repositories>
 
