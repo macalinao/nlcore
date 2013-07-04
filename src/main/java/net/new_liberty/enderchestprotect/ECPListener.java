@@ -67,9 +67,8 @@ public class ECPListener implements Listener {
         EnderChest ec = plugin.getECManager().getChest(loc);
 
         // Check if we can access the Ender Chest
-        boolean canAccess = ec.getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || ec.isExpired();
-        if (!canAccess) {
-            p.sendMessage(ChatColor.RED + "You cannot access this Ender Chest as it belongs to " + ChatColor.GOLD + ec.getOwner());
+        if (!ec.canAccess(p)) {
+            p.sendMessage(ChatColor.RED + "You cannot break this Ender Chest as it belongs to " + ChatColor.GOLD + ec.getOwner());
             p.sendMessage(ec.getExpiryInfoMessage());
             e.setCancelled(true);
             return;
@@ -111,9 +110,8 @@ public class ECPListener implements Listener {
         Player p = e.getPlayer();
         String owner = ec.getOwner();
 
-        boolean canAccess = ec.getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || ec.isExpired();
-        if (!canAccess) {
-            p.sendMessage(ChatColor.BLUE + "You cannot use this Ender Chest as it belongs to " + ChatColor.GOLD + owner + ".");
+        if (!ec.canAccess(p)) {
+            p.sendMessage(ChatColor.BLUE + "You cannot access this Ender Chest as it belongs to " + ChatColor.GOLD + owner + ".");
             p.sendMessage(ec.getExpiryInfoMessage());
             return;
         }

@@ -131,6 +131,16 @@ public class EnderChest {
     }
 
     /**
+     * Checks if the player can access the chest.
+     *
+     * @param p
+     * @return
+     */
+    public boolean canAccess(Player p) {
+        return getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || isExpired();
+    }
+
+    /**
      * Opens this EnderChest for the given player.
      *
      * @param p
