@@ -1,6 +1,6 @@
 name: EnderChestProtect
 main: net.new_liberty.enderchestprotect.EnderChestProtect
-version: 2.0
+version: 2.0.0
 author: AlbireoX
 
 commands:
