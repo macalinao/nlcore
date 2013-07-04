@@ -1,13 +1,10 @@
 package net.new_liberty.enderchestprotect;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,15 +15,10 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.Inventory;
 
 public class ECPListener implements Listener {
-    private Map<String, EnderChest> selectedChests = new HashMap<String, EnderChest>();
-
-    private Map<String, Long> cooldowns = new HashMap<String, Long>();
-
     private EnderChestProtect plugin;
 
     public ECPListener(EnderChestProtect plugin) {
@@ -112,13 +104,6 @@ public class ECPListener implements Listener {
         }
         e.setCancelled(true);
 
-        // Wait 2 seconds before opening another chest
-        int cooldown = 2000;
-        if ((cooldowns.containsKey(e.getPlayer().getName())) && (cooldowns.get(e.getPlayer().getName()) + cooldown - System.currentTimeMillis() > 0L)) {
-            return;
-        }
-        cooldowns.put(e.getPlayer().getName(), Long.valueOf(System.currentTimeMillis()));
-
         EnderChest ec = plugin.getECManager().getChest(block.getLocation());
 
         Player p = e.getPlayer();
@@ -141,25 +126,17 @@ public class ECPListener implements Listener {
             ec.updateExpiryTime();
             p.sendMessage(ChatColor.YELLOW + "The protection on this chest has been renewed.");
         }
-        setSelectedChest(e.getPlayer(), ec);
         ec.open(e.getPlayer());
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e) {
-        if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
-            return;
-        }
-        getSelectedChest(e.getPlayer()).save(e.getInventory());
-        selectedChests.remove(e.getPlayer().getName());
+        checkInventory(e.getInventory());
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getInventory().getTitle().equals("ProtectedEnderChest")) {
-            return;
-        }
-        getSelectedChest(e.getWhoClicked()).save(e.getInventory());
+        checkInventory(e.getInventory());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -169,29 +146,23 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (p.getOpenInventory().getTitle().equalsIgnoreCase("ProtectedEnderChest")) {
-            getSelectedChest(p).save(p.getOpenInventory().getTopInventory());
-        }
-
+        checkInventory(p.getOpenInventory().getTopInventory());
         p.closeInventory();
-        selectedChests.remove(p.getName());
     }
 
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        selectedChests.remove(e.getPlayer().getName());
-    }
-
-    @EventHandler
-    public void onPlayerKick(PlayerKickEvent e) {
-        selectedChests.remove(e.getPlayer().getName());
-    }
-
-    private EnderChest getSelectedChest(HumanEntity player) {
-        return selectedChests.get(player.getName());
-    }
-
-    private void setSelectedChest(Player p, EnderChest loc) {
-        selectedChests.put(p.getName(), loc);
+    /**
+     * Saves the inventory if it was a protected Ender Chest.
+     *
+     * @param title
+     * @param inv
+     */
+    private void checkInventory(Inventory inv) {
+        String title = inv.getTitle();
+        if (!title.startsWith("Ender Chest ")) {
+            return;
+        }
+        int id = Integer.parseInt(title.substring("Ender Chest ".length()));
+        EnderChest chest = plugin.getECManager().getChest(id);
+        chest.save(inv);
     }
 }

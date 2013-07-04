@@ -4,15 +4,26 @@ import com.simplyian.easydb.EasyDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Manages Ender Chests.
  */
 public class ECManager {
     private final EnderChestProtect plugin;
+
+    /**
+     * The Ender Chest inventories on the server.
+     */
+    private Map<Integer, Inventory> inventories = new HashMap<Integer, Inventory>();
 
     public ECManager(EnderChestProtect plugin) {
         this.plugin = plugin;
@@ -28,6 +39,18 @@ public class ECManager {
     public EnderChest createChest(String owner, Location loc) {
         EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z) VALUES (?, ?, ?, ?, ?)", owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         return getChest(loc);
+    }
+
+    /**
+     * Gets a chest from its id.
+     *
+     * @param id
+     * @return
+     */
+    public EnderChest getChest(int id) {
+        EnderChest ec = new EnderChest(plugin, id);
+        ec.repopulate();
+        return ec;
     }
 
     /**
@@ -69,5 +92,29 @@ public class ECManager {
                 return ret;
             }
         }, p);
+    }
+
+    public Inventory createInventory(EnderChest chest) {
+        Inventory inv = Bukkit.createInventory(null, 27, "Ender Chest " + chest.getId());
+        if (chest.getContents() != null) {
+            try {
+                InventorySerializer.loadFromString(chest.getContents(), inv);
+            } catch (InvalidConfigurationException ex) {
+                String locStr = chest.getLocation().getWorld().getName() + ", " + chest.getLocation().getBlockX() + ", " + chest.getLocation().getBlockY() + ", " + chest.getLocation().getBlockZ();
+                plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + locStr + "! Fix soon or " + chest.getOwner() + " will be mad!");
+            }
+        }
+        inventories.put(chest.getId(), inv);
+        return inv;
+    }
+
+    /**
+     * Gets an inventory.
+     *
+     * @param id
+     * @return
+     */
+    public Inventory getInventory(int id) {
+        return inventories.get(id);
     }
 }

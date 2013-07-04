@@ -68,9 +68,14 @@ public class EnderChest {
         setData(owner, loc, contents, expiryTime);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getOwner() {
         if (dirty) {
             repopulate();
+            dirty = false;
         }
         return owner;
     }
@@ -78,6 +83,7 @@ public class EnderChest {
     public Location getLocation() {
         if (dirty) {
             repopulate();
+            dirty = false;
         }
         return loc;
     }
@@ -85,6 +91,7 @@ public class EnderChest {
     public String getContents() {
         if (dirty) {
             repopulate();
+            dirty = false;
         }
         return contents;
     }
@@ -92,6 +99,7 @@ public class EnderChest {
     public Timestamp getExpiryTime() {
         if (dirty) {
             repopulate();
+            dirty = false;
         }
         return expiryTime;
     }
@@ -111,14 +119,9 @@ public class EnderChest {
      * @param p
      */
     public void open(Player p) {
-        Inventory inv = Bukkit.createInventory(p, 27, "ProtectedEnderChest");
-        if (getContents() != null) {
-            try {
-                InventorySerializer.loadFromString(contents, inv);
-            } catch (InvalidConfigurationException ex) {
-                String locStr = loc.getWorld().getName() + ", " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ();
-                plugin.getLogger().log(Level.SEVERE, "Corrupted Ender Chest at " + locStr + "! Fix soon or " + owner + " will be mad!");
-            }
+        Inventory inv = plugin.getECManager().getInventory(id);
+        if (inv == null) {
+            inv = plugin.getECManager().createInventory(this);
         }
         p.openInventory(inv);
     }
