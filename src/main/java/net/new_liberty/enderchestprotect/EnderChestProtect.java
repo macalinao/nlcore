@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnderChestProtect extends JavaPlugin {
+    private ECManager ecManager;
+
     @Override
     public void onEnable() {
         if (!EasyDB.getDb().isValid()) {
@@ -24,6 +26,8 @@ public class EnderChestProtect extends JavaPlugin {
         // Save the config
         saveDefaultConfig();
         reloadConfig();
+
+        ecManager = new ECManager(this);
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS enderchests ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
@@ -41,56 +45,12 @@ public class EnderChestProtect extends JavaPlugin {
     }
 
     /**
-     * Loads a chest from its location.
+     * Gets the Ender Chest manager.
      *
-     * @param loc
      * @return
      */
-    public EnderChest getChest(final Location loc) {
-        return EasyDB.getDb().query("SELECT * FROM enderchests WHERE world = ? AND x = ? AND y = ? AND z = ?", new ResultSetHandler<EnderChest>() {
-            @Override
-            public EnderChest handle(ResultSet rs) throws SQLException {
-                if (!rs.next()) {
-                    return null;
-                };
-                EnderChest ec = new EnderChest(EnderChestProtect.this, rs.getInt("id"));
-                ec.setData(rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_time"));
-                return ec;
-            }
-        }, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-    }
-
-    /**
-     * Creates a chest with the given owner and location.
-     *
-     * @param owner
-     * @param loc
-     * @return
-     */
-    public EnderChest createChest(String owner, Location loc) {
-        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z) VALUES (?, ?, ?, ?, ?)", owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-        return getChest(loc);
-    }
-
-    /**
-     * Gets all of the Ender Chests of a player.
-     *
-     * @param p
-     * @return
-     */
-    public List<EnderChest> getChests(String p) {
-        return EasyDB.getDb().query("SELECT * FROM enderchests WHERE owner = ?", new ResultSetHandler<List<EnderChest>>() {
-            @Override
-            public List<EnderChest> handle(ResultSet rs) throws SQLException {
-                List<EnderChest> ret = new ArrayList<EnderChest>();
-                while (rs.next()) {
-                    EnderChest ec = new EnderChest(EnderChestProtect.this, rs.getInt("id"));
-                    ec.setData(rs);
-                    ret.add(ec);
-                }
-                return ret;
-            }
-        }, p);
+    public ECManager getECManager() {
+        return ecManager;
     }
 
     /**

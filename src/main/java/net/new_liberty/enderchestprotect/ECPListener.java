@@ -48,14 +48,14 @@ public class ECPListener implements Listener {
             return;
         }
 
-        List<EnderChest> chests = plugin.getChests(pn);
+        List<EnderChest> chests = plugin.getECManager().getChests(pn);
         if (chests.size() >= plugin.getAllowedChestCount(p)) {
             p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
             e.setCancelled(true);
             return;
         }
 
-        plugin.createChest(e.getPlayer().getName(), e.getBlock().getLocation());
+        plugin.getECManager().createChest(e.getPlayer().getName(), e.getBlock().getLocation());
         e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + chests.size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
     }
 
@@ -68,7 +68,7 @@ public class ECPListener implements Listener {
         Location loc = e.getBlock().getLocation();
 
         Player p = e.getPlayer();
-        EnderChest ec = plugin.getChest(loc);
+        EnderChest ec = plugin.getECManager().getChest(loc);
 
         if (ec.getOwner() != null) {
             if (!ec.getOwner().equals(p.getName()) && !p.hasPermission("nlenderchest.admin")) {
@@ -119,7 +119,7 @@ public class ECPListener implements Listener {
         }
         cooldowns.put(e.getPlayer().getName(), Long.valueOf(System.currentTimeMillis()));
 
-        EnderChest ec = plugin.getChest(block.getLocation());
+        EnderChest ec = plugin.getECManager().getChest(block.getLocation());
 
         Player p = e.getPlayer();
         String owner = ec.getOwner();

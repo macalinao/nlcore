@@ -71,7 +71,7 @@ public class EnderChestCommand implements CommandExecutor {
         (new BukkitRunnable() {
             @Override
             public void run() {
-                List<EnderChest> chests = plugin.getChests(thePlayer);
+                List<EnderChest> chests = plugin.getECManager().getChests(thePlayer);
 
                 if (chests.isEmpty()) {
                     if (self) {
@@ -111,7 +111,7 @@ public class EnderChestCommand implements CommandExecutor {
             }
         }
 
-        if (plugin.getChests(player).isEmpty()) {
+        if (plugin.getECManager().getChests(player).isEmpty()) {
             sender.sendMessage(ChatColor.RED + "You don't have any protected Ender Chests!");
             return;
         }
@@ -163,7 +163,7 @@ public class EnderChestCommand implements CommandExecutor {
         }
 
         public void clearChests() {
-            for (EnderChest ec : plugin.getChests(player)) {
+            for (EnderChest ec : plugin.getECManager().getChests(player)) {
                 ec.destroy();
             }
         }
