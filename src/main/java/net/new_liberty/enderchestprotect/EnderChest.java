@@ -97,6 +97,11 @@ public class EnderChest {
      * @return
      */
     public boolean isExpired() {
+        System.out.println("Expiry: " + getExpiryTime().getTime());
+        System.out.println("Now: " + System.currentTimeMillis());
+        System.out.println("Diff: " + (getExpiryTime().getTime() - System.currentTimeMillis()));
+        System.out.println("Pretty: " + DATE_FORMAT.format(getExpiryTime()));
+        System.out.println("Pretty2: " + DATE_FORMAT.format(new Timestamp(System.currentTimeMillis())));
         return (getExpiryTime().getTime() - System.currentTimeMillis()) <= 0;
     }
 
