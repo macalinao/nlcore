@@ -125,7 +125,7 @@ public class ECPListener implements Listener {
             p.sendMessage(ChatColor.YELLOW + "The protection on this chest has been renewed.");
         }
 
-        ec.open(e.getPlayer());
+        p.openInventory(ec.getInventory());
     }
 
     @EventHandler

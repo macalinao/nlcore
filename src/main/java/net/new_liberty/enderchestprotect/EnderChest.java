@@ -129,16 +129,16 @@ public class EnderChest {
     }
 
     /**
-     * Opens this EnderChest for the given player.
+     * Gets an Inventory for this chest.
      *
-     * @param p
+     * @return
      */
-    public void open(Player p) {
+    public Inventory getInventory() {
         Inventory inv = plugin.getECManager().getInventory(id);
         if (inv == null) {
             inv = plugin.getECManager().createInventory(this);
         }
-        p.openInventory(inv);
+        return inv;
     }
 
     /**
