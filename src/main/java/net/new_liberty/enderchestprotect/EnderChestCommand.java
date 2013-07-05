@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -165,6 +166,7 @@ public class EnderChestCommand implements CommandExecutor {
         public void clearChests() {
             for (EnderChest ec : plugin.getECManager().getChests(player)) {
                 ec.destroy();
+                ec.getLocation().getBlock().setType(Material.AIR);
             }
         }
     }
