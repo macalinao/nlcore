@@ -85,7 +85,7 @@ public class ECPListener implements Listener {
         ec.destroy();
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             return;
