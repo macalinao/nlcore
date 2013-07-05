@@ -106,7 +106,7 @@ public class EnderChest {
      * @return The new expiry time.
      */
     public Timestamp updateExpiryTime() {
-        Timestamp newTime = plugin.getNexExpiryTime();
+        Timestamp newTime = plugin.getNewExpiryTime();
         EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
         dirty = true;
         return newTime;

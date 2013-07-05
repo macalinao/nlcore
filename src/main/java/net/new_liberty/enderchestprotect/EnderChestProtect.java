@@ -66,7 +66,7 @@ public class EnderChestProtect extends JavaPlugin {
      *
      * @return
      */
-    public Timestamp getNexExpiryTime() {
+    public Timestamp getNewExpiryTime() {
         return new Timestamp(System.currentTimeMillis() + (getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
     }
 
