@@ -126,6 +126,9 @@ public class ECManager {
      * @param id The inventory id.
      */
     public void deleteInventory(int id) {
-        inventories.remove(id).clear();
+        Inventory inv = inventories.remove(id);
+        if (inv != null) {
+            inv.clear();
+        }
     }
 }
