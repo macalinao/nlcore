@@ -59,7 +59,7 @@ public class ECListCommand implements CommandExecutor {
             String locString = "x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ();
             String expireString = ChatColor.YELLOW + "expires " + ChatColor.AQUA + ec.getExpiryTimeString();
 
-            String msg = Integer.toString(i) + ". " + locString + " " + expireString;
+            String msg = Integer.toString(self ? i : ec.getId()) + ". " + locString + " " + expireString;
 
             if (ec.getLocation().getWorld().getName().equalsIgnoreCase("world_nether")) {
                 msg = ChatColor.RED + msg;
