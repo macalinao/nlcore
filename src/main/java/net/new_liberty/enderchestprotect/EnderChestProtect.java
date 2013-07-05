@@ -46,6 +46,8 @@ public class EnderChestProtect extends JavaPlugin {
         getCommand("eclist").setExecutor(new ECListCommand(this));
 
         Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
+
+        getLogger().log(Level.INFO, "Plugin enabled.");
     }
 
     /**
