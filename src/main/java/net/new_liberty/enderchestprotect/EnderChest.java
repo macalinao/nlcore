@@ -165,11 +165,12 @@ public class EnderChest {
     }
 
     /**
-     * Saves the chest with the given inventory.
+     * Saves the chest.
      *
      * @param inv
      */
-    public void save(Inventory inv) {
+    public void save() {
+        Inventory inv = getInventory();
         String theContents = (inv == null ? null : InventorySerializer.writeToString(inv));
         EasyDB.getDb().update("UPDATE enderchests SET contents = ? WHERE id = ?", theContents, id);
         dirty = true;

@@ -132,6 +132,6 @@ public class ECPListener implements Listener {
         }
         int id = Integer.parseInt(title.substring("Ender Chest ".length()));
         EnderChest chest = plugin.getECManager().getChest(id);
-        chest.save(inv);
+        chest.save();
     }
 }
