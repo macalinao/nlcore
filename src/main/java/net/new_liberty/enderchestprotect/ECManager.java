@@ -119,4 +119,13 @@ public class ECManager {
     public Inventory getInventory(int id) {
         return inventories.get(id);
     }
+
+    /**
+     * Deletes an inventory.
+     *
+     * @param id The inventory id.
+     */
+    public void deleteInventory(int id) {
+        inventories.remove(id).clear();
+    }
 }

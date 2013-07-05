@@ -179,6 +179,7 @@ public class EnderChest {
      */
     public void destroy() {
         EasyDB.getDb().update("DELETE FROM enderchests WHERE id = ?", id);
+        plugin.getECManager().deleteInventory(id);
     }
 
     /**

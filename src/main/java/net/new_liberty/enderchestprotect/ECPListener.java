@@ -76,7 +76,6 @@ public class ECPListener implements Listener {
             for (ItemStack i : inv.getContents()) {
                 ec.getLocation().getWorld().dropItemNaturally(ec.getLocation(), i);
             }
-            inv.clear();
         }
 
         if (!p.getName().equals(ec.getOwner())) {
