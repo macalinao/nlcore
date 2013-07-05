@@ -81,16 +81,13 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (ec.getOwner() == null) {
-            e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken a protected Ender Chest belonging to " + ChatColor.GOLD + "nobody" + ChatColor.BLUE + ". ?!??!?!?!");
-        } else if (!e.getPlayer().getName().equals(ec.getOwner())) {
-            e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken a protected Ender Chest belonging to " + ChatColor.GOLD + ec.getOwner() + ".");
+        if (!p.getName().equals(ec.getOwner())) {
+            p.sendMessage(ChatColor.YELLOW + "You have broken a protected Ender Chest belonging to " + ChatColor.AQUA + ec.getOwner() + ChatColor.YELLOW + ".");
         } else {
-            e.getPlayer().sendMessage(ChatColor.BLUE + "You have broken your protected Ender Chest.");
+            p.sendMessage(ChatColor.YELLOW + "You have broken your protected Ender Chest.");
         }
 
         ec.destroy();
-        e.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -116,13 +113,11 @@ public class ECPListener implements Listener {
             return;
         }
 
-        if (!ec.getOwner().equals(p.getName())) {
-            p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner + ".");
-        }
-
         if (p.getName().equals(ec.getOwner())) {
             ec.updateExpiryTime();
             p.sendMessage(ChatColor.YELLOW + "The protection on this chest has been renewed to expire on " + ChatColor.AQUA + ec.getExpiryTimeString() + ChatColor.YELLOW + ".");
+        } else {
+            p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner + ".");
         }
 
         p.openInventory(ec.getInventory());
