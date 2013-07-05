@@ -102,14 +102,10 @@ public class EnderChest {
 
     /**
      * Updates the expiry time of this Ender Chest.
-     *
-     * @return The new expiry time.
      */
-    public Timestamp updateExpiryTime() {
-        Timestamp newTime = plugin.getNewExpiryTime();
-        EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", newTime, id);
+    public void updateExpiryTime() {
+        EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", plugin.getNewExpiryTime(), id);
         dirty = true;
-        return newTime;
     }
 
     /**
