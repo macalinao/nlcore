@@ -37,7 +37,8 @@ public class ECManager {
      * @return
      */
     public EnderChest createChest(String owner, Location loc) {
-        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z) VALUES (?, ?, ?, ?, ?)", owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z, expiry_date) VALUES (?, ?, ?, ?, ?, ?)",
+                owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), plugin.getNexExpiryTime());
         return getChest(loc);
     }
 

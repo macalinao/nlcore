@@ -1,6 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -54,6 +55,15 @@ public class EnderChestProtect extends JavaPlugin {
      */
     public ECManager getECManager() {
         return ecManager;
+    }
+
+    /**
+     * Gets the time of new expiry.
+     *
+     * @return
+     */
+    public Timestamp getNexExpiryTime() {
+        return new Timestamp(System.currentTimeMillis() + (getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
     }
 
     public Map<String, ClearChestTimer> getClearChests() {
