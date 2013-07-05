@@ -39,8 +39,8 @@ public class ECPListener implements Listener {
             return;
         }
 
-        List<EnderChest> chests = plugin.getECManager().getChests(pn);
-        if (chests.size() >= plugin.getAllowedChestCount(p)) {
+        int count = plugin.getECManager().getChestCount(pn);
+        if (count >= plugin.getAllowedChestCount(p)) {
             p.sendMessage(ChatColor.RED + "You have placed your maximum number of protected Ender Chests!");
             e.setCancelled(true);
             return;
@@ -48,7 +48,7 @@ public class ECPListener implements Listener {
 
         plugin.getECManager().createChest(e.getPlayer().getName(), e.getBlock().getLocation());
         e.getPlayer().sendMessage(ChatColor.YELLOW + "You have placed " + ChatColor.AQUA
-                + chests.size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + ChatColor.YELLOW + " protected Ender Chests.");
+                + (count + 1) + "/" + plugin.getAllowedChestCount(e.getPlayer()) + ChatColor.YELLOW + " protected Ender Chests.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

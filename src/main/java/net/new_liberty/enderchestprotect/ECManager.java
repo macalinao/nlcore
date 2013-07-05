@@ -96,6 +96,16 @@ public class ECManager {
         }, p);
     }
 
+    /**
+     * Gets the number of Ender Chests of a player.
+     *
+     * @param p
+     * @return
+     */
+    public int getChestCount(String p) {
+        return ((Number) EasyDB.getDb().get("SELECT COUNT(*) AS chests FROM enderchests WHERE owner = ?", 0, p)).intValue();
+    }
+
     public Inventory createInventory(EnderChest chest) {
         Inventory inv = Bukkit.createInventory(null, 27, "Ender Chest " + chest.getId());
         if (chest.getContents() != null) {
