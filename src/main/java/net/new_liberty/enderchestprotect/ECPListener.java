@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class ECPListener implements Listener {
     private EnderChestProtect plugin;
@@ -69,11 +70,13 @@ public class ECPListener implements Listener {
             return;
         }
 
-        // Yes we can
+        // Yes we can, drop items if there are some
         if (ec.hasItems()) {
-            p.sendMessage(ChatColor.RED + "You cannot break this chest while there are items in it!");
-            e.setCancelled(true);
-            return;
+            Inventory inv = ec.getInventory();
+            for (ItemStack i : inv.getContents()) {
+                ec.getLocation().getWorld().dropItemNaturally(ec.getLocation(), i);
+            }
+            inv.clear();
         }
 
         if (!p.getName().equals(ec.getOwner())) {
