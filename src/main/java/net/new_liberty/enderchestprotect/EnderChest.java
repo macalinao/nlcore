@@ -123,8 +123,13 @@ public class EnderChest {
         return DATE_FORMAT.format(getExpiryTime());
     }
 
+    /**
+     * Gets the contents of a message that is sent when the chest expires.
+     *
+     * @return
+     */
     public String getExpiryInfoMessage() {
-        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.BLUE + getExpiryTimeString() + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
+        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.AQUA + getExpiryTimeString() + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
     }
 
     /**
