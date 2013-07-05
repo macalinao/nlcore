@@ -36,8 +36,8 @@ public class ECClearCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(ChatColor.BLUE + "This will remove and clear any protected Ender Chests you have! This process is not reversible! If you want to do this, type " + ChatColor.GOLD + "/enderchest confirm");
-        sender.sendMessage(ChatColor.BLUE + "This option will only be available for the next 30 seconds.");
+        sender.sendMessage(ChatColor.YELLOW + "This will remove and clear any protected Ender Chests you have! This process is not reversible! If you want to do this, type " + ChatColor.AQUA + "/ecconfirm");
+        sender.sendMessage(ChatColor.YELLOW + "This option will only be available for the next 30 seconds.");
         plugin.getClearChests().put(sender.getName(), new ClearChestTimer(plugin, player));
 
         return true;

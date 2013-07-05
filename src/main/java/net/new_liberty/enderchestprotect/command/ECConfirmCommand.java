@@ -35,7 +35,7 @@ public class ECConfirmCommand implements CommandExecutor {
         }
 
         timer.clearChests();
-        sender.sendMessage(ChatColor.BLUE + "Your protected Ender Chests have been successfully cleared.");
+        sender.sendMessage(ChatColor.YELLOW + "Your protected Ender Chests have been successfully cleared.");
         clearChests.remove(sender.getName());
         return true;
     }
