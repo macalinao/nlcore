@@ -2,6 +2,7 @@ name: EnderChestProtect
 main: net.new_liberty.enderchestprotect.EnderChestProtect
 version: 2.1.0
 author: AlbireoX
+website: http://new-liberty.net
 
 commands:
   ecclear:
@@ -13,3 +14,7 @@ commands:
   eclist:
     description: Lists Ender Chests.
     usage: /eclist [player]
+
+permissions:
+  ecp.admin:
+    description: Allows using other players' chests.

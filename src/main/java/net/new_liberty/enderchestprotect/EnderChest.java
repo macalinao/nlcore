@@ -6,10 +6,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.*;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -139,7 +137,7 @@ public class EnderChest {
      * @return
      */
     public boolean canAccess(Player p) {
-        return getOwner().equals(p.getName()) || p.hasPermission("nlenderchest.admin") || isExpired();
+        return getOwner().equals(p.getName()) || p.hasPermission("ecp.admin") || isExpired();
     }
 
     /**

@@ -32,7 +32,7 @@ public class ECListCommand implements CommandExecutor {
         }
         boolean self = !player.equals(sender.getName());
 
-        if (!self && !sender.hasPermission("nlenderchest.admin")) {
+        if (!self && !sender.hasPermission("ecp.admin")) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
             return true;
         }

@@ -25,8 +25,8 @@ public class ECClearCommand implements CommandExecutor {
         }
 
         if (!sender.getName().equals(player)) {
-            if (!sender.hasPermission("nlenderchest.admin")) {
-                sender.sendMessage(ChatColor.RED + "You don't have permission!");
+            if (!sender.hasPermission("ecp.admin")) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission to use this command.");
                 return true;
             }
         }
