@@ -46,7 +46,8 @@ public class ECPListener implements Listener {
         }
 
         plugin.getECManager().createChest(e.getPlayer().getName(), e.getBlock().getLocation());
-        e.getPlayer().sendMessage(ChatColor.BLUE + "You have placed " + chests.size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + " protected Ender Chests.");
+        e.getPlayer().sendMessage(ChatColor.YELLOW + "You have placed " + ChatColor.AQUA
+                + chests.size() + "/" + plugin.getAllowedChestCount(e.getPlayer()) + ChatColor.YELLOW + " protected Ender Chests.");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
