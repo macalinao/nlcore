@@ -66,7 +66,7 @@ public class ECManager {
             public EnderChest handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
                     return null;
-                };
+                }
                 EnderChest ec = new EnderChest(plugin, rs.getInt("id"));
                 ec.setData(rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_time"));
                 return ec;
