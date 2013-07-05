@@ -114,8 +114,17 @@ public class EnderChest {
         return newTime;
     }
 
+    /**
+     * Gets the expiry time of this Ender Chest as a string.
+     *
+     * @return
+     */
+    public String getExpiryTimeString() {
+        return DATE_FORMAT.format(getExpiryTime());
+    }
+
     public String getExpiryInfoMessage() {
-        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.BLUE + DATE_FORMAT.format(getExpiryTime()) + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
+        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.BLUE + getExpiryTimeString() + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
     }
 
     /**
