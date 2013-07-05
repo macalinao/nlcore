@@ -129,53 +129,8 @@ public class ECPListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClose(InventoryCloseEvent e) {
-        checkInventory(e.getInventory());
-    }
-
-    @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        checkInventory(e.getInventory());
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onTeleport(PlayerTeleportEvent e) {
-        Player p = e.getPlayer();
-        if (p.getOpenInventory() == null) {
-            return;
-        }
-
-        checkInventory(p.getOpenInventory().getTopInventory());
-        p.closeInventory();
-    }
-
-    @EventHandler
-    public void onPlayerKick(PlayerKickEvent e) {
-        Player p = e.getPlayer();
-        if (p.getOpenInventory() == null) {
-            return;
-        }
-
-        checkInventory(p.getOpenInventory().getTopInventory());
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        Player p = e.getPlayer();
-        if (p.getOpenInventory() == null) {
-            return;
-        }
-
-        checkInventory(p.getOpenInventory().getTopInventory());
-    }
-
-    /**
-     * Saves the inventory if it was a protected Ender Chest.
-     *
-     * @param title
-     * @param inv
-     */
-    private void checkInventory(Inventory inv) {
+        Inventory inv = e.getInventory();
         String title = inv.getTitle();
         if (!title.startsWith("Ender Chest ")) {
             return;
