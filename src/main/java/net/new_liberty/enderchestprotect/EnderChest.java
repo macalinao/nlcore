@@ -74,34 +74,22 @@ public class EnderChest {
     }
 
     public String getOwner() {
-        if (dirty) {
-            repopulate();
-            dirty = false;
-        }
+        checkDirty();
         return owner;
     }
 
     public Location getLocation() {
-        if (dirty) {
-            repopulate();
-            dirty = false;
-        }
+        checkDirty();
         return loc;
     }
 
     public String getContents() {
-        if (dirty) {
-            repopulate();
-            dirty = false;
-        }
+        checkDirty();
         return contents;
     }
 
     public Timestamp getExpiryTime() {
-        if (dirty) {
-            repopulate();
-            dirty = false;
-        }
+        checkDirty();
         return expiryTime;
     }
 
@@ -179,5 +167,15 @@ public class EnderChest {
     public void destroy() {
         EasyDB.getDb().update("DELETE FROM enderchests WHERE id = ?", id);
         loc.getBlock().setType(Material.AIR);
+    }
+
+    /**
+     * Performs a dirty check and repopulates if dirty.
+     */
+    private void checkDirty() {
+        if (dirty) {
+            repopulate();
+            dirty = false;
+        }
     }
 }
