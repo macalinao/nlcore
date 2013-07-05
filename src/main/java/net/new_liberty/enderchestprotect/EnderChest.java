@@ -118,7 +118,7 @@ public class EnderChest {
      * @return
      */
     public String getExpiryTimeString() {
-        return DATE_FORMAT.format(getExpiryTime());
+        return isExpired() ? DATE_FORMAT.format(getExpiryTime()) : "expired";
     }
 
     /**
