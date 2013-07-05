@@ -97,7 +97,7 @@ public class EnderChest {
      * @return
      */
     public boolean isExpired() {
-        return getExpiryTime().before(new Timestamp(System.currentTimeMillis()));
+        return (getExpiryTime().getTime() - System.currentTimeMillis()) <= 0;
     }
 
     /**
