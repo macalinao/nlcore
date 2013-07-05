@@ -82,6 +82,6 @@ public class EnderChestProtect extends JavaPlugin {
                 return i;
             }
         }
-        return -1;
+        return 0;
     }
 }
