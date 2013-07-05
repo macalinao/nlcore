@@ -57,7 +57,7 @@ public class ECListCommand implements CommandExecutor {
             i++;
 
             String locString = "x = " + loc.getX() + ", y = " + loc.getY() + ", z = " + loc.getZ();
-            String expireString = ChatColor.YELLOW + "expires " + ChatColor.AQUA + ec.getExpiryTimeString();
+            String expireString = ChatColor.YELLOW + "(expires " + ChatColor.AQUA + ec.getExpiryTimeString() + ")";
 
             String msg = Integer.toString(self ? i : ec.getId()) + ". " + locString + " " + expireString;
 

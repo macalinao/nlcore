@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import net.new_liberty.enderchestprotect.command.ECClearCommand;
 import net.new_liberty.enderchestprotect.command.ECConfirmCommand;
 import net.new_liberty.enderchestprotect.command.ECListCommand;
+import net.new_liberty.enderchestprotect.command.ECViewCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,6 +45,7 @@ public class EnderChestProtect extends JavaPlugin {
         getCommand("ecclear").setExecutor(new ECClearCommand(this));
         getCommand("ecconfirm").setExecutor(new ECConfirmCommand(this));
         getCommand("eclist").setExecutor(new ECListCommand(this));
+        getCommand("ecview").setExecutor(new ECViewCommand(this));
 
         Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
 
