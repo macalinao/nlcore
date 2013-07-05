@@ -1,19 +1,19 @@
 package net.new_liberty.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
-import org.apache.commons.dbutils.ResultSetHandler;
+import net.new_liberty.enderchestprotect.command.ECClearCommand;
+import net.new_liberty.enderchestprotect.command.ECConfirmCommand;
+import net.new_liberty.enderchestprotect.command.ECListCommand;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EnderChestProtect extends JavaPlugin {
+    private Map<String, ClearChestTimer> clearChests = new HashMap<String, ClearChestTimer>();
+
     private ECManager ecManager;
 
     @Override
@@ -40,7 +40,10 @@ public class EnderChestProtect extends JavaPlugin {
                 + "expiry_time TIMESTAMP NOT NULL,"
                 + "PRIMARY KEY (id));");
 
-        getCommand("enderchest").setExecutor(new EnderChestCommand(this));
+        getCommand("ecclear").setExecutor(new ECClearCommand(this));
+        getCommand("ecconfirm").setExecutor(new ECConfirmCommand(this));
+        getCommand("eclist").setExecutor(new ECListCommand(this));
+
         Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
     }
 
@@ -51,6 +54,10 @@ public class EnderChestProtect extends JavaPlugin {
      */
     public ECManager getECManager() {
         return ecManager;
+    }
+
+    public Map<String, ClearChestTimer> getClearChests() {
+        return clearChests;
     }
 
     /**

@@ -4,6 +4,12 @@ version: 2.1.0
 author: AlbireoX
 
 commands:
-  enderchest:
-    desciption: Main ECP command
-    usage: /enderchest <args>
+  ecclear:
+    description: Clears Ender Chests.
+    usage: /ecclear [player]
+  ecconfirm:
+    description: Confirms if you want to clear Ender Chests.
+    usage: /ecconfirm
+  eclist:
+    description: Lists Ender Chests.
+    usage: /eclist [player]
