@@ -74,6 +74,9 @@ public class ECPListener implements Listener {
         if (ec.hasItems()) {
             Inventory inv = ec.getInventory();
             for (ItemStack i : inv.getContents()) {
+                if (i == null) {
+                    continue;
+                }
                 ec.getLocation().getWorld().dropItemNaturally(ec.getLocation(), i);
             }
         }
