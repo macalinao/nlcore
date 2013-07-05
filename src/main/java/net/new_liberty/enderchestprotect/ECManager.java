@@ -49,10 +49,19 @@ public class ECManager {
      * @param id
      * @return
      */
-    public EnderChest getChest(int id) {
-        EnderChest ec = new EnderChest(plugin, id);
-        ec.repopulate();
-        return ec;
+    public EnderChest getChest(final int id) {
+        return EasyDB.getDb().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<EnderChest>() {
+            @Override
+            public EnderChest handle(ResultSet rs) throws SQLException {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                EnderChest ec = new EnderChest(plugin, id);
+                ec.setData(rs);
+                return ec;
+            }
+        }, id);
     }
 
     /**
