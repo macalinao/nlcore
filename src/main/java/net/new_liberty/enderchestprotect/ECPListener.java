@@ -32,7 +32,7 @@ public class ECPListener implements Listener {
         Player p = e.getPlayer();
         String pn = p.getName();
 
-        if (plugin.getAllowedChestCount(p) == -1) {
+        if (plugin.getAllowedChestCount(p) == 0) {
             p.sendMessage(ChatColor.RED + "You are not allowed to place Ender Chests.");
             e.setCancelled(true);
             return;
