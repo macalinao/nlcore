@@ -1,0 +1,3 @@
+# Commands to be performed when the player votes for a server.
+commands:
+  - money give %name% 12.5

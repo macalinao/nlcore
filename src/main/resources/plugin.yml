@@ -1,0 +1,14 @@
+name: VoteSuite
+main: net.new_liberty.votesuite.VoteSuite
+version: 1.0.0
+author: AlbireoX
+website: http://new-liberty.net
+
+commands:
+  vote:
+    description: Shows a message detailing how to vote for the server.
+    usage: /vote
+
+permissions:
+  votesuite.admin:
+    description: Allows full use of the plugin.
