@@ -38,8 +38,8 @@ public class ECManager {
      * @return
      */
     public EnderChest createChest(String owner, Location loc) {
-        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z, expiry_time) VALUES (?, ?, ?, ?, ?, ?)",
-                owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), plugin.getNewExpiryTime());
+        EasyDB.getDb().update("INSERT INTO enderchests (owner, world, x, y, z, access_time) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
+                owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         return getChest(loc);
     }
 
@@ -78,7 +78,7 @@ public class ECManager {
                     return null;
                 }
                 EnderChest ec = new EnderChest(plugin, rs.getInt("id"));
-                ec.setData(rs.getString("owner"), loc, rs.getString("contents"), rs.getTimestamp("expiry_time"));
+                ec.setData(rs);
                 return ec;
             }
         }, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());

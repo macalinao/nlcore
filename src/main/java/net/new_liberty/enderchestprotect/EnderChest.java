@@ -32,7 +32,7 @@ public class EnderChest {
 
     private String contents;
 
-    private Timestamp expiryTime;
+    private Timestamp lastAccessed;
 
     public EnderChest(EnderChestProtect plugin, int id) {
         this.plugin = plugin;
@@ -51,20 +51,20 @@ public class EnderChest {
     }
 
     void setData(ResultSet rs) throws SQLException {
-        setData(rs.getString("owner"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("contents"), rs.getTimestamp("expiry_time"));
+        setData(rs.getString("owner"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("contents"), rs.getTimestamp("last_accessed"));
     }
 
-    void setData(String owner, Location loc, String contents, Timestamp expiryTime) {
+    void setData(String owner, Location loc, String contents, Timestamp lastAccessed) {
         this.owner = owner;
         this.loc = loc;
         this.contents = contents;
-        this.expiryTime = expiryTime;
+        this.lastAccessed = lastAccessed;
     }
 
-    void setData(String owner, String world, int x, int y, int z, String contents, Timestamp expiryTime) {
+    void setData(String owner, String world, int x, int y, int z, String contents, Timestamp lastAccessed) {
         World w = Bukkit.getWorld(world);
         loc = new Location(w, x, y, z);
-        setData(owner, loc, contents, expiryTime);
+        setData(owner, loc, contents, lastAccessed);
     }
 
     public int getId() {
@@ -86,9 +86,18 @@ public class EnderChest {
         return contents;
     }
 
-    public Timestamp getExpiryTime() {
+    public Timestamp getLastAccessed() {
         checkDirty();
-        return expiryTime;
+        return lastAccessed;
+    }
+
+    /**
+     * Gets the time this Ender Chest will expire.
+     *
+     * @return
+     */
+    public Timestamp getExpiryTime() {
+        return new Timestamp(getLastAccessed().getTime() + plugin.getExpiryMillis());
     }
 
     /**
@@ -97,14 +106,14 @@ public class EnderChest {
      * @return
      */
     public boolean isExpired() {
-        return (getExpiryTime().getTime() - System.currentTimeMillis()) <= 0;
+        return getExpiryTime().before(new Timestamp(System.currentTimeMillis()));
     }
 
     /**
      * Updates the expiry time of this Ender Chest.
      */
-    public void updateExpiryTime() {
-        EasyDB.getDb().update("UPDATE enderchests SET expiry_time = ? WHERE id = ?", plugin.getNewExpiryTime(), id);
+    public void updateAccessTime() {
+        EasyDB.getDb().update("UPDATE enderchests SET access_time = CURRENT_TIMESTAMP WHERE id = ?", id);
         dirty = true;
     }
 
@@ -123,7 +132,7 @@ public class EnderChest {
      * @return
      */
     public String getExpiryInfoMessage() {
-        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.AQUA + getExpiryTimeString() + " " + ChatColor.GREEN + "(" + ((getExpiryTime().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
+        return ChatColor.YELLOW + "This chest's protection expires on " + ChatColor.AQUA + getExpiryTimeString() + " " + ChatColor.GREEN + "(" + ((getLastAccessed().getTime() - System.currentTimeMillis()) / (60 * 1000)) + " minutes from now)";
     }
 
     /**

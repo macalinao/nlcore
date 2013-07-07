@@ -114,7 +114,7 @@ public class ECPListener implements Listener {
         }
 
         if (p.getName().equals(ec.getOwner())) {
-            ec.updateExpiryTime();
+            ec.updateAccessTime();
             p.sendMessage(ChatColor.YELLOW + "The protection on this chest has been renewed to expire on " + ChatColor.AQUA + ec.getExpiryTimeString() + ChatColor.YELLOW + ".");
         } else {
             p.sendMessage(ChatColor.BLUE + "This Ender Chest belongs to " + owner + ".");

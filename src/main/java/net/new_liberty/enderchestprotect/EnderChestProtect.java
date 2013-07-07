@@ -39,7 +39,7 @@ public class EnderChestProtect extends JavaPlugin {
                 + "y INT(10) NOT NULL,"
                 + "z INT(10) NOT NULL,"
                 + "contents TEXT,"
-                + "expiry_time TIMESTAMP NOT NULL,"
+                + "access_time TIMESTAMP NOT NULL,"
                 + "PRIMARY KEY (id));");
 
         getCommand("ecclear").setExecutor(new ECClearCommand(this));
@@ -66,8 +66,8 @@ public class EnderChestProtect extends JavaPlugin {
      *
      * @return
      */
-    public Timestamp getNewExpiryTime() {
-        return new Timestamp(System.currentTimeMillis() + (getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000));
+    public int getExpiryMillis() {
+        return getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000;
     }
 
     public Map<String, ClearChestTimer> getClearChests() {
