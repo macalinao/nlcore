@@ -5,6 +5,7 @@ author: ${author}
 website: ${project.url}
 
 main: ${mainClass}
+depend: [EasyDB]
 
 commands:
   ecclear:
