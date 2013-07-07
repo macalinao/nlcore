@@ -1,8 +1,10 @@
 name: ${project.name}
-main: ${mainClass}
+description: ${project.description}
 version: ${project.version}-b${buildNumber}
-author: AlbireoX
+author: ${author}
 website: ${project.url}
+
+main: ${mainClass}
 
 commands:
   ecclear:
