@@ -31,6 +31,14 @@ public class VSListener implements Listener {
         }
 
         String serviceId = vote.getServiceName(); // TODO add a Service object
+        VoteService service = plugin.getService(serviceId);
+        String serviceName;
+        if (service == null) {
+            serviceName = serviceId;
+        } else {
+            serviceName = service.getName();
+        }
+
         String address = vote.getAddress();
 
         // Timestamp has a different format for each voting website, so we are
@@ -42,6 +50,7 @@ public class VSListener implements Listener {
         for (String cmd : plugin.getConfig().getStringList("commands")) {
             cmd = cmd.replace("%name%", name);
             cmd = cmd.replace("%service%", serviceId);
+            cmd = cmd.replace("%service_name%", serviceName);
             cmd = cmd.replace("%address%", address);
 
             try {
