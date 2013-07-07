@@ -2,6 +2,7 @@
 =====
 * Changed to use SQL
 * Added protection expiry times to allow raiding
+* Added `/ecview` to allow remotely viewing player Ender Chests
 
 2.0.0
 =====
