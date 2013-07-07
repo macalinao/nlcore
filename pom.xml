@@ -13,7 +13,40 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <author>AlbireoX</author>
+        <buildNumber>0</buildNumber>
+        <mainClass>${project.groupId}.${project.artifactId}.VoteSuite</mainClass>
     </properties>
+
+    <scm>
+        <developerConnection>scm:git:git@bitbucket.org:newliberty/votesuite.git</developerConnection>
+        <connection>scm:git:https://bitbucket.org/newliberty/votesuite.git</connection>
+        <url>https://bitbucket.org/newliberty/votesuite</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://ci.new-liberty.net/job/VoteSuite</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>Bitbucket</system>
+        <url>https://bitbucket.org/newliberty/votesuite/issues</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>nl-private-releases</id>
+            <name>NL Private Release Repository</name>
+            <url>http://nexus.new-liberty.net/content/repositories/private-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nl-private-snapshots</id>
+            <name>NL Private Snapshot Repository</name>
+            <url>http://nexus.new-liberty.net/content/repositories/private-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <repositories>
         <repository>
@@ -46,6 +79,17 @@
     <build>
         <defaultGoal>clean package install</defaultGoal>
 
+        <resources>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <targetPath>.</targetPath>
+                <includes>
+                    <include>*.yml</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -61,6 +105,15 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                </configuration>
             </plugin>
         </plugins>
     </build>

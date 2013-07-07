@@ -1,8 +1,11 @@
-name: VoteSuite
-main: net.new_liberty.votesuite.VoteSuite
-version: 1.0.0
-author: AlbireoX
-website: http://new-liberty.net
+name: ${project.name}
+description: ${project.description}
+version: ${project.version}-b${buildNumber}
+author: ${author}
+website: ${project.url}
+
+main: ${mainClass}
+softdepend: [EasyDB]
 
 commands:
   vote:
