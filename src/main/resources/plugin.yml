@@ -1,8 +1,8 @@
-name: EnderChestProtect
-main: net.new_liberty.enderchestprotect.EnderChestProtect
-version: 2.1.0
+name: ${project.name}
+main: ${mainClass}
+version: ${project.version}-b${buildNumber}
 author: AlbireoX
-website: http://new-liberty.net
+website: ${project.url}
 
 commands:
   ecclear:
