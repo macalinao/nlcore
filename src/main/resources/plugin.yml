@@ -5,8 +5,7 @@ author: ${author}
 website: ${project.url}
 
 main: ${mainClass}
-depend: [Votifier]
-softdepend: [EasyDB]
+depend: [EasyDB, Votifier]
 
 commands:
   vote:
