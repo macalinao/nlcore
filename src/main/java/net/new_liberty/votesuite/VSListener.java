@@ -3,7 +3,9 @@ package net.new_liberty.votesuite;
 import com.simplyian.easydb.EasyDB;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,9 +30,25 @@ public class VSListener implements Listener {
             name = player.getName();
         }
 
+        String serviceId = vote.getServiceName(); // TODO add a Service object
+        String address = vote.getAddress();
+
         // Timestamp has a different format for each voting website, so we are
         // using our own which depends on the time it was received
         EasyDB.getDb().update("INSERT INTO votes (name, service, address) VALUES (?, ?, ?) ",
-                name, vote.getServiceName(), vote.getAddress());
+                name, serviceId, address);
+
+        // Run our commands
+        for (String cmd : plugin.getConfig().getStringList("commands")) {
+            cmd = cmd.replace("%name%", name);
+            cmd = cmd.replace("%service%", serviceId);
+            cmd = cmd.replace("%address%", address);
+
+            try {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+            } catch (CommandException ex) {
+                plugin.getLogger().log(Level.SEVERE, "An error occured when running the command '" + cmd + "'.", ex);
+            }
+        }
     }
 }

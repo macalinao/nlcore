@@ -3,7 +3,7 @@ commands:
   - money give %name% 12.5
 
 # Sources of votes
-sources:
+services:
   PlanetMinecraft.com:
     name: Planet Minecraft
     link: http://www.planetminecraft.com/server/newliberty/
