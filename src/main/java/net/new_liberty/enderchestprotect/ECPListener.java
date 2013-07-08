@@ -24,7 +24,7 @@ public class ECPListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         if (!e.getBlock().getType().equals(Material.ENDER_CHEST)) {
             return;
@@ -51,7 +51,7 @@ public class ECPListener implements Listener {
                 + (count + 1) + "/" + plugin.getAllowedChestCount(e.getPlayer()) + ChatColor.YELLOW + " protected Ender Chests.");
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getType() != Material.ENDER_CHEST) {
             return;
