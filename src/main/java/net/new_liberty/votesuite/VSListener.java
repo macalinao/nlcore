@@ -4,11 +4,8 @@ import com.simplyian.easydb.EasyDB;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,26 +50,12 @@ public class VSListener implements Listener {
         // Run our commands
         runCommands(plugin.getConfig().getStringList("commands"), name, serviceId, serviceName, address);
 
-        // Our recent votes cache
+        // Insert vote into our recent votes cache
         EasyDB.getDb().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
                 name, serviceId, address);
 
-        // Generate a Set of missing services
-        List<String> voteSvcIds = EasyDB.getDb().query("SELECT service FROM votes_recent WHERE name = ?", new ColumnListHandler<String>(), name);
-        Set<VoteService> missingServices = plugin.getServices();
-        for (String voteSvcId : voteSvcIds) {
-            VoteService rm = null;
-            for (VoteService svc : missingServices) {
-                if (svc.getId().equals(voteSvcId)) {
-                    rm = svc;
-                    break;
-                }
-            }
-            missingServices.remove(rm);
-        }
-
-        // Clear and run commands if empty
-        if (missingServices.isEmpty()) {
+        // Clear and run commands if no missing services
+        if (plugin.getMissingServices(name).isEmpty()) {
             EasyDB.getDb().update("DELETE FROM votes_recent WHERE name = ?", name);
 
             // Run our commands

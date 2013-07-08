@@ -1,11 +1,9 @@
 package net.new_liberty.votesuite;
 
 import com.simplyian.easydb.EasyDB;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +36,7 @@ public class VoteSuite extends JavaPlugin {
                 + "service varchar(50) NOT NULL"
                 + "PRIMARY KEY (name, service));");
 
+        getCommand("vote").setExecutor(new VoteCommand(this));
         Bukkit.getPluginManager().registerEvents(new VSListener(this), this);
 
         getLogger().log(Level.INFO, "Plugin loaded.");
@@ -79,5 +78,27 @@ public class VoteSuite extends JavaPlugin {
      */
     public Set<VoteService> getServices() {
         return new HashSet<VoteService>(services.values());
+    }
+
+    /**
+     * Gets the services a player hasn't voted for recently.
+     *
+     * @param player
+     * @return
+     */
+    public Set<VoteService> getMissingServices(String player) {
+        List<String> voteSvcIds = EasyDB.getDb().query("SELECT service FROM votes_recent WHERE name = ?", new ColumnListHandler<String>(), player);
+        Set<VoteService> missingServices = getServices();
+        for (String voteSvcId : voteSvcIds) {
+            VoteService rm = null;
+            for (VoteService svc : missingServices) {
+                if (svc.getId().equals(voteSvcId)) {
+                    rm = svc;
+                    break;
+                }
+            }
+            missingServices.remove(rm);
+        }
+        return missingServices;
     }
 }
