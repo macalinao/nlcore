@@ -2,6 +2,12 @@
 commands:
   - money give %name% 12.5
 
+# Commands to be performed when the player has voted for all servers.
+all-commands:
+  - tell %name% Thank you for voting for New Liberty. You have been rewarded! Remember to vote again tomorrow!
+  - tell %name% You now regain health when you kill another player and break blocks faster for the next 24 hours.
+  - crent vote %name% 86400
+
 # Sources of votes
 services:
   PlanetMinecraft.com:

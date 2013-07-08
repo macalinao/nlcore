@@ -2,7 +2,9 @@ package net.new_liberty.votesuite;
 
 import com.simplyian.easydb.EasyDB;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -30,6 +32,11 @@ public class VoteSuite extends JavaPlugin {
                 + "address varchar(50) NOT NULL,"
                 + "time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
                 + "PRIMARY KEY (id));");
+
+        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes_recent ("
+                + "name varchar(16) NOT NULL,"
+                + "service varchar(50) NOT NULL"
+                + "PRIMARY KEY (name, service));");
 
         Bukkit.getPluginManager().registerEvents(new VSListener(this), this);
 
@@ -63,5 +70,14 @@ public class VoteSuite extends JavaPlugin {
      */
     public VoteService getService(String serviceId) {
         return services.get(serviceId);
+    }
+
+    /**
+     * Gets a set of our services.
+     *
+     * @return
+     */
+    public Set<VoteService> getServices() {
+        return new HashSet<VoteService>(services.values());
     }
 }
