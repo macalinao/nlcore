@@ -8,12 +8,9 @@ public class VoteService {
 
     private String name;
 
-    private String link;
-
-    public VoteService(String id, String name, String link) {
+    public VoteService(String id, String name) {
         this.id = id;
         this.name = name;
-        this.link = link;
     }
 
     /**
@@ -35,19 +32,5 @@ public class VoteService {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return the link
-     */
-    public String getLink() {
-        return link;
-    }
-
-    /**
-     * @param link the link to set
-     */
-    public void setLink(String link) {
-        this.link = link;
     }
 }

@@ -1,5 +1,8 @@
 package net.new_liberty.votesuite;
 
+import com.google.common.base.Joiner;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,10 +33,14 @@ public class VoteCommand implements CommandExecutor {
         if (services.isEmpty()) {
             player.sendMessage(ChatColor.YELLOW + "You have already voted for everything today! Thanks for voting, and make sure to vote tomorrow!");
         } else {
-            player.sendMessage(ChatColor.YELLOW + "Click on all of the links below or go to " + ChatColor.WHITE + "http://vote.nl-mc.com/" + ChatColor.YELLOW + " to receive your voting rewards.");
+            player.sendMessage(ChatColor.YELLOW + "Go to " + ChatColor.WHITE + "http://vote.nl-mc.com/" + ChatColor.YELLOW + " to receive your voting rewards.");
+            player.sendMessage(ChatColor.GREEN + "Sites you haven't voted on yet:");
+
+            List<String> serviceNames = new ArrayList<String>();
             for (VoteService service : services) {
-                player.sendMessage(ChatColor.YELLOW + service.getName() + ": " + ChatColor.WHITE + service.getLink());
+                serviceNames.add(service.getName());
             }
+            player.sendMessage(ChatColor.AQUA + Joiner.on(", ").join(serviceNames));
         }
         return true;
     }

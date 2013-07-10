@@ -12,13 +12,9 @@ all-commands:
 services:
   PlanetMinecraft.com:
     name: Planet Minecraft
-    link: http://www.planetminecraft.com/server/newliberty/
   MinecraftServers:
     name: MinecraftServers.net
-    link: http://minecraftservers.net/server/59199/vote/
   Minestatus:
     name: Minestatus
-    link: https://minestatus.net/78968/vote
   MinecraftServers.org:
     name: MinecraftServers.org
-    link: http://minecraftservers.org/vote/67824
