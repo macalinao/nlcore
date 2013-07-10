@@ -32,7 +32,7 @@ public class VoteCommand implements CommandExecutor {
         } else {
             player.sendMessage(ChatColor.YELLOW + "Click on all of the links below or go to " + ChatColor.WHITE + "http://vote.nl-mc.com/" + ChatColor.YELLOW + " to receive your voting rewards.");
             for (VoteService service : services) {
-                player.sendMessage(ChatColor.YELLOW + service.getName() + ": " + ChatColor.WHITE + service.getUrl());
+                player.sendMessage(ChatColor.YELLOW + service.getName() + ": " + ChatColor.WHITE + service.getLink());
             }
         }
         return true;

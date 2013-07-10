@@ -8,12 +8,12 @@ public class VoteService {
 
     private String name;
 
-    private String url;
+    private String link;
 
-    public VoteService(String id, String name, String url) {
+    public VoteService(String id, String name, String link) {
         this.id = id;
         this.name = name;
-        this.url = url;
+        this.link = link;
     }
 
     /**
@@ -38,16 +38,16 @@ public class VoteService {
     }
 
     /**
-     * @return the url
+     * @return the link
      */
-    public String getUrl() {
-        return url;
+    public String getLink() {
+        return link;
     }
 
     /**
-     * @param url the url to set
+     * @param link the link to set
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLink(String link) {
+        this.link = link;
     }
 }
