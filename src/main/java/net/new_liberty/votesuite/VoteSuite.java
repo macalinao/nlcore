@@ -33,7 +33,7 @@ public class VoteSuite extends JavaPlugin {
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes_recent ("
                 + "name varchar(16) NOT NULL,"
-                + "service varchar(50) NOT NULL"
+                + "service varchar(50) NOT NULL,"
                 + "PRIMARY KEY (name, service));");
 
         getCommand("vote").setExecutor(new VoteCommand(this));
