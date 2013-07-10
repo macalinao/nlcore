@@ -21,6 +21,7 @@ public class VoteSuite extends JavaPlugin {
             return;
         }
 
+        saveDefaultConfig();
         loadConfig();
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes ("
