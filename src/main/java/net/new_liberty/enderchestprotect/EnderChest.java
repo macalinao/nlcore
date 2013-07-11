@@ -51,7 +51,7 @@ public class EnderChest {
     }
 
     void setData(ResultSet rs) throws SQLException {
-        setData(rs.getString("owner"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("contents"), rs.getTimestamp("last_accessed"));
+        setData(rs.getString("owner"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("contents"), rs.getTimestamp("access_time"));
     }
 
     void setData(String owner, Location loc, String contents, Timestamp lastAccessed) {
