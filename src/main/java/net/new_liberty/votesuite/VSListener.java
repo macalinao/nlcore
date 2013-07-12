@@ -52,7 +52,7 @@ public class VSListener implements Listener {
 
         // Insert vote into our recent votes cache
         EasyDB.getDb().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
-                name, serviceId, address);
+                name, serviceId);
 
         // Clear and run commands if no missing services
         if (plugin.getMissingServices(name).isEmpty()) {
