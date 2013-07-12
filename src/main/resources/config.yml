@@ -10,11 +10,15 @@ all-commands:
 
 # Sources of votes
 services:
-  PlanetMinecraft.com:
+  a:
+    id: PlanetMinecraft.com
     name: Planet Minecraft
-  MinecraftServers:
+  b:
+    id: minecraftservers
     name: MinecraftServers.net
-  Minestatus:
+  c:
+    id: Minestatus
     name: Minestatus
-  MinecraftServers.org:
+  d:
+    id: MinecraftServers.org
     name: MinecraftServers.org
