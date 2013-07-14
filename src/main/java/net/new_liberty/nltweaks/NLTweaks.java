@@ -6,12 +6,16 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionType;
 
 /**
- * Disables Ender Pearls in 32 lines of code.
+ * This plugin contains all of the tweaks to New Liberty that don't warrant
+ * their own plugin.
  */
 public class NLTweaks extends JavaPlugin implements Listener {
     @Override
@@ -19,6 +23,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
+    // Disable ender pearls
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         Player player = e.getPlayer();
@@ -27,5 +32,21 @@ public class NLTweaks extends JavaPlugin implements Listener {
             player.sendMessage(ChatColor.RED + "You can't use Ender Pearls on this server.");
             player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL));
         }
+    }
+
+    // Disable Strength II potions
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.getItem() != null && e.getItem().getType() != Material.POTION) {
+            return;
+        }
+
+        Potion p = Potion.fromItemStack(e.getItem());
+        if (p.getType() != PotionType.STRENGTH || p.getLevel() != 2) {
+            return;
+        }
+
+        e.getPlayer().sendMessage(ChatColor.RED + "You can't use Strength II potions on this server.");
+        e.setCancelled(true);
     }
 }
