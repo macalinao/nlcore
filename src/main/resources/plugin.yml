@@ -1,9 +1,10 @@
-name: NoEnderpearls
-description: Removes Ender Pearls from a server.
-author: AlbireoX
-version: 1.0
+name: ${project.name}
+description: ${project.description}
+version: ${project.version}-b${buildNumber}
+author: ${author}
+website: ${project.url}
 
-main: net.new_liberty.noenderpearls.NoEnderpearls
+main: ${mainClass}
 
 permissions:
     noenderpearls.bypass:
