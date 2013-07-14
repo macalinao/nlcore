@@ -1,4 +1,4 @@
-package net.new_liberty.noenderpearls;
+package net.new_liberty.nltweaks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Disables Ender Pearls in 32 lines of code.
  */
-public class NoEnderpearls extends JavaPlugin implements Listener {
+public class NLTweaks extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
