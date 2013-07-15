@@ -42,11 +42,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         }
 
         Potion p = Potion.fromItemStack(e.getItem());
-        if (p.getType() != PotionType.STRENGTH) {
-            return;
-        }
-
-        if (p.getLevel() != 2) {
+        if (p.getType() != PotionType.STRENGTH || p.getLevel() != 2) {
             return;
         }
 
