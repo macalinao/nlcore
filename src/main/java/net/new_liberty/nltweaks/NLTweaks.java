@@ -37,7 +37,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
     // Disable Strength II potions
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getItem() != null && e.getItem().getType() != Material.POTION) {
+        if (e.getItem() == null || e.getItem().getType() != Material.POTION) {
             return;
         }
 
