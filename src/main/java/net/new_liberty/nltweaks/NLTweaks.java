@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +49,17 @@ public class NLTweaks extends JavaPlugin implements Listener {
         }
 
         e.getPlayer().sendMessage(ChatColor.RED + "You can't use Strength II potions on this server.");
+        e.setCancelled(true);
+    }
+
+    // Disable Strength II splash potions
+    @EventHandler
+    public void onPotionSplash(PotionSplashEvent e) {
+        Potion p = Potion.fromItemStack(e.getPotion().getItem());
+        if (p.getType() != PotionType.STRENGTH || p.getLevel() != 2) {
+            return;
+        }
+
         e.setCancelled(true);
     }
 }
