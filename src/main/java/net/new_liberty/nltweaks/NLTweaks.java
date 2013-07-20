@@ -39,6 +39,19 @@ public class NLTweaks extends JavaPlugin implements Listener {
         }
     }
 
+    // Disable placing of TNT minecarts
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        if (e.getItem() == null) {
+            return;
+        }
+
+        if (e.getItem().getType() == Material.EXPLOSIVE_MINECART) {
+            e.getPlayer().sendMessage(ChatColor.RED + "TNT Minecarts are currently disabled due to a bug in Minecraft.");
+            e.setCancelled(true);
+        }
+    }
+
     // Nerf Strength pots
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
