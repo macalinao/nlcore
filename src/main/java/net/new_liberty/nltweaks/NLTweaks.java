@@ -1,18 +1,21 @@
 package net.new_liberty.nltweaks;
 
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 /**
@@ -36,30 +39,36 @@ public class NLTweaks extends JavaPlugin implements Listener {
         }
     }
 
-    // Disable Strength II potions
+    // Nerf Strength pots
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getItem() == null || e.getItem().getType() != Material.POTION) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if (!(e.getDamager() instanceof Player)) {
+            return;
+        }
+        Player p = (Player) e.getDamager();
+        int level = -1;
+
+        for (PotionEffect f : p.getActivePotionEffects()) {
+            if (f.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
+                level = f.getAmplifier();
+                break;
+            }
+        }
+
+        if (level == -1) {
             return;
         }
 
-        Potion p = Potion.fromItemStack(e.getItem());
-        if (p.getType() != PotionType.STRENGTH || p.getLevel() != 2) {
-            return;
+        double newDmg = e.getDamage();
+        if (level == 0) { // Strength I -- +130%
+            newDmg /= 2.3;
+            newDmg += 3;
+
+        } else if (level == 1) {  // Strength II -- +260%
+            newDmg /= 3.6;
+            newDmg += 6;
         }
 
-        e.getPlayer().sendMessage(ChatColor.RED + "You can't use Strength II potions on this server.");
-        e.setCancelled(true);
-    }
-
-    // Disable Strength II splash potions
-    @EventHandler
-    public void onPotionSplash(PotionSplashEvent e) {
-        Potion p = Potion.fromItemStack(e.getPotion().getItem());
-        if (p.getType() != PotionType.STRENGTH || p.getLevel() != 2) {
-            return;
-        }
-
-        e.setCancelled(true);
+        e.setDamage(newDmg);
     }
 }
