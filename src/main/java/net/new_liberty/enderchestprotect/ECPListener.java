@@ -103,6 +103,10 @@ public class ECPListener implements Listener {
         e.setCancelled(true);
 
         EnderChest ec = plugin.getECManager().getChest(block.getLocation());
+        if (ec == null) {
+            // Only happens if they found an ender chest that was placed before the plugin was installed.
+            return;
+        }
 
         Player p = e.getPlayer();
         String owner = ec.getOwner();
