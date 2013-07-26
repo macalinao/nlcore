@@ -4,7 +4,8 @@ import net.new_liberty.votesuite.command.VoteCommand;
 import com.simplyian.easydb.EasyDB;
 import java.util.*;
 import java.util.logging.Level;
-import org.apache.commons.dbutils.handlers.ColumnListHandler;
+import net.new_liberty.votesuite.command.VHomeCommand;
+import net.new_liberty.votesuite.command.VSetHomeCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,6 +49,8 @@ public class VoteSuite extends JavaPlugin {
                 + "pitch FLOAT NOT NULL,"
                 + "PRIMARY KEY (name));");
 
+        getCommand("vhome").setExecutor(new VHomeCommand(this));
+        getCommand("vsethome").setExecutor(new VSetHomeCommand(this));
         getCommand("vote").setExecutor(new VoteCommand(this));
         Bukkit.getPluginManager().registerEvents(new VSListener(this), this);
 
