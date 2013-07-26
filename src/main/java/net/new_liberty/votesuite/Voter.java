@@ -95,6 +95,11 @@ public class Voter {
         return 0;
     }
 
+    /**
+     * Gets this Voter's home.
+     *
+     * @return
+     */
     public Location getHome() {
         String query = "SELECT * FROM votes_homes WHERE name = ?";
         return EasyDB.getDb().query(query, new ResultSetHandler<Location>() {
@@ -118,5 +123,17 @@ public class Voter {
                 return new Location(w, x, y, z, yaw, pitch);
             }
         }, player);
+    }
+
+    /**
+     * Sets this Voter's home.
+     *
+     * @param loc
+     */
+    public void setHome(Location loc) {
+        String query = "INSERT INTO votes_homes (name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?";
+        EasyDB.getDb().update(query, player, loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(),
+                loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 }
