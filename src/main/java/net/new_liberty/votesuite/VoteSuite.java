@@ -38,6 +38,16 @@ public class VoteSuite extends JavaPlugin {
                 + "service varchar(50) NOT NULL,"
                 + "PRIMARY KEY (name, service));");
 
+        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes_homes ("
+                + "name varchar(16) NOT NULL,"
+                + "world varchar(32) NOT NULL,"
+                + "x DOUBLE NOT NULL,"
+                + "y DOUBLE NOT NULL,"
+                + "z DOUBLE NOT NULL,"
+                + "yaw FLOAT NOT NULL,"
+                + "pitch FLOAT NOT NULL,"
+                + "PRIMARY KEY (name));");
+
         getCommand("vote").setExecutor(new VoteCommand(this));
         Bukkit.getPluginManager().registerEvents(new VSListener(this), this);
 

@@ -1,9 +1,15 @@
 package net.new_liberty.votesuite;
 
 import com.simplyian.easydb.EasyDB;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 
 /**
  * Represents someone who votes.
@@ -87,5 +93,30 @@ public class Voter {
             return ((Number) ret).intValue();
         }
         return 0;
+    }
+
+    public Location getHome() {
+        String query = "SELECT * FROM votes_homes WHERE name = ?";
+        return EasyDB.getDb().query(query, new ResultSetHandler<Location>() {
+            @Override
+            public Location handle(ResultSet rs) throws SQLException {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                String worldStr = rs.getString("world");
+                World w = Bukkit.getWorld(worldStr);
+                if (w == null) {
+                    return null;
+                }
+                double x = rs.getDouble("x");
+                double y = rs.getDouble("y");
+                double z = rs.getDouble("z");
+                float yaw = rs.getFloat("yaw");
+                float pitch = rs.getFloat("pitch");
+
+                return new Location(w, x, y, z, yaw, pitch);
+            }
+        }, player);
     }
 }
