@@ -8,6 +8,9 @@ all-commands:
   - tell %name% You now regain health when you kill another player and break blocks faster for the next 24 hours.
   - crent vote %name% 86400
 
+# Number of votes needed to use /vhome
+votes-home: 3
+
 # Sources of votes
 services:
   a:
