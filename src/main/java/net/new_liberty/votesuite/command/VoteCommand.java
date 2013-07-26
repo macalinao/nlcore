@@ -1,9 +1,11 @@
-package net.new_liberty.votesuite;
+package net.new_liberty.votesuite.command;
 
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import net.new_liberty.votesuite.VoteService;
+import net.new_liberty.votesuite.VoteSuite;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
