@@ -41,7 +41,8 @@ public class VHomeCommand implements CommandExecutor {
 
         Location home = v.getHome();
         if (home == null) {
-            p.sendMessage(ChatColor.RED + "Error: you currently don't have a home set.");
+            p.sendMessage(ChatColor.RED + "Error: you currently don't have a home set. Type "
+                    + ChatColor.YELLOW + "/vsethome" + ChatColor.RED + " to set your home.");
         } else {
             p.teleport(home);
         }
