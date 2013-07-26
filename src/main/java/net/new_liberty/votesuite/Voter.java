@@ -73,4 +73,19 @@ public class Voter {
     public void clearRecentVotes() {
         EasyDB.getDb().update("DELETE FROM votes_recent WHERE name = ?", player);
     }
+
+    /**
+     * Counts the number of votes tallied up for this player in the past 24
+     * hours.
+     *
+     * @return
+     */
+    public int countDayVotes() {
+        String query = "SELECT COUNT(*) FROM votes WHERE name = ? AND time > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 DAY)";
+        Object ret = EasyDB.getDb().get(query, this, player);
+        if (ret != null) {
+            return ((Number) ret).intValue();
+        }
+        return 0;
+    }
 }
