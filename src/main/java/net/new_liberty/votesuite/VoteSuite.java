@@ -83,24 +83,12 @@ public class VoteSuite extends JavaPlugin {
     }
 
     /**
-     * Gets the services a player hasn't voted for recently.
+     * Gets a Voter.
      *
      * @param player
      * @return
      */
-    public Set<VoteService> getMissingServices(String player) {
-        List<String> voteSvcIds = EasyDB.getDb().query("SELECT service FROM votes_recent WHERE name = ?", new ColumnListHandler<String>(), player);
-        Set<VoteService> missingServices = getServices();
-        for (String voteSvcId : voteSvcIds) {
-            VoteService rm = null;
-            for (VoteService svc : missingServices) {
-                if (svc.getId().equals(voteSvcId)) {
-                    rm = svc;
-                    break;
-                }
-            }
-            missingServices.remove(rm);
-        }
-        return missingServices;
+    public Voter getVoter(String player) {
+        return new Voter(this, player);
     }
 }

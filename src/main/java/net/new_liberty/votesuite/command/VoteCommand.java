@@ -30,7 +30,7 @@ public class VoteCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
 
-        Set<VoteService> services = plugin.getMissingServices(player.getName());
+        Set<VoteService> services = plugin.getVoter(player.getName()).getMissingServices();
         player.sendMessage(ChatColor.GRAY + "[" + ChatColor.DARK_RED + "New Liberty" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " Voting Help");
         if (services.isEmpty()) {
             player.sendMessage(ChatColor.YELLOW + "You have already voted for everything today! Thanks for voting, and make sure to vote tomorrow!");

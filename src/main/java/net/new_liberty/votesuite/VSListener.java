@@ -30,36 +30,27 @@ public class VSListener implements Listener {
         if (player != null) { // Prefer the online name
             name = player.getName();
         }
+        Voter voter = plugin.getVoter(name);
 
-        String serviceId = vote.getServiceName(); // TODO add a Service object
-        VoteService service = plugin.getService(serviceId);
-        String serviceName;
+        VoteService service = plugin.getService(vote.getServiceName());
         if (service == null) {
-            serviceName = serviceId;
-        } else {
-            serviceName = service.getName();
+            return; // We're not tracking this service; ignore it.
         }
 
         String address = vote.getAddress();
 
-        // Timestamp has a different format for each voting website, so we are
-        // using our own which depends on the time it was received
-        EasyDB.getDb().update("INSERT INTO votes (name, service, address) VALUES (?, ?, ?) ",
-                name, serviceId, address);
+        voter.addVote(service, vote.getAddress());
 
         // Run our commands
-        runCommands(plugin.getConfig().getStringList("commands"), name, serviceId, serviceName, address);
+        runCommands(plugin.getConfig().getStringList("commands"), name, service.getId(), service.getName(), address);
 
-        // Insert vote into our recent votes cache
-        EasyDB.getDb().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
-                name, serviceId);
 
         // Clear and run commands if no missing services
-        if (plugin.getMissingServices(name).isEmpty()) {
-            EasyDB.getDb().update("DELETE FROM votes_recent WHERE name = ?", name);
+        if (voter.getMissingServices().isEmpty()) {
+            voter.clearRecentVotes();
 
             // Run our commands
-            runCommands(plugin.getConfig().getStringList("all-commands"), name, serviceId, serviceName, address);
+            runCommands(plugin.getConfig().getStringList("all-commands"), name, service.getName(), service.getName(), address);
         }
     }
 
