@@ -9,6 +9,10 @@ main: ${mainClass}
 permissions:
   noenderpearls.bypass:
     description: Allows bypassing of Ender Pearl restrictions.
+  chatcolorcommands.setcolors:
+    description: Allows setting your prefix colors.
+  chatcolorcommands.setchatcolor:
+    description: Allows setting your chat color.
 
 commands:
   setcolors:
