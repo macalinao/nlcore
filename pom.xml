@@ -6,7 +6,7 @@
     <description>Makes voting easy for players.</description>
     <groupId>net.new_liberty</groupId>
     <artifactId>votesuite</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://new-liberty.net</url>
 
@@ -21,7 +21,7 @@
         <developerConnection>scm:git:git@bitbucket.org:newliberty/votesuite.git</developerConnection>
         <connection>scm:git:https://bitbucket.org/newliberty/votesuite.git</connection>
         <url>https://bitbucket.org/newliberty/votesuite</url>
-        <tag>votesuite-1.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
