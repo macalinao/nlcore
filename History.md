@@ -1,3 +1,8 @@
+1.1.1
+=====
+* Added a tweak to notify people of the vote homes if they don't currently have homes.
+* Added a tweak to allow changing prefixes (thanks DzineIT)
+
 1.1.0
 =====
 * New Tweak registry system
