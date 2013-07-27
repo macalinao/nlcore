@@ -7,6 +7,13 @@ website: ${project.url}
 main: ${mainClass}
 
 permissions:
-    noenderpearls.bypass:
-        description: Allows bypassing of Ender Pearl restrictions.
+  noenderpearls.bypass:
+    description: Allows bypassing of Ender Pearl restrictions.
 
+commands:
+  setcolors:
+    description: Allows setting your prefix colors.
+    usage: /setcolors <colors>
+  setchatcolor:
+    description: Allows setting your chat color.
+    usage: /setchatcolor <color>
