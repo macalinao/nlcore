@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks.tweak;
 
+import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.Tweak;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,6 +11,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * Gets rid of TNT minecarts on the server.
  */
 public class NoTNTMinecart extends Tweak {
+    public NoTNTMinecart(NLTweaks plugin) {
+        super(plugin);
+    }
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getItem() == null) {

@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks.tweak;
 
+import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.Tweak;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,6 +15,10 @@ import org.bukkit.inventory.ItemStack;
  * Disables the use of Ender Pearls.
  */
 public class NoEnderpearls extends Tweak {
+    public NoEnderpearls(NLTweaks plugin) {
+        super(plugin);
+    }
+
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         Player player = e.getPlayer();

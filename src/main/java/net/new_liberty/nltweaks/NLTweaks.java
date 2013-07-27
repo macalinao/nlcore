@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks;
 
+import net.new_liberty.nltweaks.tweak.ChatColorCommands;
 import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
 import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
@@ -15,13 +16,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class NLTweaks extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
-        addTweak(new NerfStrengthPots());
-        addTweak(new NoEnderpearls());
-        addTweak(new NoTNTMinecart());
-        addTweak(new VHomeInformer());
+        addTweak(new ChatColorCommands(this));
+        addTweak(new NerfStrengthPots(this));
+        addTweak(new NoEnderpearls(this));
+        addTweak(new NoTNTMinecart(this));
+        addTweak(new VHomeInformer(this));
     }
 
     private void addTweak(Tweak tweak) {
         Bukkit.getPluginManager().registerEvents(tweak, this);
+        tweak.onEnable();
     }
 }
