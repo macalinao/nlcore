@@ -92,7 +92,7 @@ public class ChatColorCommands extends Tweak {
 
             String validation = validate(rank, value);
             if (validation.equals(OK_RESPONSE)) {
-                execute(sender, rank, value);
+                execute(sender, parse(rank, value));
             } else {
                 sender.sendMessage(ChatColor.RED + "Error: " + validation);
             }
@@ -101,7 +101,9 @@ public class ChatColorCommands extends Tweak {
 
         public abstract String validate(String rank, String value);
 
-        public abstract void execute(CommandSender sender, String rank, String value);
+        public abstract String parse(String rank, String value);
+
+        public abstract void execute(CommandSender sender, String value);
     }
 
     public static class SetColorsCommand extends ChatColorCommand {
@@ -139,7 +141,7 @@ public class ChatColorCommands extends Tweak {
         }
 
         @Override
-        public void execute(CommandSender sender, String rank, String value) {
+        public String parse(String rank, String value) {
             StringBuilder b = new StringBuilder("[");
             char[] colors = value.toCharArray();
             char[] rankChars = rank.toCharArray();
@@ -148,11 +150,14 @@ public class ChatColorCommands extends Tweak {
                 b.append('&').append(colors[i]).append(rankChars[i]);
             }
 
-            String prefix = b.append("&f]&").append(colors[colors.length - 1]).toString();
+            return b.append("&f]&").append(colors[colors.length - 1]).toString();
+        }
 
+        @Override
+        public void execute(CommandSender sender, String prefix) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user "
                     + sender.getName() + " prefix set " + prefix);
-            sender.sendMessage("Your colors have been set to: " + value);
+            sender.sendMessage("Your colors have been set to: " + ChatColor.translateAlternateColorCodes('&', prefix));
         }
     }
 
@@ -184,12 +189,15 @@ public class ChatColorCommands extends Tweak {
         }
 
         @Override
-        public void execute(CommandSender sender, String rank, String value) {
-            ChatColor color = ChatColor.getByChar(value);
+        public String parse(String rank, String value) {
+            return "&" + ChatColor.getByChar(value).getChar();
+        }
 
+        @Override
+        public void execute(CommandSender sender, String suffix) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user "
-                    + sender.getName() + " suffix set &" + color.getChar());
-            sender.sendMessage("Changed chat color to: " + value + "this color");
+                    + sender.getName() + " suffix set " + suffix);
+            sender.sendMessage("Changed chat color to: " + ChatColor.translateAlternateColorCodes('&', suffix) + "this color");
         }
     }
 }
