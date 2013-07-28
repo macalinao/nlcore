@@ -13,6 +13,15 @@ permissions:
     description: Allows setting your prefix colors.
   chatcolorcommands.setchatcolor:
     description: Allows setting your chat color.
+  chatcolorcommands.ranks.guardian:
+    description: The Guardian rank on New Liberty.
+    children:
+      - chatcolorcommands.setcolors
+  chatcolorcommands.ranks.champion:
+    description: The Champion rank on New Liberty.
+    children:
+      - chatcolorcommands.setcolors
+      - chatcolorcommands.setchatcolor
 
 commands:
   setcolors:
