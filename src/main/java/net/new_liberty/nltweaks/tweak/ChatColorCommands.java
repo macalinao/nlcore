@@ -18,7 +18,7 @@ public class ChatColorCommands extends Tweak {
     private static final String OK_RESPONSE = "OK";
 
     /**
-     * Restricted solid prefix colours
+     * Restricted solid prefix colors
      */
     private static final List<Character> rsp = Arrays.asList('c', 'e', 'd', 'a', '5', '0');
 
@@ -63,8 +63,7 @@ public class ChatColorCommands extends Tweak {
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(ChatColor.RED
-                        + "Only players have prefixes/ uffixes!");
+                sender.sendMessage(ChatColor.RED + "Only players have prefixes/suffixes!");
                 return true;
             }
 
@@ -112,8 +111,19 @@ public class ChatColorCommands extends Tweak {
         }
 
         @Override
-        public String validate(String rank, String prefix) {
-            int required = rank.length() + 1;
+        public String validate(String rank, String value) {
+            String prefix;
+            if (value.length() == 1) {
+                prefix = "";
+                for (int i = 0; i < rank.length(); i++) {
+                    prefix += "f";
+                }
+            } else {
+                prefix = value.substring(0, value.length() - 1);
+            }
+            char name = value.charAt(value.length() - 1);
+
+            int required = rank.length();
             if (prefix.length() != required) {
                 return "Your prefix needs to be " + required + " characters long.";
             }
@@ -122,15 +132,20 @@ public class ChatColorCommands extends Tweak {
                 return "Invalid prefix (violates restricted prefix colors)";
             }
 
-            char lastCode = prefix.charAt(prefix.length() - 1);
-            if (equalsOne(lastCode, 'e', 'c', 'a', '5', 'd', '0')) {
+            if (equalsOne(name, 'e', 'c', 'a', '5', 'd', '0')) {
                 return "Invalid prefix (violates restricted name colors)";
             }
 
+            for (char c : value.toCharArray()) {
+                if (!equalsOne(c, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')) {
+                    return "You can't use formatting codes in your colors.";
+                }
+            }
+
             char last = ' ';
-            for (int i = 0; i < prefix.length(); i++) {
+            for (int i = 0; i < prefix.length() - 1; i++) {
                 char cur = prefix.charAt(i);
-                if (rsp.contains(last) && rsp.contains(cur)) {
+                if (last == cur && rsp.contains(cur)) {
                     return "Invalid prefix (violates restricted solid prefix colors)";
                 }
 
@@ -172,12 +187,16 @@ public class ChatColorCommands extends Tweak {
         @Override
         public String validate(String rank, String value) {
             if (value.length() != 1) {
-                return "Suffixes are only one colour!";
+                return "Suffixes are only one color!";
             }
 
             char suffix = value.charAt(0);
             if (equalsOne(suffix, 'e', 'c', 'a', '5', 'd', '0', '4')) {
                 return "Invalid suffix (violates restricted chat colors)";
+            }
+
+            if (!equalsOne(suffix, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')) {
+                return "You can't use formatting codes in your colors.";
             }
 
             ChatColor color = ChatColor.getByChar(suffix);
