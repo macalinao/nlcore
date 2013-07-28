@@ -83,16 +83,12 @@ public class ChatColorCommands extends Tweak {
                     return "Suffixes are only one colour!";
                 }
 
-                if (value.contains("5") || value.contains("0")) {
-                    return "Invalid suffix (violates restricted prefix colors)";
-                }
-
-                char lastCode = value.charAt(value.length() - 1);
-                if (equalsOne(lastCode, 'e', 'c', 'a', '5', 'd', '0', '4')) {
+                char suffix = value.charAt(0);
+                if (equalsOne(suffix, 'e', 'c', 'a', '5', 'd', '0', '4')) {
                     return "Invalid suffix (violates restricted chat colors)";
                 }
 
-                ChatColor color = ChatColor.getByChar(value);
+                ChatColor color = ChatColor.getByChar(suffix);
                 if (color == null) {
                     return "Unknown color.";
                 }
