@@ -1,5 +1,6 @@
 1.1.1
 =====
+* Added StaffList tweak
 * Added CreeperChest - prevents placing creeper eggs close to chests
 * Changed TNT Minecarts to only disallow placing
 * Disabled invisibility potions
