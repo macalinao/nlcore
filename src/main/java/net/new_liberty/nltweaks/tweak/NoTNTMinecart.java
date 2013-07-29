@@ -18,11 +18,7 @@ public class NoTNTMinecart extends Tweak {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getItem() == null || e.getAction() != Action.RIGHT_CLICK_AIR || e.getAction() != Action.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-
-        if (e.getItem().getType() == Material.EXPLOSIVE_MINECART) {
+        if (e.getItem() != null && e.getItem().getType() == Material.EXPLOSIVE_MINECART) {
             e.getPlayer().sendMessage(ChatColor.RED + "TNT Minecarts are currently disabled due to a bug in Minecraft.");
             e.setCancelled(true);
         }

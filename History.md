@@ -2,7 +2,6 @@
 =====
 * Added StaffList tweak
 * Added CreeperChest - prevents placing creeper eggs close to chests
-* Changed TNT Minecarts to only disallow placing
 * Disabled invisibility potions
 * Added a tweak to notify people of the vote homes if they don't currently have homes.
 * Added a tweak to allow changing prefixes (thanks DzineIT)
