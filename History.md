@@ -1,5 +1,6 @@
 1.1.1
 =====
+* Disabled invisibility potions
 * Added a tweak to notify people of the vote homes if they don't currently have homes.
 * Added a tweak to allow changing prefixes (thanks DzineIT)
 

@@ -3,6 +3,7 @@ package net.new_liberty.nltweaks;
 import net.new_liberty.nltweaks.tweak.ChatColorCommands;
 import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
+import net.new_liberty.nltweaks.tweak.NoInvisibilityPots;
 import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
 import net.new_liberty.nltweaks.tweak.VHomeInformer;
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         addTweak(new ChatColorCommands(this));
         addTweak(new NerfStrengthPots(this));
         addTweak(new NoEnderpearls(this));
+        addTweak(new NoInvisibilityPots(this));
         addTweak(new NoTNTMinecart(this));
         addTweak(new VHomeInformer(this));
     }
