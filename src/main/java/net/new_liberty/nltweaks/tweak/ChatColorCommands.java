@@ -112,15 +112,7 @@ public class ChatColorCommands extends Tweak {
 
         @Override
         public String validate(String rank, String value) {
-            String prefix;
-            if (value.length() == 1) {
-                prefix = "";
-                for (int i = 0; i < rank.length(); i++) {
-                    prefix += "f";
-                }
-            } else {
-                prefix = value.substring(0, value.length() - 1);
-            }
+            String prefix = value.substring(0, value.length() - 1);
             char name = value.charAt(value.length() - 1);
 
             int required = rank.length();
