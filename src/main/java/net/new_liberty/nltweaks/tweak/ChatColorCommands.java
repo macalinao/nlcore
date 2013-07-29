@@ -117,7 +117,7 @@ public class ChatColorCommands extends Tweak {
 
             int required = rank.length();
             if (prefix.length() != required) {
-                return "Your prefix needs to be " + required + " characters long.";
+                return "Your prefix needs to be " + (required + 1) + " characters long.";
             }
 
             if (prefix.contains("5") || prefix.contains("0")) {
