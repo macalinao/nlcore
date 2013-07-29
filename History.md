@@ -1,5 +1,6 @@
 1.1.1
 =====
+* Added CreeperChest - prevents placing creeper eggs close to chests
 * Changed TNT Minecarts to only disallow placing
 * Disabled invisibility potions
 * Added a tweak to notify people of the vote homes if they don't currently have homes.
