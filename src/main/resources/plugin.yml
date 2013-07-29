@@ -22,6 +22,12 @@ permissions:
     children:
       - chatcolorcommands.setcolors
       - chatcolorcommands.setchatcolor
+  stafflist.admin:
+    description: Admin permission
+  stafflist.mod:
+    description: Mod permission
+  stafflist.helper:
+    description: Helper permission
 
 commands:
   list:
