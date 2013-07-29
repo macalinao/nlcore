@@ -171,7 +171,7 @@ public class ChatColorCommands extends Tweak {
         @Override
         public void execute(CommandSender sender, String prefix) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user "
-                    + sender.getName() + " prefix set " + prefix);
+                    + sender.getName() + " prefix " + prefix);
             sender.sendMessage("Your colors have been set to: " + ChatColor.translateAlternateColorCodes('&', prefix));
         }
     }
@@ -215,7 +215,7 @@ public class ChatColorCommands extends Tweak {
         @Override
         public void execute(CommandSender sender, String suffix) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user "
-                    + sender.getName() + " suffix set " + suffix);
+                    + sender.getName() + " suffix " + suffix);
             sender.sendMessage("Changed chat color to: " + ChatColor.translateAlternateColorCodes('&', suffix) + "this color");
         }
     }
