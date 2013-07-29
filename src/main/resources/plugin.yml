@@ -24,6 +24,9 @@ permissions:
       - chatcolorcommands.setchatcolor
 
 commands:
+  list:
+    description: Lists the online player count.
+    usage: /list
   setcolors:
     description: Allows setting your prefix colors.
     usage: /setcolors <colors>

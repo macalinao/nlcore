@@ -6,6 +6,7 @@ import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
 import net.new_liberty.nltweaks.tweak.NoInvisibilityPots;
 import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
+import net.new_liberty.nltweaks.tweak.StaffList;
 import net.new_liberty.nltweaks.tweak.VHomeInformer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -24,6 +25,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         addTweak(new NoEnderpearls(this));
         addTweak(new NoInvisibilityPots(this));
         addTweak(new NoTNTMinecart(this));
+        addTweak(new StaffList(this));
         addTweak(new VHomeInformer(this));
     }
 
