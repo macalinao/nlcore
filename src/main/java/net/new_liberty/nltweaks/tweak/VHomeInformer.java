@@ -4,6 +4,7 @@ import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.Tweak;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 /**
@@ -14,7 +15,7 @@ public class VHomeInformer extends Tweak {
         super(plugin);
     }
 
-    @EventHandler
+    @EventHandler(EventPriority.HIGH)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         if (e.getPlayer().hasPermission("essentials.sethome")) { // Check if they have access to set homes
             return;
