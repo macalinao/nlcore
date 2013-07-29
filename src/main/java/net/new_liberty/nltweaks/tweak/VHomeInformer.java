@@ -15,7 +15,7 @@ public class VHomeInformer extends Tweak {
         super(plugin);
     }
 
-    @EventHandler(EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         if (e.getPlayer().hasPermission("essentials.sethome")) { // Check if they have access to set homes
             return;
