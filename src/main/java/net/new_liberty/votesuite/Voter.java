@@ -36,23 +36,6 @@ public class Voter {
     }
 
     /**
-     * Adds a vote for this Voter.
-     *
-     * @param svc
-     * @param address
-     */
-    public void addVote(VoteService svc, String address) {
-        // Timestamp has a different format for each voting website, so we are
-        // using our own which depends on the time it was received
-        EasyDB.getDb().update("INSERT INTO votes (name, service, address) VALUES (?, ?, ?) ",
-                player, svc.getId(), address);
-
-        // Insert vote into our recent votes db
-        EasyDB.getDb().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
-                player, svc.getId());
-    }
-
-    /**
      * Gets the vote services this voter is missing.
      *
      * @return

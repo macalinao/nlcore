@@ -67,12 +67,12 @@ public class VoteSuite extends JavaPlugin {
         if (services == null) {
             servicesConfig = getConfig().createSection("services");
         }
-        for (String serviceId : servicesConfig.getKeys(false)) {
-            String svcId = servicesConfig.getString(serviceId + ".id", serviceId);
-            String svcName = servicesConfig.getString(serviceId + ".name", serviceId);
+        for (String key : servicesConfig.getKeys(false)) {
+            String svcId = servicesConfig.getString(key + ".id", key);
+            String svcName = servicesConfig.getString(key + ".name", key);
             VoteService service = new VoteService(svcId, svcName);
 
-            services.put(serviceId, service);
+            services.put(svcId, service);
         }
     }
 
