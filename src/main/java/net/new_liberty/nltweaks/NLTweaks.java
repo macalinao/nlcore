@@ -1,6 +1,7 @@
 package net.new_liberty.nltweaks;
 
 import net.new_liberty.nltweaks.tweak.ChatColorCommands;
+import net.new_liberty.nltweaks.tweak.MobTamer;
 import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
 import net.new_liberty.nltweaks.tweak.NoInvisibilityPots;
@@ -19,6 +20,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         addTweak(new ChatColorCommands());
+        addTweak(new MobTamer());
         addTweak(new NerfStrengthPots());
         addTweak(new NoEnderpearls());
         addTweak(new NoInvisibilityPots());
