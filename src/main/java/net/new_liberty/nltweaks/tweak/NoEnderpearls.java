@@ -15,10 +15,6 @@ import org.bukkit.inventory.ItemStack;
  * Disables the use of Ender Pearls.
  */
 public class NoEnderpearls extends Tweak {
-    public NoEnderpearls(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         Player player = e.getPlayer();

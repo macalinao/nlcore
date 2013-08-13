@@ -15,15 +15,6 @@ import org.bukkit.potion.PotionType;
  * error.
  */
 public class NoInvisibilityPots extends Tweak {
-    /**
-     * C'tor
-     *
-     * @param plugin
-     */
-    public NoInvisibilityPots(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void onPotionSplash(PotionSplashEvent e) {
         Potion p;

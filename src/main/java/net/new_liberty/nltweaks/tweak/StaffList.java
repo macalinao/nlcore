@@ -19,10 +19,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * Handles /list and notifications of helpers logging in
  */
 public class StaffList extends Tweak implements CommandExecutor {
-    public StaffList(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @Override
     public void onEnable() {
         plugin.getCommand("list").setExecutor(this);

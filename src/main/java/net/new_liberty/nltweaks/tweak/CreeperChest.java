@@ -13,10 +13,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * Prevents placing creeper eggs so close to chests.
  */
 public class CreeperChest extends Tweak {
-    public CreeperChest(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK || e.getItem() == null || e.getItem().getType() != Material.MONSTER_EGG) {

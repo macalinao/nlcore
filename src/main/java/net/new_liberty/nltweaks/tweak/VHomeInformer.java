@@ -11,10 +11,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  * Informs players of /vhome and /vsethome if they don't have access to homes.
  */
 public class VHomeInformer extends Tweak {
-    public VHomeInformer(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         if (e.getPlayer().hasPermission("essentials.sethome")) { // Check if they have access to set homes

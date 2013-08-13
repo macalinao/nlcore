@@ -12,10 +12,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
  * Gets rid of TNT minecarts on the server.
  */
 public class NoTNTMinecart extends Tweak {
-    public NoTNTMinecart(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getItem() != null && e.getItem().getType() == Material.EXPLOSIVE_MINECART) {

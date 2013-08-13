@@ -19,17 +19,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class NLTweaks extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
-        addTweak(new ChatColorCommands(this));
-        addTweak(new CreeperChest(this));
-        addTweak(new NerfStrengthPots(this));
-        addTweak(new NoEnderpearls(this));
-        addTweak(new NoInvisibilityPots(this));
-        addTweak(new NoTNTMinecart(this));
-        addTweak(new StaffList(this));
-        addTweak(new VHomeInformer(this));
+        addTweak(new ChatColorCommands());
+        addTweak(new CreeperChest());
+        addTweak(new NerfStrengthPots());
+        addTweak(new NoEnderpearls());
+        addTweak(new NoInvisibilityPots());
+        addTweak(new NoTNTMinecart());
+        addTweak(new StaffList());
+        addTweak(new VHomeInformer());
     }
 
     private void addTweak(Tweak tweak) {
+        tweak.initialize(this);
         Bukkit.getPluginManager().registerEvents(tweak, this);
         tweak.onEnable();
     }

@@ -22,10 +22,6 @@ public class ChatColorCommands extends Tweak {
      */
     private static final List<Character> rsp = Arrays.asList('c', 'e', 'd', 'a', '5', '0');
 
-    public ChatColorCommands(NLTweaks plugin) {
-        super(plugin);
-    }
-
     @Override
     public void onEnable() {
         plugin.getCommand("setcolors").setExecutor(new SetColorsCommand());
