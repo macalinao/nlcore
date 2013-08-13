@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks;
 
+import java.util.logging.Logger;
 import org.bukkit.event.Listener;
 
 /**
@@ -7,6 +8,8 @@ import org.bukkit.event.Listener;
  */
 public abstract class Tweak implements Listener {
     protected NLTweaks plugin;
+
+    protected Logger logger;
 
     private boolean initialized = false;
 
@@ -20,6 +23,7 @@ public abstract class Tweak implements Listener {
             return;
         }
         this.plugin = plugin;
+        logger = new TweakLogger(this);
         initialized = true;
     }
 
@@ -27,5 +31,23 @@ public abstract class Tweak implements Listener {
      * Called when the tweak is enabled.
      */
     public void onEnable() {
+    }
+
+    /**
+     * Gets the name of this tweak.
+     *
+     * @return
+     */
+    public String getName() {
+        return getClass().getSimpleName();
+    }
+
+    /**
+     * Gets the logger of this tweak.
+     *
+     * @return
+     */
+    public Logger getLogger() {
+        return logger;
     }
 }

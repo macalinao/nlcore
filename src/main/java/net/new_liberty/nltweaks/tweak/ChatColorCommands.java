@@ -2,7 +2,6 @@ package net.new_liberty.nltweaks.tweak;
 
 import java.util.Arrays;
 import java.util.List;
-import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.Tweak;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

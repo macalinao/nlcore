@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks;
 
+import java.util.logging.Level;
 import net.new_liberty.nltweaks.tweak.ChatColorCommands;
 import net.new_liberty.nltweaks.tweak.MobTamer;
 import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
@@ -33,5 +34,6 @@ public class NLTweaks extends JavaPlugin implements Listener {
         tweak.initialize(this);
         Bukkit.getPluginManager().registerEvents(tweak, this);
         tweak.onEnable();
+        tweak.getLogger().log(Level.INFO, "Tweak enabled.");
     }
 }
