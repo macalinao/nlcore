@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
  * Mob Tamer tweak.
  */
 public class MobTamer extends Tweak {
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent e) {
         Block b = e.getClickedBlock();
         if (b.getType() != Material.MOB_SPAWNER) {
