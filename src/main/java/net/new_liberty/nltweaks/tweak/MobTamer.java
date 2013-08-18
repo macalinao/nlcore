@@ -37,6 +37,11 @@ public class MobTamer extends Tweak {
             return;
         }
 
+        if (t == EntityType.OCELOT || t == EntityType.GHAST || t == EntityType.CREEPER) {
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "You can't spawn " + t.getName() + ".");
+            return;
+        }
+
         CreatureSpawner s = (CreatureSpawner) b.getState();
         s.setSpawnedType(t);
         e.getPlayer().sendMessage(ChatColor.YELLOW + "You have changed this spawner to spawn " + t.getName() + " mobs.");
