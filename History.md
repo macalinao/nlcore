@@ -1,3 +1,7 @@
+2.2.1
+=====
+* Fix expiry time thing
+
 2.2.0
 =====
 * Fix NPE. Yeah this was a really small change, but oh well
