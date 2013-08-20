@@ -1,3 +1,9 @@
+1.1.2
+=====
+* Added MobTamer
+* Removed CreeperChest
+* Added EasySpawners
+
 1.1.1
 =====
 * Added StaffList tweak
