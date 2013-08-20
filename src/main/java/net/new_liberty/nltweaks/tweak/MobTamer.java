@@ -46,6 +46,11 @@ public class MobTamer extends Tweak {
         s.setSpawnedType(t);
         e.getPlayer().sendMessage(ChatColor.YELLOW + "You have changed this spawner to spawn " + t.getName() + " mobs.");
         e.setCancelled(true);
-        i.setAmount(i.getAmount() - 1);
+        int amt = i.getAmount() - 1;
+        if (amt > 0) {
+            i.setAmount(amt);
+        } else {
+            e.getPlayer().setItemInHand(null);
+        }
     }
 }
