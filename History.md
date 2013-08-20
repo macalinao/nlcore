@@ -1,3 +1,7 @@
+2.2.0
+=====
+* Fix NPE. Yeah this was a really small change, but oh well
+
 2.1.0
 =====
 * Changed to use SQL
