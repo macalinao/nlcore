@@ -1,3 +1,7 @@
+2.2.2
+=====
+* Fix EST to CST
+
 2.2.1
 =====
 * Fix expiry time thing
