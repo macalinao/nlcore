@@ -28,6 +28,10 @@ public class MobTamer extends Tweak {
         }
 
         ItemStack i = e.getItem();
+        if (i == null) {
+            return;
+        }
+
         if (i.getType() != Material.MONSTER_EGG) {
             return;
         }
