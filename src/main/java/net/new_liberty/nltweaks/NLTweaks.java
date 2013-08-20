@@ -2,6 +2,7 @@ package net.new_liberty.nltweaks;
 
 import java.util.logging.Level;
 import net.new_liberty.nltweaks.tweak.ChatColorCommands;
+import net.new_liberty.nltweaks.tweak.EasySpawners;
 import net.new_liberty.nltweaks.tweak.MobTamer;
 import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
@@ -21,6 +22,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         addTweak(new ChatColorCommands());
+        addTweak(new EasySpawners());
         addTweak(new MobTamer());
         addTweak(new NerfStrengthPots());
         addTweak(new NoEnderpearls());

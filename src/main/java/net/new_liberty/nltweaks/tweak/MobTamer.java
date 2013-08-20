@@ -38,7 +38,7 @@ public class MobTamer extends Tweak {
         }
 
         if (t == EntityType.OCELOT || t == EntityType.GHAST || t == EntityType.CREEPER) {
-            e.getPlayer().sendMessage(ChatColor.YELLOW + "You can't spawn " + t.getName() + ".");
+            e.getPlayer().sendMessage(ChatColor.YELLOW + "You can't spawn " + t.getName() + " mobs. Check the shop for creeper spawners.");
             return;
         }
 
