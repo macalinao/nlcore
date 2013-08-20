@@ -6,7 +6,7 @@
     <description>Chest protection plugin based on Ender Chests</description>
     <groupId>net.new_liberty</groupId>
     <artifactId>enderchestprotect</artifactId>
-    <version>2.2.2-SNAPSHOT</version>
+    <version>2.2.2</version>
     <packaging>jar</packaging>
     <url>http://new-liberty.net</url>
 
@@ -21,7 +21,7 @@
         <developerConnection>scm:git:git@bitbucket.org:newliberty/enderchestprotect.git</developerConnection>
         <connection>scm:git:https://bitbucket.org/newliberty/enderchestprotect.git</connection>
         <url>https://bitbucket.org/newliberty/enderchestprotect</url>
-        <tag>HEAD</tag>
+        <tag>enderchestprotect-2.2.2</tag>
     </scm>
 
     <ciManagement>
