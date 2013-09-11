@@ -23,8 +23,12 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class NLTweaks extends JavaPlugin implements Listener {
 
+    private static NLTweaks instance;
+
     @Override
     public void onEnable() {
+        instance = this;
+
         addTweak(new ChatColorCommands());
         addTweak(new EasySpawners());
         addTweak(new EggArsenal());
@@ -37,10 +41,20 @@ public class NLTweaks extends JavaPlugin implements Listener {
         addTweak(new VHomeInformer());
     }
 
+    @Override
+    public void onDisable() {
+        instance = null;
+    }
+
     private void addTweak(Tweak tweak) {
         tweak.initialize(this);
         Bukkit.getPluginManager().registerEvents(tweak, this);
         tweak.onEnable();
         tweak.getLogger().log(Level.INFO, "Tweak enabled.");
     }
+
+    public static NLTweaks getInstance() {
+        return instance;
+    }
+
 }
