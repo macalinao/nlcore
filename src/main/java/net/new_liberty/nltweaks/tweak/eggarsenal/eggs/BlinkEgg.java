@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -60,6 +61,16 @@ public class BlinkEgg extends SpecialEgg {
         Player p = e.getPlayer();
         timers.add(new BlinkTimer(p.getName(), p.launchProjectile(Egg.class)));
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onEggThrow(PlayerEggThrowEvent e) {
+        for (BlinkTimer t : timers) {
+            if (t.isFor(e.getEgg())) {
+                e.setHatching(false);
+                return;
+            }
+        }
     }
 
     @EventHandler
