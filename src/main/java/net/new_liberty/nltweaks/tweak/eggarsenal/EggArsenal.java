@@ -22,6 +22,10 @@ public class EggArsenal extends Tweak {
         combatTag = new CombatTagApi((CombatTag) Bukkit.getPluginManager().getPlugin("CombatTag"));
 
         addEgg(new BlinkEgg());
+
+        for (SpecialEgg egg : eggs.values()) {
+            egg.initialize(this);
+        }
     }
 
     /**
