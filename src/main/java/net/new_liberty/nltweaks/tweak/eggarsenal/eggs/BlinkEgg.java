@@ -119,7 +119,7 @@ public class BlinkEgg extends SpecialEgg {
                 return true;
             }
 
-            if (System.currentTimeMillis() - expire < 0) {
+            if (expire - System.currentTimeMillis() < 0) {
                 run();
                 return true;
             }
