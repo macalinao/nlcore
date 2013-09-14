@@ -27,6 +27,7 @@ public class BlinkEgg extends SpecialEgg {
         super("Blink Egg");
         description = "Teleports you a short distance.";
         eggType = EntityType.ENDERMAN;
+        allowInCombat = false;
 
         (new BukkitRunnable() {
             @Override
@@ -50,6 +51,10 @@ public class BlinkEgg extends SpecialEgg {
     public void onEggUse(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
                 || !(e.hasItem())) {
+            return;
+        }
+
+        if (!checkCanUse(e.getPlayer())) {
             return;
         }
 

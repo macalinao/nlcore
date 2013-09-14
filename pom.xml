@@ -61,6 +61,12 @@
             <version>1.6.2-R0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.trc202</groupId>
+            <artifactId>CombatTag</artifactId>
+            <version>5.9.3</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
