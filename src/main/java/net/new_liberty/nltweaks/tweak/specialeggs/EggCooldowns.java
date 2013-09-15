@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak.eggarsenal;
+package net.new_liberty.nltweaks.tweak.specialeggs;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package net.new_liberty.nltweaks.tweak.eggarsenal;
+package net.new_liberty.nltweaks.tweak.specialeggs;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.trc202.CombatTag.CombatTag;
@@ -6,11 +6,11 @@ import com.trc202.CombatTagApi.CombatTagApi;
 import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.nltweaks.Tweak;
-import net.new_liberty.nltweaks.tweak.eggarsenal.eggs.BlinkEgg;
+import net.new_liberty.nltweaks.tweak.specialeggs.eggs.BlinkEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class EggArsenal extends Tweak {
+public class SpecialEggs extends Tweak {
 
     private CombatTagApi combatTag;
 

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak.eggarsenal;
+package net.new_liberty.nltweaks.tweak.specialeggs;
 
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ public abstract class SpecialEgg implements Listener {
 
     private final String name;
 
-    protected EggArsenal ea = null;
+    protected SpecialEggs ea = null;
 
     protected String description = "Does cool stuff.";
 
@@ -40,7 +40,7 @@ public abstract class SpecialEgg implements Listener {
         this.name = name;
     }
 
-    public void initialize(EggArsenal ea) {
+    public void initialize(SpecialEggs ea) {
         if (this.ea == null) {
             this.ea = ea;
         }

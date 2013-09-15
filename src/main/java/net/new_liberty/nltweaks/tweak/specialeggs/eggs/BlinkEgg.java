@@ -1,10 +1,10 @@
-package net.new_liberty.nltweaks.tweak.eggarsenal.eggs;
+package net.new_liberty.nltweaks.tweak.specialeggs.eggs;
 
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.ArrayList;
 import java.util.List;
 import net.new_liberty.nltweaks.NLTweaks;
-import net.new_liberty.nltweaks.tweak.eggarsenal.SpecialEgg;
+import net.new_liberty.nltweaks.tweak.specialeggs.SpecialEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
