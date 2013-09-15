@@ -24,8 +24,7 @@ permissions:
       - chatcolorcommands.setcolors
       - chatcolorcommands.setchatcolor
   specialeggs.segive:
-  	description: Gives an egg to the user or a target.
-  	usage: /segive <egg> [amt] [target]
+    description: Gives an egg to the user or a target.
   stafflist.admin:
     description: Admin permission
   stafflist.mod:
@@ -37,6 +36,9 @@ commands:
   list:
     description: Lists the online player count.
     usage: /list
+  segive:
+    description: Gives an egg to the user or a target.
+    usage: /segive <egg> [amt] [target]
   setcolors:
     description: Allows setting your prefix colors.
     usage: /setcolors <colors>
