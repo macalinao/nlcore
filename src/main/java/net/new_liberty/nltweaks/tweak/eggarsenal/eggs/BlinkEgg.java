@@ -28,6 +28,7 @@ public class BlinkEgg extends SpecialEgg {
         description = "Teleports you a short distance.";
         eggType = EntityType.ENDERMAN;
         allowInCombat = false;
+        cooldown = 10;
 
         (new BukkitRunnable() {
             @Override
