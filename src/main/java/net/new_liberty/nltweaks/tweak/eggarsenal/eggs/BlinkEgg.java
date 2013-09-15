@@ -12,10 +12,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlinkEgg extends SpecialEgg {
@@ -107,6 +108,23 @@ public class BlinkEgg extends SpecialEgg {
 
         if (rem != null) {
             timers.remove(rem);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player p = (Player) e.getEntity();
+        if (e.getCause() != DamageCause.FALL) {
+            return;
+        }
+
+        int cd = ea.getCooldowns(p.getName()).getCooldown(this);
+        if (10000 - cd < 5000) {
+            e.setCancelled(true);
         }
     }
 
