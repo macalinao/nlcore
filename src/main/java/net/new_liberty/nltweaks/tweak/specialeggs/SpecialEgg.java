@@ -75,8 +75,8 @@ public abstract class SpecialEgg implements Listener {
      *
      * @return
      */
-    public ItemStack create() {
-        ItemStack r = new ItemStack(Material.MONSTER_EGG, 1);
+    public ItemStack create(int amt) {
+        ItemStack r = new ItemStack(Material.MONSTER_EGG, amt);
         r.setDurability(eggType.getTypeId());
 
         ItemMeta m = r.getItemMeta();

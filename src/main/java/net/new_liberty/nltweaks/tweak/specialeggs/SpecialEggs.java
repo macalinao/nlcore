@@ -30,6 +30,8 @@ public class SpecialEggs extends Tweak {
         for (SpecialEgg egg : eggs.values()) {
             egg.initialize(this);
         }
+
+        plugin.getCommand("segive").setExecutor(new SEGive(this));
     }
 
     /**
@@ -45,6 +47,16 @@ public class SpecialEggs extends Tweak {
             cds.put(player, cd);
         }
         return cd;
+    }
+
+    /**
+     * Gets an egg from its name.
+     *
+     * @param name
+     * @return
+     */
+    public SpecialEgg getEgg(String name) {
+        return eggs.get(name);
     }
 
     public boolean isInCombat(Player player) {

@@ -23,6 +23,9 @@ permissions:
     children:
       - chatcolorcommands.setcolors
       - chatcolorcommands.setchatcolor
+  specialeggs.segive:
+  	description: Gives an egg to the user or a target.
+  	usage: /segive <egg> [amt] [target]
   stafflist.admin:
     description: Admin permission
   stafflist.mod:

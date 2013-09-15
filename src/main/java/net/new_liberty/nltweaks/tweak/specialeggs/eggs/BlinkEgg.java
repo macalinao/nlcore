@@ -184,10 +184,9 @@ public class BlinkEgg extends SpecialEgg {
 
             if (!ea.getWg().getRegionManager(egg.getWorld()).getApplicableRegions(egg.getLocation()).allows(DefaultFlag.PVP)) {
                 p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
-                p.getInventory().addItem(BlinkEgg.this.create());
+                p.getInventory().addItem(BlinkEgg.this.create(1));
                 return;
             }
-
             p.teleport(egg);
             p.getWorld().playSound(p.getLocation(), Sound.WITHER_SHOOT, 1.0f, 1.0f);
         }
