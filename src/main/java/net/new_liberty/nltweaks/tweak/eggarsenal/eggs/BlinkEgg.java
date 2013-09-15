@@ -70,7 +70,7 @@ public class BlinkEgg extends SpecialEgg {
 
         int amt = e.getItem().getAmount();
         if (amt > 1) {
-            e.getItem().setAmount(amt + 1);
+            e.getItem().setAmount(amt - 1);
         } else if (amt == 1) {
             p.getInventory().remove(e.getItem());
         }
