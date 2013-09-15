@@ -41,6 +41,7 @@ public abstract class SpecialEgg implements Listener {
         if (this.ea == null) {
             this.ea = ea;
         }
+        System.out.println(this.ea);
     }
 
     public String getName() {
@@ -58,7 +59,12 @@ public abstract class SpecialEgg implements Listener {
      * @return
      */
     public boolean isInstance(ItemStack egg) {
-        return egg.getType() == Material.MONSTER_EGG && egg.getItemMeta().getDisplayName().equals(name);
+        if (egg == null) {
+            return false;
+        }
+        return egg.getType() == Material.MONSTER_EGG
+                && egg.getItemMeta().hasDisplayName()
+                && egg.getItemMeta().getDisplayName().equals(name);
     }
 
     /**
@@ -79,7 +85,7 @@ public abstract class SpecialEgg implements Listener {
     }
 
     /**
-     * Checks if this egg can be used
+     * Checks if this egg can be used, and if it can, apply the cooldowns etc.
      *
      * @param p
      * @return
@@ -90,12 +96,15 @@ public abstract class SpecialEgg implements Listener {
             return false;
         }
 
-        int cd = ea.getCooldowns(p.getName()).getCooldown(this);
+        EggCooldowns cds = ea.getCooldowns(p.getName());
+        int cd = cds.getCooldown(this);
         if (cd > 0) {
             p.sendMessage(ChatColor.RED + "This egg is currently on cooldown for another " + (Math.ceil(cd / 1000)) + " seconds.");
             return false;
         }
 
+        // Can use
+        cds.startCooldown(this);
         return true;
     }
 

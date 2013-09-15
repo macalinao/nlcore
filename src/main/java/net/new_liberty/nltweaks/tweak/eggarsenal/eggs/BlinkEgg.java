@@ -54,12 +54,11 @@ public class BlinkEgg extends SpecialEgg {
             return;
         }
 
-        if (!checkCanUse(e.getPlayer())) {
+        if (!isInstance(e.getItem())) {
             return;
         }
 
-        ItemStack held = e.getItem();
-        if (!isInstance(held)) {
+        if (!checkCanUse(e.getPlayer())) {
             return;
         }
 
