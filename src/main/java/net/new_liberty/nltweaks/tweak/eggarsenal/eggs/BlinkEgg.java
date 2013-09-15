@@ -123,7 +123,7 @@ public class BlinkEgg extends SpecialEgg {
         }
 
         int cd = ea.getCooldowns(p.getName()).getCooldown(this);
-        if (10000 - cd < 5000) {
+        if (cd != 0) {
             e.setCancelled(true);
         }
     }
