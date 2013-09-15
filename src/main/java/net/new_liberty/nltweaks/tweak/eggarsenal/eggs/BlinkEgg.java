@@ -5,6 +5,7 @@ import java.util.List;
 import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.tweak.eggarsenal.SpecialEgg;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
@@ -153,6 +154,7 @@ public class BlinkEgg extends SpecialEgg {
             }
 
             p.teleport(egg);
+            p.getWorld().playSound(p.getLocation(), Sound.WITHER_SHOOT, 1.0f, 1.0f);
         }
 
     }

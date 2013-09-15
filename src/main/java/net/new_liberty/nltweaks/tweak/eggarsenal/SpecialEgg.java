@@ -99,7 +99,7 @@ public abstract class SpecialEgg implements Listener {
         EggCooldowns cds = ea.getCooldowns(p.getName());
         int cd = cds.getCooldown(this);
         if (cd > 0) {
-            p.sendMessage(ChatColor.RED + "This egg is currently on cooldown for another " + (Math.ceil(cd / 1000)) + " seconds.");
+            p.sendMessage(ChatColor.RED + "This egg is currently on cooldown for another " + ((int) Math.ceil(cd / 1000)) + " seconds.");
             return false;
         }
 
