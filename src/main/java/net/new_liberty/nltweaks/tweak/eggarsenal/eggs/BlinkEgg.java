@@ -66,6 +66,14 @@ public class BlinkEgg extends SpecialEgg {
 
         Player p = e.getPlayer();
         timers.add(new BlinkTimer(p.getName(), p.launchProjectile(Egg.class)));
+
+        int amt = e.getItem().getAmount();
+        if (amt > 1) {
+            e.getItem().setAmount(amt + 1);
+        } else if (amt == 1) {
+            p.getInventory().remove(e.getItem());
+        }
+
         e.setCancelled(true);
     }
 
