@@ -38,7 +38,7 @@ public abstract class SpecialEgg implements Listener {
     }
 
     public void initialize(EggArsenal ea) {
-        if (ea == null) {
+        if (this.ea == null) {
             this.ea = ea;
         }
     }
