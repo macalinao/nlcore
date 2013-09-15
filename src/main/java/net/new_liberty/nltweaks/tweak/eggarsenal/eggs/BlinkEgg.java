@@ -1,10 +1,12 @@
 package net.new_liberty.nltweaks.tweak.eggarsenal.eggs;
 
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.ArrayList;
 import java.util.List;
 import net.new_liberty.nltweaks.NLTweaks;
 import net.new_liberty.nltweaks.tweak.eggarsenal.SpecialEgg;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 
 import org.bukkit.entity.Egg;
@@ -30,6 +32,7 @@ public class BlinkEgg extends SpecialEgg {
         description = "Teleports you a short distance.";
         eggType = EntityType.ENDERMAN;
         allowInCombat = false;
+        useInNoPvPZone = false;
         cooldown = 10;
 
         (new BukkitRunnable() {
@@ -176,6 +179,12 @@ public class BlinkEgg extends SpecialEgg {
         public void run() {
             Player p = Bukkit.getPlayerExact(player);
             if (p == null) {
+                return;
+            }
+
+            if (!ea.getWg().getRegionManager(egg.getWorld()).getApplicableRegions(egg.getLocation()).allows(DefaultFlag.PVP)) {
+                p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
+                p.getInventory().addItem(BlinkEgg.this.create());
                 return;
             }
 

@@ -4,6 +4,7 @@
  */
 package net.new_liberty.nltweaks.tweak.eggarsenal;
 
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,6 +33,8 @@ public abstract class SpecialEgg implements Listener {
      * Cooldown of the egg in seconds.
      */
     protected int cooldown = 0;
+
+    protected boolean useInNoPvPZone = true;
 
     protected SpecialEgg(String name) {
         this.name = name;
@@ -64,7 +67,7 @@ public abstract class SpecialEgg implements Listener {
         }
         return egg.getType() == Material.MONSTER_EGG
                 && egg.getItemMeta().hasDisplayName()
-                && egg.getItemMeta().getDisplayName().equals(name);
+                && ChatColor.stripColor(egg.getItemMeta().getDisplayName()).equals(name);
     }
 
     /**
@@ -96,8 +99,15 @@ public abstract class SpecialEgg implements Listener {
             return false;
         }
 
+        if (!useInNoPvPZone
+                && !ea.getWg().getRegionManager(p.getWorld()).getApplicableRegions(p.getLocation()).allows(DefaultFlag.PVP)) {
+            p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
+            return false;
+        }
+
         EggCooldowns cds = ea.getCooldowns(p.getName());
         int cd = cds.getCooldown(this);
+
         if (cd > 0) {
             p.sendMessage(ChatColor.RED + "This egg is currently on cooldown for another " + ((int) Math.ceil(cd / 1000)) + " seconds.");
             return false;

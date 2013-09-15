@@ -1,5 +1,6 @@
 package net.new_liberty.nltweaks.tweak.eggarsenal;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.trc202.CombatTag.CombatTag;
 import com.trc202.CombatTagApi.CombatTagApi;
 import java.util.HashMap;
@@ -17,9 +18,12 @@ public class EggArsenal extends Tweak {
 
     private Map<String, SpecialEgg> eggs = new HashMap<String, SpecialEgg>();
 
+    private WorldGuardPlugin wg;
+
     @Override
     public void onEnable() {
         combatTag = new CombatTagApi((CombatTag) Bukkit.getPluginManager().getPlugin("CombatTag"));
+        wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 
         addEgg(new BlinkEgg());
 
@@ -45,6 +49,10 @@ public class EggArsenal extends Tweak {
 
     public boolean isInCombat(Player player) {
         return combatTag.isInCombat(player);
+    }
+
+    public WorldGuardPlugin getWg() {
+        return wg;
     }
 
     private void addEgg(SpecialEgg egg) {
