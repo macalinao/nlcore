@@ -9,10 +9,11 @@ import net.new_liberty.nltweaks.Tweak;
 import net.new_liberty.nltweaks.tweak.specialeggs.eggs.BlinkEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class SpecialEggs extends Tweak {
 
-    private CombatTagApi combatTag;
+    private CombatTagApi combatTag = null;
 
     private Map<String, EggCooldowns> cds = new HashMap<String, EggCooldowns>();
 
@@ -22,7 +23,11 @@ public class SpecialEggs extends Tweak {
 
     @Override
     public void onEnable() {
-        combatTag = new CombatTagApi((CombatTag) Bukkit.getPluginManager().getPlugin("CombatTag"));
+        Plugin ctPlugin = Bukkit.getPluginManager().getPlugin("CombatTag");
+        if (plugin != null) {
+            combatTag = new CombatTagApi((CombatTag) ctPlugin);
+        }
+
         wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 
         addEgg(new BlinkEgg());
@@ -60,6 +65,9 @@ public class SpecialEggs extends Tweak {
     }
 
     public boolean isInCombat(Player player) {
+        if (combatTag == null) {
+            return false;
+        }
         return combatTag.isInCombat(player);
     }
 

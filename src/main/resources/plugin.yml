@@ -5,7 +5,8 @@ author: ${author}
 website: ${project.url}
 
 main: ${mainClass}
-depend: [CombatTag, WorldGuard]
+depend: [WorldGuard]
+softdepend: [CombatTag]
 
 permissions:
   noenderpearls.bypass:
