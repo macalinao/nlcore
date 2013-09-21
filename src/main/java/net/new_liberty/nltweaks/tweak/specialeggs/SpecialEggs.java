@@ -24,7 +24,7 @@ public class SpecialEggs extends Tweak {
     @Override
     public void onEnable() {
         Plugin ctPlugin = Bukkit.getPluginManager().getPlugin("CombatTag");
-        if (ctPlugin != null) {
+        if (ctPlugin != null && ctPlugin.isEnabled()) {
             combatTag = new CombatTagApi((CombatTag) ctPlugin);
         }
 
