@@ -64,6 +64,7 @@ public class BlinkEgg extends SpecialEgg {
             return;
         }
 
+        e.setCancelled(true);
         if (!checkCanUse(e.getPlayer())) {
             return;
         }
@@ -77,8 +78,6 @@ public class BlinkEgg extends SpecialEgg {
         } else if (amt == 1) {
             p.getInventory().remove(e.getItem());
         }
-
-        e.setCancelled(true);
     }
 
     @EventHandler
