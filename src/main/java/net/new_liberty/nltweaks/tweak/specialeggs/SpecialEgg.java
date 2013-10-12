@@ -88,6 +88,26 @@ public abstract class SpecialEgg implements Listener {
     }
 
     /**
+     * Gets the egg cooldown of the given player.
+     *
+     * @param player
+     * @return
+     */
+    public int getCd(String player) {
+        return ea.getCooldowns(player).getCooldown(this);
+    }
+
+    /**
+     * Gets the egg cooldown of the given player.
+     *
+     * @param player
+     * @return
+     */
+    public int getCd(Player player) {
+        return getCd(player.getName());
+    }
+
+    /**
      * Checks if this egg can be used, and if it can, apply the cooldowns etc.
      *
      * @param p
