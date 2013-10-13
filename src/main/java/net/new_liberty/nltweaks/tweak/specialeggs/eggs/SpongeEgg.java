@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -48,7 +49,7 @@ public class SpongeEgg extends SpecialEgg {
                 for (;;) {
                     SpongeBlock sponge = sponges.peek();
                     if (sponge != null && sponge.isExpired()) {
-                        sponge.destroyWithSmoke();
+                        sponge.destroyWithEffects();
                         sponges.remove();
                     } else {
                         break;
@@ -170,11 +171,12 @@ public class SpongeEgg extends SpecialEgg {
         }
 
         /**
-         * Destroys the sponge with smoke.
+         * Destroys the sponge with special effects.
          */
-        public void destroyWithSmoke() {
+        public void destroyWithEffects() {
             destroy();
             loc.getWorld().playEffect(loc, Effect.SMOKE, 0);
+            loc.getWorld().playSound(loc, Sound.FIZZ, 1.0f, 0.5f);
         }
 
         @Override
