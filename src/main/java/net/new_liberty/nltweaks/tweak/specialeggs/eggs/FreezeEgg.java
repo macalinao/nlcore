@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.nltweaks.tweak.specialeggs.ThrownEgg;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * Prevents people surrounding the egg's detonation location from moving.
@@ -33,7 +35,7 @@ public class FreezeEgg extends ThrownEgg {
 
     public FreezeEgg() {
         super("Freeze Egg");
-        description = "Prevents enemies from moving.";
+        description = "Prevents enemies from moving for " + (FREEZE_MS / 1000) + " seconds.";
         eggType = EntityType.GHAST;
         allowInCombat = false;
         useInNoPvPZone = false;
@@ -62,6 +64,7 @@ public class FreezeEgg extends ThrownEgg {
         lastFrozen.put(p.getName(), System.currentTimeMillis());
         p.getWorld().playEffect(l, Effect.SMOKE, 4);
         p.getWorld().playSound(l, Sound.GLASS, 1.0f, 0.5f);
+        p.sendMessage(ChatColor.AQUA + "You've been frozen by a freeze egg!");
     }
 
     /**
@@ -73,6 +76,13 @@ public class FreezeEgg extends ThrownEgg {
     public boolean isFrozen(Player p) {
         Long last = lastFrozen.get(p.getName());
         return last != null && (last + FREEZE_MS - System.currentTimeMillis()) < 0;
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent e) {
+        if (isFrozen(e.getPlayer())) {
+            e.setCancelled(true);
+        }
     }
 
     @EventHandler
