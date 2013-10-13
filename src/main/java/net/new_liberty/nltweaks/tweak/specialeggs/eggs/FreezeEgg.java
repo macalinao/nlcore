@@ -15,9 +15,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
@@ -114,24 +111,6 @@ public class FreezeEgg extends ThrownEgg {
         if (isFrozen(e.getPlayer())) {
             e.setCancelled(true);
         }
-    }
-
-    @EventHandler
-    @Override
-    public void onEggUse(PlayerInteractEvent e) {
-        super.onEggUse(e);
-    }
-
-    @EventHandler
-    @Override
-    public void onEggThrow(PlayerEggThrowEvent e) {
-        super.onEggThrow(e);
-    }
-
-    @EventHandler
-    @Override
-    public void onEggHit(ProjectileHitEvent e) {
-        super.onEggHit(e);
     }
 
 }

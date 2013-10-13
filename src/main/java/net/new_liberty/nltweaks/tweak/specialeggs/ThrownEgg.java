@@ -9,8 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,6 +30,8 @@ public abstract class ThrownEgg extends SpecialEgg {
 
     protected ThrownEgg(String name) {
         super(name);
+
+        Bukkit.getPluginManager().registerEvents(this, NLTweaks.getInstance());
 
         (new BukkitRunnable() {
             @Override
@@ -63,6 +65,7 @@ public abstract class ThrownEgg extends SpecialEgg {
      *
      * @param e
      */
+    @EventHandler
     public void onEggUse(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
                 || !(e.hasItem())) {
@@ -94,6 +97,7 @@ public abstract class ThrownEgg extends SpecialEgg {
      *
      * @param e
      */
+    @EventHandler
     public void onEggThrow(PlayerEggThrowEvent e) {
         for (ThrownEggTimer t : timers) {
             if (t.isFor(e.getEgg())) {
@@ -108,6 +112,7 @@ public abstract class ThrownEgg extends SpecialEgg {
      *
      * @param e
      */
+    @EventHandler
     public void onEggHit(ProjectileHitEvent e) {
         if (!(e.getEntity() instanceof Egg)) {
             return;

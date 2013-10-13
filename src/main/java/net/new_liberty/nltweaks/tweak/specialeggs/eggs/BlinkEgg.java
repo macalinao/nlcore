@@ -9,9 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerEggThrowEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * Teleports the player a short distance (wherever this egg lands).
@@ -58,24 +55,6 @@ public class BlinkEgg extends ThrownEgg {
         p.teleport(target);
         p.getWorld().playSound(p.getLocation(), Sound.WITHER_SHOOT, 1.0f, 1.0f);
         return true;
-    }
-
-    @EventHandler
-    @Override
-    public void onEggUse(PlayerInteractEvent e) {
-        super.onEggUse(e);
-    }
-
-    @EventHandler
-    @Override
-    public void onEggThrow(PlayerEggThrowEvent e) {
-        super.onEggThrow(e);
-    }
-
-    @EventHandler
-    @Override
-    public void onEggHit(ProjectileHitEvent e) {
-        super.onEggHit(e);
     }
 
 }
