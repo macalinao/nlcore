@@ -37,7 +37,6 @@ public class SpongeEgg extends SpecialEgg {
         description = "Soaks up water where this egg is placed.";
         eggType = EntityType.OCELOT;
         cooldown = 5;
-
     }
 
     @Override
