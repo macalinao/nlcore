@@ -30,8 +30,7 @@ public class FreezeEgg extends ThrownEgg {
 
     @Override
     public boolean detonate(Player p, Location target) {
-        p.teleport(target);
-        p.getWorld().playSound(p.getLocation(), Sound.WITHER_SHOOT, 1.0f, 1.0f);
+        p.getWorld().playSound(p.getLocation(), Sound.GLASS, 10.0f, 0.5f);
         return true;
     }
 
