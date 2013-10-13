@@ -35,7 +35,7 @@ public class FreezeEgg extends ThrownEgg {
 
     public FreezeEgg() {
         super("Freeze Egg");
-        description = "Prevents enemies from moving for " + (FREEZE_MS / 1000) + " seconds.";
+        description = "Prevents enemies from moving.";
         eggType = EntityType.GHAST;
         allowInCombat = false;
         useInNoPvPZone = false;
