@@ -31,8 +31,6 @@ public abstract class ThrownEgg extends SpecialEgg {
     protected ThrownEgg(String name) {
         super(name);
 
-        Bukkit.getPluginManager().registerEvents(this, NLTweaks.getInstance());
-
         (new BukkitRunnable() {
             @Override
             public void run() {
