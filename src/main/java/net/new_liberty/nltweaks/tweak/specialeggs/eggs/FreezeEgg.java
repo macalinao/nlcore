@@ -1,5 +1,8 @@
 package net.new_liberty.nltweaks.tweak.specialeggs.eggs;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.struct.Relation;
 import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.nltweaks.tweak.specialeggs.ThrownEgg;
@@ -48,10 +51,25 @@ public class FreezeEgg extends ThrownEgg {
     @Override
     public boolean detonate(Player p, Location target) {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (pl.getLocation().distanceSquared(target) < FREEZE_RADIUS * FREEZE_RADIUS && !isImmune(pl)) {
-                // Freeze them
-                freeze(pl);
+            if (p == pl) {
+                continue;
             }
+
+            if (pl.getLocation().distanceSquared(target) > FREEZE_RADIUS * FREEZE_RADIUS && !isImmune(pl)) {
+                continue;
+            }
+
+            FPlayer pp = FPlayers.i.get(p);
+            FPlayer defender = FPlayers.i.get(pl);
+
+            Relation r = pp.getRelationTo(defender);
+
+            // You can never hurt faction members or allies
+            if (r == Relation.MEMBER || r == Relation.ALLY) {
+                continue;
+            }
+
+            freeze(pl);
         }
 
         target.getWorld().playEffect(target, Effect.SMOKE, 4);
