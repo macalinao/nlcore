@@ -69,7 +69,7 @@ public abstract class ThrownEgg extends SpecialEgg {
     @EventHandler
     public void onEggUse(PlayerInteractEvent e) {
         if (!(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)
-                || !(e.hasItem())) {
+                || !e.hasItem()) {
             return;
         }
 

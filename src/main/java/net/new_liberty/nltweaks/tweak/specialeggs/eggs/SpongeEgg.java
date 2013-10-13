@@ -17,8 +17,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
@@ -37,6 +37,7 @@ public class SpongeEgg extends SpecialEgg {
         description = "Soaks up water where this egg is placed.";
         eggType = EntityType.OCELOT;
         cooldown = 5;
+        usePlayerForLocationCheck = false;
     }
 
     @Override
@@ -66,32 +67,23 @@ public class SpongeEgg extends SpecialEgg {
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onEggUse(PlayerInteractEvent e) {
         // Check for block click
-        if (event.getClickedBlock() == null) {
-            return;
-        }
-        if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+        if (e.getClickedBlock() == null || e.getAction() != Action.RIGHT_CLICK_BLOCK || !e.hasItem()) {
             return;
         }
 
-        // Check for sk ocelote egg
-        if (!event.hasItem()) {
+        if (!isInstance(e.getItem())) {
             return;
         }
-        ItemStack item = event.getItem();
-        if (!item.getType().equals(Material.MONSTER_EGG)) {
-            return;
-        }
-        if (item.getDurability() != EntityType.OCELOT.getTypeId()) {
-            return;
-        }
+        e.setCancelled(true);
 
-        // Cancel the mobspawn event
-        event.setCancelled(true);
+        if (!checkCanUse(e.getPlayer())) {
+            return;
+        }
 
         // Get block to place the sponge
-        Block block = event.getClickedBlock().getRelative(event.getBlockFace());
+        Block block = e.getClickedBlock().getRelative(e.getBlockFace());
         if (!(block.getType().equals(Material.AIR)
                 || block.getType().equals(Material.STATIONARY_WATER)
                 || block.getType().equals(Material.STATIONARY_LAVA)
@@ -100,19 +92,16 @@ public class SpongeEgg extends SpecialEgg {
             return;
         }
 
-        // Check for worldguard region -- can build?
-        if (!ea.getWg().canBuild(event.getPlayer(), block)) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You cannot place a sponge here; this place is protected.");
+        if (!canUseAt(e.getPlayer(), block.getLocation())) {
             return;
         }
 
-        // Then
         // Consume one ocelot egg
-        int amt = item.getAmount();
+        int amt = e.getItem().getAmount();
         if (amt > 1) {
-            item.setAmount(item.getAmount() - 1);
-        } else {
-            event.getPlayer().setItemInHand(null);
+            e.getItem().setAmount(amt - 1);
+        } else if (amt == 1) {
+            e.getPlayer().getInventory().remove(e.getItem());
         }
 
         // Set block as sponge
@@ -124,6 +113,19 @@ public class SpongeEgg extends SpecialEgg {
         // Schedule a sponge for extermination
         SpongeBlock sponge = new SpongeBlock(block.getLocation(), System.currentTimeMillis() + EXPIRY_TIME);
         sponges.add(sponge);
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getBlock().getType() != Material.SPONGE) {
+            return;
+        }
+
+        for (SpongeBlock s : sponges) {
+            if (s.isBlock(e.getBlock())) {
+                s.destroy();
+            }
+        }
     }
 
     /**
@@ -138,6 +140,16 @@ public class SpongeEgg extends SpecialEgg {
         public SpongeBlock(Location loc, long expire) {
             this.loc = loc;
             this.expire = expire;
+        }
+
+        /**
+         * Checks if a block is this block
+         *
+         * @param b
+         * @return
+         */
+        public boolean isBlock(Block b) {
+            return b.getLocation().equals(loc);
         }
 
         /**

@@ -36,7 +36,20 @@ public abstract class SpecialEgg implements Listener {
      */
     protected int cooldown = 0;
 
+    /**
+     * Allow using this egg in a no PvP zone.
+     */
     protected boolean useInNoPvPZone = true;
+
+    /**
+     * Allow using this egg in a no build zone.
+     */
+    protected boolean useInNoBuildZone = true;
+
+    /**
+     * Uses the player's location when checking if the egg can be used.
+     */
+    protected boolean usePlayerForLocationCheck = true;
 
     protected SpecialEgg(String name) {
         this.name = name;
@@ -128,7 +141,7 @@ public abstract class SpecialEgg implements Listener {
             return false;
         }
 
-        if (!canUseAt(p, p.getLocation())) {
+        if (usePlayerForLocationCheck && !canUseAt(p, p.getLocation())) {
             return false;
         }
 
@@ -147,7 +160,7 @@ public abstract class SpecialEgg implements Listener {
 
     /**
      * Checks if the player can use the egg at the given location. This is
-     * useful for thrown eggs.
+     * useful for thrown eggs or eggs that create blocks.
      *
      * @param p
      * @param l
@@ -159,6 +172,12 @@ public abstract class SpecialEgg implements Listener {
             p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
             return false;
         }
+
+        if (!useInNoBuildZone && !ea.getWg().canBuild(p, l)) {
+            p.sendMessage(ChatColor.RED + "You cannot use this egg in a protected area.");
+            return false;
+        }
+
         return true;
     }
 
