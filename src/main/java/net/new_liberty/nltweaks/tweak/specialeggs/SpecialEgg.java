@@ -7,6 +7,7 @@ package net.new_liberty.nltweaks.tweak.specialeggs;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -116,15 +117,13 @@ public abstract class SpecialEgg implements Listener {
      * @param p
      * @return
      */
-    protected boolean checkCanUse(Player p) {
+    public boolean checkCanUse(Player p) {
         if (!allowInCombat && ea.isInCombat(p)) {
             p.sendMessage(ChatColor.RED + "You can't use this egg while in combat.");
             return false;
         }
 
-        if (!useInNoPvPZone
-                && !ea.getWg().getRegionManager(p.getWorld()).getApplicableRegions(p.getLocation()).allows(DefaultFlag.PVP)) {
-            p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
+        if (!canUseAt(p, p.getLocation())) {
             return false;
         }
 
@@ -138,6 +137,23 @@ public abstract class SpecialEgg implements Listener {
 
         // Can use
         cds.startCooldown(this);
+        return true;
+    }
+
+    /**
+     * Checks if the player can use the egg at the given location. This is
+     * useful for thrown eggs.
+     *
+     * @param p
+     * @param l
+     * @return
+     */
+    public boolean canUseAt(Player p, Location l) {
+        if (!useInNoPvPZone
+                && !ea.getWg().getRegionManager(l.getWorld()).getApplicableRegions(p.getLocation()).allows(DefaultFlag.PVP)) {
+            p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
+            return false;
+        }
         return true;
     }
 

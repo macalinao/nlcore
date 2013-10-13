@@ -184,12 +184,8 @@ public abstract class ThrownEgg extends SpecialEgg {
                 return;
             }
 
-            if (!useInNoPvPZone && !ea.getWg().getRegionManager(egg.getWorld()).getApplicableRegions(egg.getLocation()).allows(DefaultFlag.PVP)) {
-                p.sendMessage(ChatColor.RED + "You can't use this egg in a no-PvP zone.");
-                return;
-            }
-
-            if (ThrownEgg.this.detonate(p, egg.getLocation())) {
+            if (ThrownEgg.this.canUseAt(p, egg.getLocation())
+                    && ThrownEgg.this.detonate(p, egg.getLocation())) {
                 return;
             }
 
