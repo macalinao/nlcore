@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.nltweaks.Tweak;
 import net.new_liberty.nltweaks.tweak.specialeggs.eggs.BlinkEgg;
+import net.new_liberty.nltweaks.tweak.specialeggs.eggs.FreezeEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -31,6 +32,7 @@ public class SpecialEggs extends Tweak {
         wg = (WorldGuardPlugin) Bukkit.getPluginManager().getPlugin("WorldGuard");
 
         addEgg(new BlinkEgg());
+        addEgg(new FreezeEgg());
 
         for (SpecialEgg egg : eggs.values()) {
             egg.initialize(this);
