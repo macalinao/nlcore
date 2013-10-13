@@ -75,7 +75,7 @@ public class FreezeEgg extends ThrownEgg {
      */
     public boolean isFrozen(Player p) {
         Long last = lastFrozen.get(p.getName());
-        return last != null && (last + FREEZE_MS - System.currentTimeMillis()) < 0;
+        return last != null && (last + FREEZE_MS - System.currentTimeMillis()) > 0;
     }
 
     @EventHandler
