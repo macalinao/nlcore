@@ -26,6 +26,8 @@ public class FreezeEgg extends ThrownEgg {
 
     public static final int FREEZE_MS = 3000;
 
+    public static final int FREEZE_IMMUNE_MS = 10000;
+
     public static final double FREEZE_RADIUS = 3.5;
 
     /**
@@ -39,18 +41,21 @@ public class FreezeEgg extends ThrownEgg {
         eggType = EntityType.GHAST;
         allowInCombat = false;
         useInNoPvPZone = false;
-        cooldown = 60;
+        cooldown = 15;
         detonateTime = 3000;
     }
 
     @Override
     public boolean detonate(Player p, Location target) {
         for (Player pl : Bukkit.getOnlinePlayers()) {
-            if (pl.getLocation().distanceSquared(target) < FREEZE_RADIUS * FREEZE_RADIUS) {
+            if (pl.getLocation().distanceSquared(target) < FREEZE_RADIUS * FREEZE_RADIUS && !isImmune(pl)) {
                 // Freeze them
                 freeze(pl);
             }
         }
+
+        target.getWorld().playEffect(target, Effect.SMOKE, 4);
+        target.getWorld().playSound(target, Sound.GLASS, 1.0f, 0.5f);
         return true;
     }
 
@@ -60,10 +65,7 @@ public class FreezeEgg extends ThrownEgg {
      * @param p
      */
     public void freeze(Player p) {
-        Location l = p.getLocation();
         lastFrozen.put(p.getName(), System.currentTimeMillis());
-        p.getWorld().playEffect(l, Effect.SMOKE, 4);
-        p.getWorld().playSound(l, Sound.GLASS, 1.0f, 0.5f);
         p.sendMessage(ChatColor.AQUA + "You've been frozen by a freeze egg!");
     }
 
@@ -76,6 +78,17 @@ public class FreezeEgg extends ThrownEgg {
     public boolean isFrozen(Player p) {
         Long last = lastFrozen.get(p.getName());
         return last != null && (last + FREEZE_MS - System.currentTimeMillis()) > 0;
+    }
+
+    /**
+     * Checks if a player is immune to freezing.
+     *
+     * @param p
+     * @return
+     */
+    public boolean isImmune(Player p) {
+        Long last = lastFrozen.get(p.getName());
+        return last != null && (last + FREEZE_IMMUNE_MS - System.currentTimeMillis()) > 0;
     }
 
     @EventHandler
