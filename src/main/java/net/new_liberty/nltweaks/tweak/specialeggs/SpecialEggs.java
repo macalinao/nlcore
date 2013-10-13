@@ -8,6 +8,7 @@ import java.util.Map;
 import net.new_liberty.nltweaks.Tweak;
 import net.new_liberty.nltweaks.tweak.specialeggs.eggs.BlinkEgg;
 import net.new_liberty.nltweaks.tweak.specialeggs.eggs.FreezeEgg;
+import net.new_liberty.nltweaks.tweak.specialeggs.eggs.SpongeEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -33,12 +34,21 @@ public class SpecialEggs extends Tweak {
 
         addEgg(new BlinkEgg());
         addEgg(new FreezeEgg());
+        addEgg(new SpongeEgg());
 
         for (SpecialEgg egg : eggs.values()) {
             egg.initialize(this);
+            egg.onEnable();
         }
 
         plugin.getCommand("segive").setExecutor(new SEGive(this));
+    }
+    
+    @Override
+    public void onDisable() {
+        for (SpecialEgg egg : eggs.values()) {
+            egg.onDisable();
+        }
     }
 
     /**

@@ -30,7 +30,10 @@ public abstract class ThrownEgg extends SpecialEgg {
 
     protected ThrownEgg(String name) {
         super(name);
+    }
 
+    @Override
+    public void onEnable() {
         (new BukkitRunnable() {
             @Override
             public void run() {

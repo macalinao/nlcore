@@ -46,7 +46,12 @@ public abstract class SpecialEgg implements Listener {
         if (this.ea == null) {
             this.ea = ea;
         }
-        System.out.println(this.ea);
+    }
+
+    public void onEnable() {
+    }
+
+    public void onDisable() {
     }
 
     public String getName() {

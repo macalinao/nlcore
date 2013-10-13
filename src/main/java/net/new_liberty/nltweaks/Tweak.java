@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
  * Represents a tweak in NL.
  */
 public abstract class Tweak implements Listener {
+
     protected NLTweaks plugin;
 
     protected Logger logger;
@@ -34,6 +35,12 @@ public abstract class Tweak implements Listener {
     }
 
     /**
+     * Called when the tweak is disabled.
+     */
+    public void onDisable() {
+    }
+
+    /**
      * Gets the name of this tweak.
      *
      * @return
@@ -50,4 +57,5 @@ public abstract class Tweak implements Listener {
     public Logger getLogger() {
         return logger;
     }
+
 }
