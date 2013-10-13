@@ -75,6 +75,7 @@ public class SEGive implements CommandExecutor {
         }
 
         player.getInventory().addItem(s.create(amt));
+        sender.sendMessage(ChatColor.YELLOW + "You have given " + amt + " " + s.getName() + " to " + player.getName() + ".");
         return true;
     }
 
