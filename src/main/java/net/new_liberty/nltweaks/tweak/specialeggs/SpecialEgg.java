@@ -83,7 +83,7 @@ public abstract class SpecialEgg implements Listener {
         ItemMeta m = r.getItemMeta();
         m.setDisplayName(ChatColor.RESET + name);
         m.setLore(Arrays.asList(ChatColor.RESET.toString() + ChatColor.YELLOW + description));
-        m.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+        m.addEnchant(Enchantment.DURABILITY, 1, true);
         r.setItemMeta(m);
         m.removeEnchant(Enchantment.DAMAGE_ALL);
 
