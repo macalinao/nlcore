@@ -8,6 +8,7 @@ import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -82,6 +83,7 @@ public abstract class SpecialEgg implements Listener {
         ItemMeta m = r.getItemMeta();
         m.setDisplayName(ChatColor.RESET + name);
         m.setLore(Arrays.asList(ChatColor.RESET.toString() + ChatColor.YELLOW + description));
+        m.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
         r.setItemMeta(m);
 
         return r;
