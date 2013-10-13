@@ -20,8 +20,8 @@ public class FreezeEgg extends ThrownEgg {
 
     public FreezeEgg() {
         super("Freeze Egg");
-        description = "Prevents people surrounding the egg's detonation location from moving.";
-        eggType = EntityType.ENDERMAN;
+        description = "Prevents enemies from moving.";
+        eggType = EntityType.GHAST;
         allowInCombat = false;
         useInNoPvPZone = false;
         cooldown = 60;
@@ -30,7 +30,7 @@ public class FreezeEgg extends ThrownEgg {
 
     @Override
     public boolean detonate(Player p, Location target) {
-        p.getWorld().playSound(p.getLocation(), Sound.GLASS, 10.0f, 0.5f);
+        p.getWorld().playSound(p.getLocation(), Sound.GLASS, 1.0f, 0.5f);
         return true;
     }
 
