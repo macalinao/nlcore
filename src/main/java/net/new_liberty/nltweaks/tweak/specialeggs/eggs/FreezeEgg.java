@@ -51,6 +51,10 @@ public class FreezeEgg extends ThrownEgg {
             if (p == pl) {
                 continue;
             }
+            
+            if (!pl.getLocation().getWorld().equals(target.getWorld())) {
+                continue;
+            }
 
             if (pl.getLocation().distanceSquared(target) > FREEZE_RADIUS * FREEZE_RADIUS && !isImmune(pl)) {
                 continue;
