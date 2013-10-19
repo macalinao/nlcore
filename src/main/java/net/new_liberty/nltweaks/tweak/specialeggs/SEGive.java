@@ -62,8 +62,8 @@ public class SEGive implements CommandExecutor {
         }
         if (args.length >= 3) {
             String pName = args[2];
-            Player pPlayer = Bukkit.getPlayer(pName);
-            if (pPlayer == null) {
+            player = Bukkit.getPlayer(pName);
+            if (player == null) {
                 sender.sendMessage(ChatColor.RED + "Unknown player.");
                 return true;
             }
