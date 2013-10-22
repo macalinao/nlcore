@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
@@ -116,6 +117,7 @@ public class FreezeEgg extends ThrownEgg {
     public void onPlayerMove(PlayerMoveEvent e) {
         if (isFrozen(e.getPlayer())) {
             e.setCancelled(true);
+            e.getPlayer().setFallDistance(0f); // Prevent fall damage
         }
     }
 
