@@ -15,6 +15,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
@@ -51,7 +53,7 @@ public class FreezeEgg extends ThrownEgg {
             if (p == pl) {
                 continue;
             }
-            
+
             if (!pl.getLocation().getWorld().equals(target.getWorld())) {
                 continue;
             }
@@ -113,6 +115,21 @@ public class FreezeEgg extends ThrownEgg {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         if (isFrozen(e.getPlayer())) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
+        if (!isFrozen((Player) e.getEntity())) {
+            return;
+        }
+
+        if (e.getCause() == DamageCause.FALL) {
             e.setCancelled(true);
         }
     }
