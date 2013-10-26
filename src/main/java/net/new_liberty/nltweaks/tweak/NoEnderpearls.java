@@ -15,12 +15,13 @@ import org.bukkit.inventory.ItemStack;
  * Disables the use of Ender Pearls.
  */
 public class NoEnderpearls extends Tweak {
+
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent e) {
         Player player = e.getPlayer();
         if (e.getCause().equals(PlayerTeleportEvent.TeleportCause.ENDER_PEARL) && !player.hasPermission("noenderpearls.bypass")) {
             e.setCancelled(true);
-            player.sendMessage(ChatColor.RED + "You can't use Ender Pearls on this server.");
+            player.sendMessage(ChatColor.RED + "You can't use Ender Pearls on this server. Try using Blink Eggs instead.");
             player.getInventory().addItem(new ItemStack(Material.ENDER_PEARL));
         }
     }
@@ -31,4 +32,5 @@ public class NoEnderpearls extends Tweak {
             e.setCancelled(true);
         }
     }
+
 }
