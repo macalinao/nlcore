@@ -10,6 +10,7 @@ import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
 import net.new_liberty.nltweaks.tweak.NoEnderpearls;
 import net.new_liberty.nltweaks.tweak.NoInvisibilityPots;
 import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
+import net.new_liberty.nltweaks.tweak.PortalUnstuck;
 import net.new_liberty.nltweaks.tweak.StaffList;
 import net.new_liberty.nltweaks.tweak.VHomeInformer;
 
@@ -37,6 +38,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         addTweak(new NoEnderpearls());
         addTweak(new NoInvisibilityPots());
         addTweak(new NoTNTMinecart());
+        addTweak(new PortalUnstuck());
         addTweak(new StaffList());
         addTweak(new VHomeInformer());
     }
