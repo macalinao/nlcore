@@ -33,7 +33,7 @@ permissions:
   stafflist.helper:
     description: Helper permission
   nl.admin:
-  	description: Admin permission
+    description: Admin permission
 
 commands:
   list:
@@ -49,5 +49,5 @@ commands:
     description: Allows setting your chat color.
     usage: /setchatcolor <color>
   versionreport:
-  	description: Creates a version report which will be saved to a given file.
-  	usage: /versionreport <name>
+    description: Creates a version report which will be saved to a given file.
+    usage: /versionreport <name>
