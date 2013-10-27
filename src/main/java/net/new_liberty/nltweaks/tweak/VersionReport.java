@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import net.new_liberty.nltweaks.Tweak;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -80,12 +81,14 @@ public class VersionReport extends Tweak implements CommandExecutor {
             out = new PrintWriter(file);
 
             out.println(rb.toString());
+
+            sender.sendMessage(ChatColor.GREEN + "Report generated successfuly at " + ChatColor.YELLOW + file.getPath() + ChatColor.GREEN + ".");
         } catch (IOException ex) {
+            logger.log(Level.SEVERE, "Could not write version file!", ex);
             sender.sendMessage(ChatColor.RED + "Error saving the version file!");
         } finally {
             out.close();
         }
-
         return true;
     }
 
