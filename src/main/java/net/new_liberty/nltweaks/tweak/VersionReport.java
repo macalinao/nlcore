@@ -20,8 +20,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 /**
- *
- * @author simplyianm
+ * Command that generates a JSON file containing all version numbers of all
+ * installed plugins.
  */
 public class VersionReport extends Tweak implements CommandExecutor {
 
