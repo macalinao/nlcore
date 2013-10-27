@@ -59,7 +59,6 @@ public class VersionReport extends Tweak implements CommandExecutor {
             PluginDescriptionFile pdf = p.getDescription();
 
             StringBuilder pl = new StringBuilder("{");
-            pl.append("{");
             pl.append("\"name\":\"").append(pdf.getName()).append("\",");
             pl.append("\"version\":\"").append(pdf.getVersion()).append("\"");
             pl.append("}");
@@ -72,7 +71,7 @@ public class VersionReport extends Tweak implements CommandExecutor {
 
         File dir = new File(plugin.getDataFolder(), "reports/");
         dir.mkdirs();
-        File file = new File(dir, reportName + ".jar");
+        File file = new File(dir, reportName + ".json");
         file.delete();
 
         PrintWriter out = null;
