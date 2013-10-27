@@ -32,6 +32,8 @@ permissions:
     description: Mod permission
   stafflist.helper:
     description: Helper permission
+  nl.admin:
+  	description: Admin permission
 
 commands:
   list:
@@ -46,3 +48,6 @@ commands:
   setchatcolor:
     description: Allows setting your chat color.
     usage: /setchatcolor <color>
+  versionreport:
+  	description: Creates a version report which will be saved to a given file.
+  	usage: /versionreport <name>

@@ -14,6 +14,7 @@ import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
 import net.new_liberty.nltweaks.tweak.PortalUnstuck;
 import net.new_liberty.nltweaks.tweak.StaffList;
 import net.new_liberty.nltweaks.tweak.VHomeInformer;
+import net.new_liberty.nltweaks.tweak.VersionReport;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -41,6 +42,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
         addTweak(new NoTNTMinecart());
         addTweak(new PortalUnstuck());
         addTweak(new StaffList());
+        addTweak(new VersionReport());
         addTweak(new VHomeInformer());
 
         addTweak(new SpecialEggs());
