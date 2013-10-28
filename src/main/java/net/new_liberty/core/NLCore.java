@@ -6,6 +6,7 @@ import net.new_liberty.core.module.Module;
 import java.util.logging.Level;
 import net.new_liberty.core.enderchestprotect.EnderChestProtect;
 import net.new_liberty.core.itemconomy.Itemconomy;
+import net.new_liberty.core.player.PlayerModule;
 
 import net.new_liberty.core.tweaks.ChatColorCommands;
 import net.new_liberty.core.tweaks.EasySpawners;
@@ -42,6 +43,7 @@ public class NLCore extends JavaPlugin implements Listener {
         // Modules
         addModule(new EnderChestProtect());
         addModule(new Itemconomy());
+        addModule(new PlayerModule());
         addModule(new SpecialEggs());
 
         // Tweaks
