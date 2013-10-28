@@ -17,6 +17,7 @@ import net.new_liberty.core.itemconomy.commands.ICSignDeposit;
 import net.new_liberty.core.itemconomy.commands.ICSignWithdraw;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.permissions.Permission;
 
 /**
  *
@@ -31,6 +32,8 @@ public class Itemconomy extends Module {
     @Override
     public void onEnable() {
         _instance = this;
+
+        plugin.getServer().getPluginManager().addPermission(new Permission("itemconomy.console"));
 
         // Our currency - TODO config
         currency.put(Material.EMERALD, 1);

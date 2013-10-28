@@ -39,11 +39,13 @@ public class NLCore extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
+        
+        // Core modules
+        addModule(new PlayerModule());
 
         // Modules
         addModule(new EnderChestProtect());
         addModule(new Itemconomy());
-        addModule(new PlayerModule());
         addModule(new SpecialEggs());
 
         // Tweaks

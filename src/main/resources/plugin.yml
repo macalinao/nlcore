@@ -34,21 +34,8 @@ permissions:
     description: Mod permission
   stafflist.helper:
     description: Helper permission
-  nl.admin:
-    description: Admin permission
   ecp.admin:
     description: Allows using other players' chests.
-    
-  ranks.donor.premium:
-    description: Premium donor rank
-  ranks.donor.elite:
-    description: Elite donor rank
-  ranks.donor.hero:
-    description: Hero donor rank
-  ranks.donor.guardian:
-    description: Guardian donor rank
-  ranks.donor.champion:
-    description: Champion donor rank
 
 commands:
   list:

@@ -9,6 +9,8 @@ import net.new_liberty.core.enderchestprotect.command.ECClearCommand;
 import net.new_liberty.core.enderchestprotect.command.ECConfirmCommand;
 import net.new_liberty.core.enderchestprotect.command.ECListCommand;
 import net.new_liberty.core.enderchestprotect.command.ECViewCommand;
+import net.new_liberty.core.player.DonorRank;
+import net.new_liberty.core.player.NLPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -84,10 +86,23 @@ public class EnderChestProtect extends Module {
      * @return
      */
     public int getAllowedChestCount(Player p) {
-        for (int i = 15; i > 0; i--) {
-            if (p.hasPermission("nlenderchest.place." + i)) {
-                return i;
-            }
+        if (p.hasPermission("ncp.admin")) {
+            return 1000;
+        }
+
+        NLPlayer n = new NLPlayer(p);
+        DonorRank r = n.getDonorRank();
+        switch (r) {
+            case PREMIUM:
+                return 1;
+            case HERO:
+                return 2;
+            case ELITE:
+                return 3;
+            case GUARDIAN:
+                return 4;
+            case CHAMPION:
+                return 5;
         }
         return 0;
     }
