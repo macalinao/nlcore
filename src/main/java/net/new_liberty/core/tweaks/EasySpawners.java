@@ -1,6 +1,6 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.Module;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * Makes spawners easy.
  */
-public class EasySpawners extends Tweak {
+public class EasySpawners extends Module {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Block b = event.getBlock();

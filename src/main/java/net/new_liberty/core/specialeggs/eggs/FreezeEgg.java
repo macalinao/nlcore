@@ -1,11 +1,11 @@
-package net.new_liberty.nltweaks.tweak.specialeggs.eggs;
+package net.new_liberty.core.specialeggs.eggs;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.struct.Relation;
 import java.util.HashMap;
 import java.util.Map;
-import net.new_liberty.nltweaks.tweak.specialeggs.ThrownEgg;
+import net.new_liberty.core.specialeggs.ThrownEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;

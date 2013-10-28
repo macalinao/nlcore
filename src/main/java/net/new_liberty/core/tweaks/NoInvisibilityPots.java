@@ -1,7 +1,7 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
-import net.new_liberty.nltweaks.NLTweaks;
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.NLCore;
+import net.new_liberty.core.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionType;
  * Prevents players from using invisibility potions. The current plugin likes to
  * error.
  */
-public class NoInvisibilityPots extends Tweak {
+public class NoInvisibilityPots extends Module {
     @EventHandler
     public void onPotionSplash(PotionSplashEvent e) {
         Potion p;

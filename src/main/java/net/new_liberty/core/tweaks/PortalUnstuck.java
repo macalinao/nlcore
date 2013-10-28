@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 /**
  * PortalUnstuck.jar
  */
-public class PortalUnstuck extends Tweak {
+public class PortalUnstuck extends Module {
 
     @EventHandler
     public void onLogin(final PlayerJoinEvent e) {

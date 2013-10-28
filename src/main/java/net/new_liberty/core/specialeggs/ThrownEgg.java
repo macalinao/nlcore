@@ -1,9 +1,9 @@
-package net.new_liberty.nltweaks.tweak.specialeggs;
+package net.new_liberty.core.specialeggs;
 
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.ArrayList;
 import java.util.List;
-import net.new_liberty.nltweaks.NLTweaks;
+import net.new_liberty.core.NLCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -49,7 +49,7 @@ public abstract class ThrownEgg extends SpecialEgg {
                 }
             }
 
-        }).runTaskTimer(NLTweaks.getInstance(), 2, 2);
+        }).runTaskTimer(NLCore.getInstance(), 2, 2);
     }
 
     /**

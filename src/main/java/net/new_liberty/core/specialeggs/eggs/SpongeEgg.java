@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak.specialeggs.eggs;
+package net.new_liberty.core.specialeggs.eggs;
 
 import com.sk89q.worldguard.bukkit.SpongeUtil;
 import java.util.LinkedList;
 import java.util.Queue;
-import net.new_liberty.nltweaks.NLTweaks;
-import net.new_liberty.nltweaks.tweak.specialeggs.SpecialEgg;
+import net.new_liberty.core.NLCore;
+import net.new_liberty.core.specialeggs.SpecialEgg;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -57,7 +57,7 @@ public class SpongeEgg extends SpecialEgg {
                 }
             }
 
-        }).runTaskTimer(NLTweaks.getInstance(), 20, 20); // 20 ticks per second
+        }).runTaskTimer(NLCore.getInstance(), 20, 20); // 20 ticks per second
     }
 
     @Override

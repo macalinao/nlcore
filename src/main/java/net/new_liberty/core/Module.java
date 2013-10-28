@@ -1,4 +1,4 @@
-package net.new_liberty.nltweaks;
+package net.new_liberty.core;
 
 import java.util.logging.Logger;
 import org.bukkit.event.Listener;
@@ -6,9 +6,9 @@ import org.bukkit.event.Listener;
 /**
  * Represents a tweak in NL.
  */
-public abstract class Tweak implements Listener {
+public abstract class Module implements Listener {
 
-    protected NLTweaks plugin;
+    protected NLCore plugin;
 
     protected Logger logger;
 
@@ -19,12 +19,12 @@ public abstract class Tweak implements Listener {
      *
      * @param plugin
      */
-    public void initialize(NLTweaks plugin) {
+    public void initialize(NLCore plugin) {
         if (initialized) {
             return;
         }
         this.plugin = plugin;
-        logger = new TweakLogger(this);
+        logger = new ModuleLogger(this);
         initialized = true;
     }
 

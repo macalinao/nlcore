@@ -1,7 +1,7 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
-import net.new_liberty.nltweaks.NLTweaks;
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.NLCore;
+import net.new_liberty.core.Module;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Nerfs Strength Pots back to how they were in 1.5.
  */
-public class NerfStrengthPots extends Tweak {
+public class NerfStrengthPots extends Module {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (!(e.getDamager() instanceof Player)) {

@@ -1,20 +1,20 @@
-package net.new_liberty.nltweaks;
+package net.new_liberty.core;
 
 import java.util.logging.Level;
 
-import net.new_liberty.nltweaks.tweak.ChatColorCommands;
-import net.new_liberty.nltweaks.tweak.EasySpawners;
-import net.new_liberty.nltweaks.tweak.HeadDrop;
-import net.new_liberty.nltweaks.tweak.specialeggs.SpecialEggs;
-import net.new_liberty.nltweaks.tweak.MobTamer;
-import net.new_liberty.nltweaks.tweak.NerfStrengthPots;
-import net.new_liberty.nltweaks.tweak.NoEnderpearls;
-import net.new_liberty.nltweaks.tweak.NoInvisibilityPots;
-import net.new_liberty.nltweaks.tweak.NoTNTMinecart;
-import net.new_liberty.nltweaks.tweak.PortalUnstuck;
-import net.new_liberty.nltweaks.tweak.StaffList;
-import net.new_liberty.nltweaks.tweak.VHomeInformer;
-import net.new_liberty.nltweaks.tweak.VersionReport;
+import net.new_liberty.core.tweaks.ChatColorCommands;
+import net.new_liberty.core.tweaks.EasySpawners;
+import net.new_liberty.core.tweaks.HeadDrop;
+import net.new_liberty.core.specialeggs.SpecialEggs;
+import net.new_liberty.core.tweaks.MobTamer;
+import net.new_liberty.core.tweaks.NerfStrengthPots;
+import net.new_liberty.core.tweaks.NoEnderpearls;
+import net.new_liberty.core.tweaks.NoInvisibilityPots;
+import net.new_liberty.core.tweaks.NoTNTMinecart;
+import net.new_liberty.core.tweaks.PortalUnstuck;
+import net.new_liberty.core.tweaks.StaffList;
+import net.new_liberty.core.tweaks.VHomeInformer;
+import net.new_liberty.core.tweaks.VersionReport;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -24,9 +24,9 @@ import org.bukkit.plugin.java.JavaPlugin;
  * This plugin contains all of the tweaks to New Liberty that don't warrant
  * their own plugin.
  */
-public class NLTweaks extends JavaPlugin implements Listener {
+public class NLCore extends JavaPlugin implements Listener {
 
-    private static NLTweaks instance;
+    private static NLCore instance;
 
     @Override
     public void onEnable() {
@@ -53,14 +53,14 @@ public class NLTweaks extends JavaPlugin implements Listener {
         instance = null;
     }
 
-    private void addTweak(Tweak tweak) {
+    private void addTweak(Module tweak) {
         tweak.initialize(this);
         Bukkit.getPluginManager().registerEvents(tweak, this);
         tweak.onEnable();
         tweak.getLogger().log(Level.INFO, "Tweak enabled.");
     }
 
-    public static NLTweaks getInstance() {
+    public static NLCore getInstance() {
         return instance;
     }
 

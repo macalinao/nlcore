@@ -1,19 +1,19 @@
-package net.new_liberty.nltweaks.tweak.specialeggs;
+package net.new_liberty.core.specialeggs;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.trc202.CombatTag.CombatTag;
 import com.trc202.CombatTagApi.CombatTagApi;
 import java.util.HashMap;
 import java.util.Map;
-import net.new_liberty.nltweaks.Tweak;
-import net.new_liberty.nltweaks.tweak.specialeggs.eggs.BlinkEgg;
-import net.new_liberty.nltweaks.tweak.specialeggs.eggs.FreezeEgg;
-import net.new_liberty.nltweaks.tweak.specialeggs.eggs.SpongeEgg;
+import net.new_liberty.core.Module;
+import net.new_liberty.core.specialeggs.eggs.BlinkEgg;
+import net.new_liberty.core.specialeggs.eggs.FreezeEgg;
+import net.new_liberty.core.specialeggs.eggs.SpongeEgg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class SpecialEggs extends Tweak {
+public class SpecialEggs extends Module {
 
     private CombatTagApi combatTag = null;
 

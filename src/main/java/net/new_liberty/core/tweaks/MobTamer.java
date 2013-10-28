@@ -1,6 +1,6 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Mob Tamer tweak.
  */
-public class MobTamer extends Tweak {
+public class MobTamer extends Module {
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getAction() != Action.LEFT_CLICK_BLOCK) {

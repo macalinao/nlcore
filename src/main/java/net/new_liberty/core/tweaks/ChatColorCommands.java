@@ -1,8 +1,8 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
 import java.util.Arrays;
 import java.util.List;
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 /**
  * Commands to allow changing of chat colors.
  */
-public class ChatColorCommands extends Tweak {
+public class ChatColorCommands extends Module {
     private static final String OK_RESPONSE = "OK";
 
     /**

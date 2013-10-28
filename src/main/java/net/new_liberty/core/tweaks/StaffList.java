@@ -1,10 +1,10 @@
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.List;
-import net.new_liberty.nltweaks.NLTweaks;
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.NLCore;
+import net.new_liberty.core.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 /**
  * Handles /list and notifications of helpers logging in
  */
-public class StaffList extends Tweak implements CommandExecutor {
+public class StaffList extends Module implements CommandExecutor {
     @Override
     public void onEnable() {
         plugin.getCommand("list").setExecutor(this);

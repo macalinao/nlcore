@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak;
+package net.new_liberty.core.tweaks;
 
 import com.google.common.base.Joiner;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import net.new_liberty.nltweaks.Tweak;
+import net.new_liberty.core.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,7 +23,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
  * Command that generates a JSON file containing all version numbers of all
  * installed plugins.
  */
-public class VersionReport extends Tweak implements CommandExecutor {
+public class VersionReport extends Module implements CommandExecutor {
 
     @Override
     public void onEnable() {

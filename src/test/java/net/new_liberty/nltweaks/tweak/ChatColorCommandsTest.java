@@ -1,7 +1,7 @@
 package net.new_liberty.nltweaks.tweak;
 
-import net.new_liberty.nltweaks.tweak.ChatColorCommands.SetChatColorCommand;
-import net.new_liberty.nltweaks.tweak.ChatColorCommands.SetColorsCommand;
+import net.new_liberty.core.tweaks.ChatColorCommands.SetChatColorCommand;
+import net.new_liberty.core.tweaks.ChatColorCommands.SetColorsCommand;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

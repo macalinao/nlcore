@@ -1,6 +1,6 @@
-package net.new_liberty.nltweaks.tweak.specialeggs.eggs;
+package net.new_liberty.core.specialeggs.eggs;
 
-import net.new_liberty.nltweaks.tweak.specialeggs.ThrownEgg;
+import net.new_liberty.core.specialeggs.ThrownEgg;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 

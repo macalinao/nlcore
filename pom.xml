@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>NLTweaks</name>
-    <description>A plugin containing all the small tweaks to gameplay NL has.</description>
+    <name>NLCore</name>
+    <description>The core plugin of New Liberty.</description>
     <groupId>net.new_liberty</groupId>
-    <artifactId>nltweaks</artifactId>
+    <artifactId>nlcore</artifactId>
     <version>1.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://new-liberty.net</url>
@@ -14,24 +14,24 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <author>AlbireoX</author>
         <buildNumber>0</buildNumber>
-        <mainClass>${project.groupId}.${project.artifactId}.NLTweaks</mainClass>
+        <mainClass>${project.groupId}.${project.artifactId}.NLCore</mainClass>
     </properties>
 
     <scm>
-        <developerConnection>scm:git:git@bitbucket.org:newliberty/nltweaks.git</developerConnection>
-        <connection>scm:git:https://bitbucket.org/newliberty/nltweaks.git</connection>
-        <url>https://bitbucket.org/newliberty/nltweaks</url>
+        <developerConnection>scm:git:git@bitbucket.org:newliberty/nlcore.git</developerConnection>
+        <connection>scm:git:https://bitbucket.org/newliberty/nlcore.git</connection>
+        <url>https://bitbucket.org/newliberty/nlcore</url>
         <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.new-liberty.net/job/NLTweaks</url>
+        <url>http://ci.new-liberty.net/job/nlcore</url>
     </ciManagement>
 
     <issueManagement>
         <system>Bitbucket</system>
-        <url>https://bitbucket.org/newliberty/nltweaks/issues</url>
+        <url>https://bitbucket.org/newliberty/nlcore/issues</url>
     </issueManagement>
 
     <distributionManagement>

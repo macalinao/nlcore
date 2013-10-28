@@ -1,4 +1,4 @@
-package net.new_liberty.nltweaks;
+package net.new_liberty.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +15,7 @@ import org.bukkit.block.Block;
 /**
  * Ian is a naughty boy, his code is all from essentials :(
  */
-public class TweakUtil {
+public class ModuleUtil {
 	public static final Set<Integer> HOLLOW_MATERIALS = new HashSet<Integer>();
 	public static final HashSet<Byte> TRANSPARENT_MATERIALS = new HashSet<Byte>();
 	public static final int RADIUS = 3;
@@ -196,7 +196,7 @@ public class TweakUtil {
 		public int z;
 	}
 
-	private TweakUtil() {
+	private ModuleUtil() {
 		throw new UnsupportedOperationException(
 				"Cannot create instances of TweakUtil");
 	}

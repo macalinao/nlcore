@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.nltweaks.tweak.specialeggs;
+package net.new_liberty.core.specialeggs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
