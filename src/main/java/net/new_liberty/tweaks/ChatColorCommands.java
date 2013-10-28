@@ -25,7 +25,7 @@ public class ChatColorCommands extends Module {
     @Override
     public void onEnable() {
         addPermission("chatcolorcommands.setcolors", "Allows setting your prefix colors.");
-        addPermission("chatcolorcommands.setchatcolor", "Allows settign your chat color.");
+        addPermission("chatcolorcommands.setchatcolor", "Allows setting your chat color.");
 
         plugin.getCommand("setcolors").setExecutor(new SetColorsCommand());
         plugin.getCommand("setchatcolor").setExecutor(new SetChatColorCommand());
