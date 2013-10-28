@@ -36,6 +36,8 @@ permissions:
     description: Helper permission
   nl.admin:
     description: Admin permission
+  ecp.admin:
+    description: Allows using other players' chests.
 
 commands:
   list:
@@ -68,3 +70,15 @@ commands:
   icsignwithdraw:
     description: Withdraw emeralds
     usage: /icsignwithdraw <player> <amt>
+  ecclear:
+    description: Clears Ender Chests.
+    usage: /ecclear [player]
+  ecconfirm:
+    description: Confirms if you want to clear Ender Chests.
+    usage: /ecconfirm
+  eclist:
+    description: Lists Ender Chests.
+    usage: /eclist [player]
+  ecview:
+    description: Views an Ender Chest.
+    usage: /ecview <chest id>
