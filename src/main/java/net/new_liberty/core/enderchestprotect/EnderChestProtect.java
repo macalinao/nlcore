@@ -34,6 +34,8 @@ public class EnderChestProtect extends Module {
             return;
         }
 
+        addPermission("ecp.admin", "EnderChestProtect admin permission");
+
         ecManager = new ECManager(this);
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS enderchests ("

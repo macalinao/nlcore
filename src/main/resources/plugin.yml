@@ -28,14 +28,6 @@ permissions:
       - chatcolorcommands.setchatcolor
   specialeggs.segive:
     description: Gives an egg to the user or a target.
-  stafflist.admin:
-    description: Admin permission
-  stafflist.mod:
-    description: Mod permission
-  stafflist.helper:
-    description: Helper permission
-  ecp.admin:
-    description: Allows using other players' chests.
 
 commands:
   list:

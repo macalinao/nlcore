@@ -3,8 +3,9 @@ package net.new_liberty.core.tweaks;
 import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.List;
-import net.new_liberty.core.NLCore;
 import net.new_liberty.core.module.Module;
+import net.new_liberty.core.player.NLPlayer;
+import net.new_liberty.core.player.StaffRank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -19,6 +20,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * Handles /list and notifications of helpers logging in
  */
 public class StaffList extends Module implements CommandExecutor {
+
     @Override
     public void onEnable() {
         plugin.getCommand("list").setExecutor(this);
@@ -33,18 +35,23 @@ public class StaffList extends Module implements CommandExecutor {
         List<String> admins = new ArrayList<String>();
 
         for (Player p : players) {
-            if (p.hasPermission("stafflist.admin")) {
-                if (canSee(sender, p)) {
-                    admins.add(p.getName());
-                }
-            } else if (p.hasPermission("stafflist.mod")) {
-                if (canSee(sender, p)) {
-                    mods.add(p.getName());
-                }
-            } else if (p.hasPermission("stafflist.helper")) {
-                if (canSee(sender, p)) {
-                    helpers.add(p.getName());
-                }
+            StaffRank r = (new NLPlayer(p)).getStaffRank();
+            switch (r) {
+                case ADMIN:
+                    if (canSee(sender, p)) {
+                        admins.add(p.getName());
+                    }
+                    break;
+                case MOD:
+                    if (canSee(sender, p)) {
+                        mods.add(p.getName());
+                    }
+                    break;
+                case HELPER:
+                    if (canSee(sender, p)) {
+                        helpers.add(p.getName());
+                    }
+                    break;
             }
         }
         Joiner j = Joiner.on(' ');
@@ -72,4 +79,5 @@ public class StaffList extends Module implements CommandExecutor {
             Bukkit.broadcastMessage(ChatColor.YELLOW + "[Helper] " + ChatColor.GRAY + e.getPlayer().getName() + " joined New Liberty");
         }
     }
+
 }
