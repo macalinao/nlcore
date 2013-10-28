@@ -4,17 +4,23 @@ import net.new_liberty.votesuite.command.VoteCommand;
 import com.simplyian.easydb.EasyDB;
 import java.util.*;
 import java.util.logging.Level;
+import net.new_liberty.core.module.Module;
 import net.new_liberty.votesuite.command.VHomeCommand;
 import net.new_liberty.votesuite.command.VSetHomeCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * VoteSuite main class.
  */
-public class VoteSuite extends JavaPlugin {
+public class VoteSuite extends Module {
+
     private Map<String, VoteService> services;
+
+    @Override
+    public String[] getDependencies() {
+        return new String[]{"EasyDB", "Votifier"};
+    }
 
     @Override
     public void onEnable() {
@@ -23,7 +29,6 @@ public class VoteSuite extends JavaPlugin {
             return;
         }
 
-        saveDefaultConfig();
         loadConfig();
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes ("
@@ -49,10 +54,10 @@ public class VoteSuite extends JavaPlugin {
                 + "pitch FLOAT NOT NULL,"
                 + "PRIMARY KEY (name));");
 
-        getCommand("vhome").setExecutor(new VHomeCommand(this));
-        getCommand("vsethome").setExecutor(new VSetHomeCommand(this));
-        getCommand("vote").setExecutor(new VoteCommand(this));
-        Bukkit.getPluginManager().registerEvents(new VSListener(this), this);
+        plugin.getCommand("vhome").setExecutor(new VHomeCommand(this));
+        plugin.getCommand("vsethome").setExecutor(new VSetHomeCommand(this));
+        plugin.getCommand("vote").setExecutor(new VoteCommand(this));
+        Bukkit.getPluginManager().registerEvents(new VSListener(this), plugin);
 
         getLogger().log(Level.INFO, "Plugin loaded.");
     }
@@ -63,9 +68,9 @@ public class VoteSuite extends JavaPlugin {
     private void loadConfig() {
         // Load services
         services = new HashMap<String, VoteService>();
-        ConfigurationSection servicesConfig = getConfig().getConfigurationSection("services");
+        ConfigurationSection servicesConfig = plugin.getConfig().getConfigurationSection("services");
         if (services == null) {
-            servicesConfig = getConfig().createSection("services");
+            servicesConfig = plugin.getConfig().createSection("services");
         }
         for (String key : servicesConfig.getKeys(false)) {
             String svcId = servicesConfig.getString(key + ".id", key);
@@ -104,4 +109,5 @@ public class VoteSuite extends JavaPlugin {
     public Voter getVoter(String player) {
         return new Voter(this, player);
     }
+
 }

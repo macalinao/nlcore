@@ -42,6 +42,15 @@ public abstract class Module implements Listener {
     }
 
     /**
+     * Gets all the plugin dependencies of this module.
+     *
+     * @return
+     */
+    public String[] getDependencies() {
+        return new String[0];
+    }
+
+    /**
      * Gets the name of this tweak.
      *
      * @return

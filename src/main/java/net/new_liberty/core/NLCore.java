@@ -77,6 +77,12 @@ public class NLCore extends JavaPlugin implements Listener {
     }
 
     private void addModule(Module module) {
+        for (String dep : module.getDependencies()) {
+            if (Bukkit.getPluginManager().getPlugin(dep) == null) {
+                module.getLogger().log(Level.WARNING, "Module could not be loaded due to missing dependency: " + dep);
+                return;
+            }
+        }
         module.initialize(this);
         Bukkit.getPluginManager().registerEvents(module, this);
         module.onEnable();

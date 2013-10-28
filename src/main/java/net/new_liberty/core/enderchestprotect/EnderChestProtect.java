@@ -19,12 +19,12 @@ public class EnderChestProtect extends Module {
     private ECManager ecManager;
 
     @Override
-    public void onEnable() {
-        if (Bukkit.getServer().getPluginManager().getPlugin("EasyDB") == null) {
-            logger.log(Level.SEVERE, "Could not find EasyDB! Loading halted.");
-            return;
-        }
+    public String[] getDependencies() {
+        return new String[]{"EasyDB"};
+    }
 
+    @Override
+    public void onEnable() {
         if (!EasyDB.getDb().isValid()) {
             getLogger().log(Level.SEVERE, "Invalid database credentials; plugin loading halted.");
             return;
