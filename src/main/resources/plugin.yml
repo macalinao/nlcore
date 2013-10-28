@@ -9,10 +9,6 @@ depend: [WorldGuard]
 softdepend: [CombatTag, EasyDB, Votifier]
 
 permissions:
-  itemconomy.console:
-    description: Allows use of the sign related commands.
-  noenderpearls.bypass:
-    description: Allows bypassing of Ender Pearl restrictions.
   chatcolorcommands.setcolors:
     description: Allows setting your prefix colors.
   chatcolorcommands.setchatcolor:
