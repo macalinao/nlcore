@@ -1,33 +1,34 @@
 package net.new_liberty.core.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import net.new_liberty.core.Module;
 import net.new_liberty.core.enderchestprotect.command.ECClearCommand;
 import net.new_liberty.core.enderchestprotect.command.ECConfirmCommand;
 import net.new_liberty.core.enderchestprotect.command.ECListCommand;
 import net.new_liberty.core.enderchestprotect.command.ECViewCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class EnderChestProtect extends JavaPlugin {
+public class EnderChestProtect extends Module {
+
     private Map<String, ClearChestTimer> clearChests = new HashMap<String, ClearChestTimer>();
 
     private ECManager ecManager;
 
     @Override
     public void onEnable() {
+        if (Bukkit.getServer().getPluginManager().getPlugin("EasyDB") == null) {
+            logger.log(Level.SEVERE, "Could not find EasyDB! Loading halted.");
+            return;
+        }
+
         if (!EasyDB.getDb().isValid()) {
             getLogger().log(Level.SEVERE, "Invalid database credentials; plugin loading halted.");
             return;
         }
-
-        // Save the config
-        saveDefaultConfig();
-        reloadConfig();
 
         ecManager = new ECManager(this);
 
@@ -42,12 +43,12 @@ public class EnderChestProtect extends JavaPlugin {
                 + "access_time TIMESTAMP NOT NULL,"
                 + "PRIMARY KEY (id));");
 
-        getCommand("ecclear").setExecutor(new ECClearCommand(this));
-        getCommand("ecconfirm").setExecutor(new ECConfirmCommand(this));
-        getCommand("eclist").setExecutor(new ECListCommand(this));
-        getCommand("ecview").setExecutor(new ECViewCommand(this));
+        plugin.getCommand("ecclear").setExecutor(new ECClearCommand(this));
+        plugin.getCommand("ecconfirm").setExecutor(new ECConfirmCommand(this));
+        plugin.getCommand("eclist").setExecutor(new ECListCommand(this));
+        plugin.getCommand("ecview").setExecutor(new ECViewCommand(this));
 
-        Bukkit.getPluginManager().registerEvents(new ECPListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new ECPListener(this), plugin);
 
         getLogger().log(Level.INFO, "Plugin enabled.");
     }
@@ -67,7 +68,7 @@ public class EnderChestProtect extends JavaPlugin {
      * @return
      */
     public int getExpiryMillis() {
-        return getConfig().getInt("expiry-minutes", 14 * 24 * 60) * 60 * 1000;
+        return 14 * 24 * 60 * 60 * 1000; // 14 days
     }
 
     public Map<String, ClearChestTimer> getClearChests() {
@@ -88,4 +89,5 @@ public class EnderChestProtect extends JavaPlugin {
         }
         return 0;
     }
+
 }
