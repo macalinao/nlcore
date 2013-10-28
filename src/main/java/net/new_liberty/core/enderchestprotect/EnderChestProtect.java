@@ -1,14 +1,14 @@
-package net.new_liberty.enderchestprotect;
+package net.new_liberty.core.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import net.new_liberty.enderchestprotect.command.ECClearCommand;
-import net.new_liberty.enderchestprotect.command.ECConfirmCommand;
-import net.new_liberty.enderchestprotect.command.ECListCommand;
-import net.new_liberty.enderchestprotect.command.ECViewCommand;
+import net.new_liberty.core.enderchestprotect.command.ECClearCommand;
+import net.new_liberty.core.enderchestprotect.command.ECConfirmCommand;
+import net.new_liberty.core.enderchestprotect.command.ECListCommand;
+import net.new_liberty.core.enderchestprotect.command.ECViewCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

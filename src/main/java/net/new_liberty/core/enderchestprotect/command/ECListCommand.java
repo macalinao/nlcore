@@ -1,8 +1,8 @@
-package net.new_liberty.enderchestprotect.command;
+package net.new_liberty.core.enderchestprotect.command;
 
 import java.util.List;
-import net.new_liberty.enderchestprotect.EnderChest;
-import net.new_liberty.enderchestprotect.EnderChestProtect;
+import net.new_liberty.core.enderchestprotect.EnderChest;
+import net.new_liberty.core.enderchestprotect.EnderChestProtect;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

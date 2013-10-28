@@ -1,4 +1,4 @@
-package net.new_liberty.enderchestprotect;
+package net.new_liberty.core.enderchestprotect;
 
 import org.bukkit.Material;
 

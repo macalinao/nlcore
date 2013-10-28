@@ -1,4 +1,4 @@
-package net.new_liberty.enderchestprotect;
+package net.new_liberty.core.enderchestprotect;
 
 import com.simplyian.easydb.EasyDB;
 import java.sql.ResultSet;
