@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.core.player;
+package net.new_liberty.nlcore.player;
 
-import net.new_liberty.core.player.StaffRank;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.player.StaffRank;
+import net.new_liberty.nlcore.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 

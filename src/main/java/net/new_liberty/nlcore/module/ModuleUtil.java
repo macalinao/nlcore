@@ -1,4 +1,4 @@
-package net.new_liberty.core.module;
+package net.new_liberty.nlcore.module;
 
 import java.util.ArrayList;
 import java.util.Collections;

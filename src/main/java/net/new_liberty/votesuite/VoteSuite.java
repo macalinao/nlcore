@@ -4,7 +4,7 @@ import net.new_liberty.votesuite.command.VoteCommand;
 import com.simplyian.easydb.EasyDB;
 import java.util.*;
 import java.util.logging.Level;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import net.new_liberty.votesuite.command.VHomeCommand;
 import net.new_liberty.votesuite.command.VSetHomeCommand;
 import org.bukkit.Bukkit;

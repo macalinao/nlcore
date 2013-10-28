@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.core.player;
+package net.new_liberty.nlcore.player;
 
 import net.new_liberty.itemconomy.BankAccount;
 import net.new_liberty.itemconomy.CurrencyInventory;

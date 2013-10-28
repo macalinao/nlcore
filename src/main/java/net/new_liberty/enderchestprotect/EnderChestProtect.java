@@ -4,13 +4,13 @@ import com.simplyian.easydb.EasyDB;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import net.new_liberty.enderchestprotect.command.ECClearCommand;
 import net.new_liberty.enderchestprotect.command.ECConfirmCommand;
 import net.new_liberty.enderchestprotect.command.ECListCommand;
 import net.new_liberty.enderchestprotect.command.ECViewCommand;
-import net.new_liberty.core.player.DonorRank;
-import net.new_liberty.core.player.NLPlayer;
+import net.new_liberty.nlcore.player.DonorRank;
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

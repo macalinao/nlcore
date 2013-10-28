@@ -8,7 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

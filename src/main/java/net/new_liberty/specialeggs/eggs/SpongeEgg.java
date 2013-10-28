@@ -7,7 +7,7 @@ package net.new_liberty.specialeggs.eggs;
 import com.sk89q.worldguard.bukkit.SpongeUtil;
 import java.util.LinkedList;
 import java.util.Queue;
-import net.new_liberty.core.NLCore;
+import net.new_liberty.nlcore.NLCore;
 import net.new_liberty.specialeggs.SpecialEgg;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;

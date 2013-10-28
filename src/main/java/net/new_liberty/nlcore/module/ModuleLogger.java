@@ -1,4 +1,4 @@
-package net.new_liberty.core.module;
+package net.new_liberty.nlcore.module;
 
 import java.util.logging.Level;
 import java.util.logging.LogRecord;

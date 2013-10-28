@@ -1,12 +1,12 @@
-package net.new_liberty.core;
+package net.new_liberty.nlcore;
 
 import java.util.HashMap;
 import java.util.Map;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import java.util.logging.Level;
 import net.new_liberty.enderchestprotect.EnderChestProtect;
 import net.new_liberty.itemconomy.Itemconomy;
-import net.new_liberty.core.player.PlayerModule;
+import net.new_liberty.nlcore.player.PlayerModule;
 
 import net.new_liberty.tweaks.ChatColorCommands;
 import net.new_liberty.tweaks.EasySpawners;

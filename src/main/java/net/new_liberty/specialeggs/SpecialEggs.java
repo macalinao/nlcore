@@ -5,7 +5,7 @@ import com.trc202.CombatTag.CombatTag;
 import com.trc202.CombatTagApi.CombatTagApi;
 import java.util.HashMap;
 import java.util.Map;
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import net.new_liberty.specialeggs.eggs.BlinkEgg;
 import net.new_liberty.specialeggs.eggs.FreezeEgg;
 import net.new_liberty.specialeggs.eggs.SpongeEgg;

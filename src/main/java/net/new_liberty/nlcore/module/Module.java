@@ -1,7 +1,7 @@
-package net.new_liberty.core.module;
+package net.new_liberty.nlcore.module;
 
 import java.util.logging.Logger;
-import net.new_liberty.core.NLCore;
+import net.new_liberty.nlcore.NLCore;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 

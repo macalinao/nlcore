@@ -1,4 +1,4 @@
-package net.new_liberty.core.player;
+package net.new_liberty.nlcore.player;
 
 /*
  * To change this template, choose Tools | Templates

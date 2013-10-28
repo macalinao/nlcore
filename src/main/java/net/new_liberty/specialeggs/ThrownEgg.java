@@ -3,7 +3,7 @@ package net.new_liberty.specialeggs;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import java.util.ArrayList;
 import java.util.List;
-import net.new_liberty.core.NLCore;
+import net.new_liberty.nlcore.NLCore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

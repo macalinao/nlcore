@@ -2,9 +2,9 @@ package net.new_liberty.tweaks;
 
 import java.util.Arrays;
 import java.util.List;
-import net.new_liberty.core.module.Module;
-import net.new_liberty.core.player.DonorRank;
-import net.new_liberty.core.player.NLPlayer;
+import net.new_liberty.nlcore.module.Module;
+import net.new_liberty.nlcore.player.DonorRank;
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

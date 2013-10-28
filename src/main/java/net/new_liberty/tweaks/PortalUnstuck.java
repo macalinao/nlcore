@@ -4,7 +4,7 @@
  */
 package net.new_liberty.tweaks;
 
-import net.new_liberty.core.module.Module;
+import net.new_liberty.nlcore.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
