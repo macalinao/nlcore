@@ -49,7 +49,7 @@ public abstract class ThrownEgg extends SpecialEgg {
                 }
             }
 
-        }).runTaskTimer(NLCore.getInstance(), 2, 2);
+        }).runTaskTimer(NLCore.i(), 2, 2);
     }
 
     /**

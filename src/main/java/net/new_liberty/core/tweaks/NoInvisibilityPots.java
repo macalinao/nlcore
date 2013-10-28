@@ -1,7 +1,7 @@
 package net.new_liberty.core.tweaks;
 
 import net.new_liberty.core.NLCore;
-import net.new_liberty.core.Module;
+import net.new_liberty.core.module.Module;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

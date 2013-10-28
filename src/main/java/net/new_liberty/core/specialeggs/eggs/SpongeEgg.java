@@ -57,7 +57,7 @@ public class SpongeEgg extends SpecialEgg {
                 }
             }
 
-        }).runTaskTimer(NLCore.getInstance(), 20, 20); // 20 ticks per second
+        }).runTaskTimer(NLCore.i(), 20, 20); // 20 ticks per second
     }
 
     @Override

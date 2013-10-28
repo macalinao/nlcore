@@ -2,7 +2,7 @@ package net.new_liberty.core.tweaks;
 
 import java.util.Arrays;
 import java.util.List;
-import net.new_liberty.core.Module;
+import net.new_liberty.core.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

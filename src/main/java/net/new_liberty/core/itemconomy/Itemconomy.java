@@ -9,7 +9,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import net.new_liberty.core.Module;
+import net.new_liberty.core.module.Module;
 import net.new_liberty.core.itemconomy.commands.ICBalance;
 import net.new_liberty.core.itemconomy.commands.ICSignBalance;
 import net.new_liberty.core.itemconomy.commands.ICSignBuy;

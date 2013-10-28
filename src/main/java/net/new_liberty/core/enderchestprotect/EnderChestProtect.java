@@ -4,7 +4,7 @@ import com.simplyian.easydb.EasyDB;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import net.new_liberty.core.Module;
+import net.new_liberty.core.module.Module;
 import net.new_liberty.core.enderchestprotect.command.ECClearCommand;
 import net.new_liberty.core.enderchestprotect.command.ECConfirmCommand;
 import net.new_liberty.core.enderchestprotect.command.ECListCommand;

@@ -4,7 +4,7 @@ import com.google.common.base.Joiner;
 import java.util.ArrayList;
 import java.util.List;
 import net.new_liberty.core.NLCore;
-import net.new_liberty.core.Module;
+import net.new_liberty.core.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
