@@ -3,6 +3,9 @@ package net.new_liberty.tweaks;
 import java.util.Arrays;
 import java.util.List;
 import net.new_liberty.core.module.Module;
+import net.new_liberty.core.player.DonorRank;
+import net.new_liberty.core.player.NLPlayer;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -79,15 +82,8 @@ public class ChatColorCommands extends Module {
 
             String value = args[0].toLowerCase();
 
-            String rank = null;
-            if (sender.hasPermission("chatcolorcommands.ranks.guardian")) {
-                rank = "Guardian";
-            } else if (sender.hasPermission("chatcolorcommands.ranks.champion")) {
-                rank = "Champion";
-            } else {
-                sender.sendMessage(ChatColor.RED + "Your rank is unknown.");
-                return true;
-            }
+            DonorRank dr = (new NLPlayer((Player) sender)).getDonorRank();
+            String rank = StringUtils.capitalize(dr.name());
 
             String validation = validate(rank, value);
             if (validation.equals(OK_RESPONSE)) {
