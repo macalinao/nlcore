@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
  * Commands to allow changing of chat colors.
  */
 public class ChatColorCommands extends Module {
+
     private static final String OK_RESPONSE = "OK";
 
     /**
@@ -23,6 +24,9 @@ public class ChatColorCommands extends Module {
 
     @Override
     public void onEnable() {
+        addPermission("chatcolorcommands.setcolors", "Allows setting your prefix colors.");
+        addPermission("chatcolorcommands.setchatcolor", "Allows settign your chat color.");
+
         plugin.getCommand("setcolors").setExecutor(new SetColorsCommand());
         plugin.getCommand("setchatcolor").setExecutor(new SetChatColorCommand());
     }
@@ -46,6 +50,7 @@ public class ChatColorCommands extends Module {
      * Represents a command that changes a chat color.
      */
     public static abstract class ChatColorCommand implements CommandExecutor {
+
         private final String type;
 
         private final String permission;
@@ -98,9 +103,11 @@ public class ChatColorCommands extends Module {
         public abstract String parse(String rank, String value);
 
         public abstract void execute(CommandSender sender, String value);
+
     }
 
     public static class SetColorsCommand extends ChatColorCommand {
+
         public SetColorsCommand() {
             super("Colors", "chatcolorcommands.setcolors");
         }
@@ -161,12 +168,14 @@ public class ChatColorCommands extends Module {
                     + sender.getName() + " prefix " + prefix);
             sender.sendMessage("Your colors have been set to: " + ChatColor.translateAlternateColorCodes('&', prefix));
         }
+
     }
 
     /**
      * Command to set the chat color.
      */
     public static class SetChatColorCommand extends ChatColorCommand {
+
         public SetChatColorCommand() {
             super("Chat Color", "chatcolorcommands.setchatcolor");
         }
@@ -205,5 +214,6 @@ public class ChatColorCommands extends Module {
                     + sender.getName() + " suffix " + suffix);
             sender.sendMessage("Changed chat color to: " + ChatColor.translateAlternateColorCodes('&', suffix) + "this color");
         }
+
     }
 }
