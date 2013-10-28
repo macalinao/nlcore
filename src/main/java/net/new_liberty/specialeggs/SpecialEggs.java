@@ -25,6 +25,8 @@ public class SpecialEggs extends Module {
 
     @Override
     public void onEnable() {
+        addPermission("specialeggs.segive", "Allows access to the /segive command.");
+
         Plugin ctPlugin = Bukkit.getPluginManager().getPlugin("CombatTag");
         if (ctPlugin != null && ctPlugin.isEnabled()) {
             combatTag = new CombatTagApi((CombatTag) ctPlugin);
@@ -43,7 +45,7 @@ public class SpecialEggs extends Module {
 
         plugin.getCommand("segive").setExecutor(new SEGive(this));
     }
-    
+
     @Override
     public void onDisable() {
         for (SpecialEgg egg : eggs.values()) {

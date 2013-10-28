@@ -22,8 +22,6 @@ permissions:
     children:
       - chatcolorcommands.setcolors
       - chatcolorcommands.setchatcolor
-  specialeggs.segive:
-    description: Gives an egg to the user or a target.
 
 commands:
   list:
