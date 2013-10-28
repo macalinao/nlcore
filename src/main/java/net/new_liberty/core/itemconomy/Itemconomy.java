@@ -33,7 +33,7 @@ public class Itemconomy extends Module {
     public void onEnable() {
         _instance = this;
 
-        plugin.getServer().getPluginManager().addPermission(new Permission("itemconomy.console"));
+        addPermission("itemconomy.console", "Console-only permission used for signs.");
 
         // Our currency - TODO config
         currency.put(Material.EMERALD, 1);

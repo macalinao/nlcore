@@ -3,6 +3,7 @@ package net.new_liberty.core.module;
 import java.util.logging.Logger;
 import net.new_liberty.core.NLCore;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
 
 /**
  * Represents a tweak in NL.
@@ -57,6 +58,18 @@ public abstract class Module implements Listener {
      */
     public String getName() {
         return getClass().getSimpleName();
+    }
+
+    /**
+     * Adds a permission to this module.
+     *
+     * @param permission
+     * @param description
+     */
+    protected final void addPermission(String permission, String description) {
+        Permission p = new Permission(permission);
+        p.setDescription(permission);
+        plugin.getServer().getPluginManager().addPermission(p);
     }
 
     /**
