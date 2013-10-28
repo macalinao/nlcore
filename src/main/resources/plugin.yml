@@ -6,7 +6,7 @@ website: ${project.url}
 
 main: ${mainClass}
 depend: [WorldGuard]
-softdepend: [CombatTag, EasyDB]
+softdepend: [CombatTag, EasyDB, Votifier]
 
 permissions:
   itemconomy.console:
@@ -93,3 +93,12 @@ commands:
   ecview:
     description: Views an Ender Chest.
     usage: /ecview <chest id>
+  vote:
+    description: Shows a message detailing how to vote for the server.
+    usage: /vote
+  vhome:
+    description: Teleports you to your vote home.
+    usage: /vhome
+  vsethome:
+    description: Sets your vote home.
+    usage: /vote
