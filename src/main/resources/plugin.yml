@@ -6,9 +6,11 @@ website: ${project.url}
 
 main: ${mainClass}
 depend: [WorldGuard]
-softdepend: [CombatTag]
+softdepend: [CombatTag, EasyDB]
 
 permissions:
+  itemconomy.console:
+    description: Allows use of the sign related commands.
   noenderpearls.bypass:
     description: Allows bypassing of Ender Pearl restrictions.
   chatcolorcommands.setcolors:
@@ -51,3 +53,18 @@ commands:
   versionreport:
     description: Creates a version report which will be saved to a given file.
     usage: /versionreport <name>
+  icbalance:
+    description: Check someone''s balance
+    usage: /icbalance <player>
+  icsignbalance:
+    description: Check yo balance
+    usage: /icsignbalance <player>
+  icsignbuy:
+    description: Buy stuff
+    usage: /icsignbuy <player> <price> <cmd>
+  icsigndeposit:
+    description: Deposit emeralds
+    usage: /icsigndeposit <player> <amt>
+  icsignwithdraw:
+    description: Withdraw emeralds
+    usage: /icsignwithdraw <player> <amt>

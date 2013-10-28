@@ -1,6 +1,7 @@
 package net.new_liberty.core;
 
 import java.util.logging.Level;
+import net.new_liberty.core.itemconomy.Itemconomy;
 
 import net.new_liberty.core.tweaks.ChatColorCommands;
 import net.new_liberty.core.tweaks.EasySpawners;
@@ -32,20 +33,23 @@ public class NLCore extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
 
-        addTweak(new ChatColorCommands());
-        addTweak(new EasySpawners());
-        addTweak(new HeadDrop());
-        addTweak(new MobTamer());
-        addTweak(new NerfStrengthPots());
-        addTweak(new NoEnderpearls());
-        addTweak(new NoInvisibilityPots());
-        addTweak(new NoTNTMinecart());
-        addTweak(new PortalUnstuck());
-        addTweak(new StaffList());
-        addTweak(new VersionReport());
-        addTweak(new VHomeInformer());
+        // Modules
+        addModule(new Itemconomy());
+        addModule(new SpecialEggs());
 
-        addTweak(new SpecialEggs());
+        // Tweaks
+        addModule(new ChatColorCommands());
+        addModule(new EasySpawners());
+        addModule(new HeadDrop());
+        addModule(new MobTamer());
+        addModule(new NerfStrengthPots());
+        addModule(new NoEnderpearls());
+        addModule(new NoInvisibilityPots());
+        addModule(new NoTNTMinecart());
+        addModule(new PortalUnstuck());
+        addModule(new StaffList());
+        addModule(new VersionReport());
+        addModule(new VHomeInformer());
     }
 
     @Override
@@ -53,7 +57,7 @@ public class NLCore extends JavaPlugin implements Listener {
         instance = null;
     }
 
-    private void addTweak(Module tweak) {
+    private void addModule(Module tweak) {
         tweak.initialize(this);
         Bukkit.getPluginManager().registerEvents(tweak, this);
         tweak.onEnable();

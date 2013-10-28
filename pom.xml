@@ -60,7 +60,12 @@
             <artifactId>bukkit</artifactId>
             <version>1.6.4-R0.1-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>        
+        </dependency>   
+        <dependency>
+            <groupId>com.simplyian</groupId>
+            <artifactId>easydb</artifactId>
+            <version>0.1.0</version>
+        </dependency>     
         <dependency>
             <groupId>com.massivecraft.factions</groupId>
             <artifactId>Factions</artifactId>
