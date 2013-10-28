@@ -15,6 +15,16 @@ import org.bukkit.configuration.ConfigurationSection;
  */
 public class VoteSuite extends Module {
 
+    public static final List<String> CMDS = Arrays.asList(
+            "money give %name% 12.5");
+
+    public static final List<String> ALL_CMDS = Arrays.asList(
+            "tell %name% Thank you for voting for New Liberty. You have been rewarded! Remember to vote again tomorrow!",
+            "tell %name% You now regain health when you kill another player and break blocks faster for the next 24 hours.",
+            "crent vote %name% 86400");
+
+    public static final int VOTES_HOME = 3;
+
     private Map<String, VoteService> services;
 
     @Override
@@ -29,7 +39,13 @@ public class VoteSuite extends Module {
             return;
         }
 
-        loadConfig();
+        services = new HashMap<String, VoteService>();
+
+        VoteService a = new VoteService("PlanetMinecraft.com", "Planet Minecraft");
+        VoteService b = new VoteService("minecraftservers", "MinecraftServers.net");
+        VoteService c = new VoteService("Minestatus", "Minestatus");
+        VoteService d = new VoteService("MinecraftServers.org", "MinecraftServers.org");
+        addServices(a, b, c, d);
 
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
@@ -62,22 +78,9 @@ public class VoteSuite extends Module {
         getLogger().log(Level.INFO, "Plugin loaded.");
     }
 
-    /**
-     * Loads the config.
-     */
-    private void loadConfig() {
-        // Load services
-        services = new HashMap<String, VoteService>();
-        ConfigurationSection servicesConfig = plugin.getConfig().getConfigurationSection("services");
-        if (services == null) {
-            servicesConfig = plugin.getConfig().createSection("services");
-        }
-        for (String key : servicesConfig.getKeys(false)) {
-            String svcId = servicesConfig.getString(key + ".id", key);
-            String svcName = servicesConfig.getString(key + ".name", key);
-            VoteService service = new VoteService(svcId, svcName);
-
-            services.put(svcId, service);
+    private void addServices(VoteService... ss) {
+        for (VoteService s : ss) {
+            services.put(s.getId(), s);
         }
     }
 

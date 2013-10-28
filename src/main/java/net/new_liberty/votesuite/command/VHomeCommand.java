@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
  * Teleports you home.
  */
 public class VHomeCommand implements CommandExecutor {
+
     private final VoteSuite plugin;
 
     public VHomeCommand(VoteSuite plugin) {
@@ -30,7 +31,7 @@ public class VHomeCommand implements CommandExecutor {
         Voter v = plugin.getVoter(p.getName());
 
         int votes = v.countDayVotes();
-        int required = plugin.getConfig().getInt("votes-home", 3);
+        int required = VoteSuite.VOTES_HOME;
         if (votes < required) {
             p.sendMessage(ChatColor.RED + "You need to vote "
                     + ChatColor.YELLOW + (required - votes) + ChatColor.RED
@@ -48,4 +49,5 @@ public class VHomeCommand implements CommandExecutor {
         }
         return true;
     }
+
 }

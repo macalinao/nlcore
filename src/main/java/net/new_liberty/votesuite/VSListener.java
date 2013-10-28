@@ -1,11 +1,7 @@
 package net.new_liberty.votesuite;
 
 import com.vexsoftware.votifier.model.VotifierEvent;
-import java.util.List;
 import java.util.logging.Level;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandException;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -13,6 +9,7 @@ import org.bukkit.event.Listener;
  * The VoteSuite listener.
  */
 public class VSListener implements Listener {
+
     private final VoteSuite plugin;
 
     public VSListener(VoteSuite plugin) {
@@ -30,7 +27,7 @@ public class VSListener implements Listener {
         vote.log();
 
         // Run our commands
-        vote.runCommands(plugin.getConfig().getStringList("commands"));
+        vote.runCommands(VoteSuite.CMDS);
 
 
         // Clear and run commands if no missing services
@@ -39,7 +36,8 @@ public class VSListener implements Listener {
             voter.clearRecentVotes();
 
             // Run our commands
-            vote.runCommands(plugin.getConfig().getStringList("all-commands"));
+            vote.runCommands(VoteSuite.ALL_CMDS);
         }
     }
+
 }
