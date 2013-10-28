@@ -4,8 +4,8 @@
  */
 package net.new_liberty.core.player;
 
-import net.new_liberty.core.itemconomy.BankAccount;
-import net.new_liberty.core.itemconomy.CurrencyInventory;
+import net.new_liberty.itemconomy.BankAccount;
+import net.new_liberty.itemconomy.CurrencyInventory;
 import org.bukkit.entity.Player;
 
 /**
