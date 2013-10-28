@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 
 public class EnderChestProtect extends Module {
 
+    public static int EXPIRY_MINUTES = 14 * 24 * 60;
+
     private Map<String, ClearChestTimer> clearChests = new HashMap<String, ClearChestTimer>();
 
     private ECManager ecManager;
@@ -68,7 +70,7 @@ public class EnderChestProtect extends Module {
      * @return
      */
     public int getExpiryMillis() {
-        return 14 * 24 * 60 * 60 * 1000; // 14 days
+        return EXPIRY_MINUTES * 60 * 1000; // 14 days
     }
 
     public Map<String, ClearChestTimer> getClearChests() {
