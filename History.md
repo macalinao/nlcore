@@ -1,3 +1,7 @@
+2.0.0
+=====
+* Merged a lot of existing NL plugins into NLTweaks to create NLCore.
+
 1.1.2
 =====
 * Added MobTamer
