@@ -1,6 +1,6 @@
 name: ${project.name}
 description: ${project.description}
-version: ${project.version}-${gitHash}-b${buildNumber}
+version: ${project.version}-${build-commit-abbrev}-b${buildNumber}
 author: ${author}
 website: ${project.url}
 

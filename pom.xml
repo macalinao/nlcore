@@ -15,7 +15,6 @@
         <author>AlbireoX</author>
         <buildNumber>0</buildNumber>
         <mainClass>${project.groupId}.${project.artifactId}.NLCore</mainClass>
-        <gitHash>unknown</gitHash>
     </properties>
 
     <scm>
@@ -54,6 +53,13 @@
             <url>http://nexus.new-liberty.net/content/groups/public/</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nl-repo</id>
+            <url>http://nexus.new-liberty.net/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -115,6 +121,19 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>com.code54.mojo</groupId>
+                <artifactId>buildversion-plugin</artifactId>
+                <version>1.0.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>set-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+      
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
