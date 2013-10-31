@@ -39,6 +39,7 @@ public class SpongeEgg extends SpecialEgg {
         eggType = EntityType.OCELOT;
         cooldown = 5;
         usePlayerForLocationCheck = false;
+        useInNoBuildZone = false;
     }
 
     @Override
