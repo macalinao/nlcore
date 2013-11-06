@@ -52,7 +52,6 @@ public class NLCore extends JavaPlugin implements Listener {
         addModule(new ChatColorCommands());
         addModule(new EasySpawners());
         addModule(new HeadDrop());
-        addModule(new MobTamer());
         addModule(new NerfStrengthPots());
         addModule(new NoEnderpearls());
         addModule(new NoInvisibilityPots());
