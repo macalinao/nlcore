@@ -12,7 +12,6 @@ import net.new_liberty.tweaks.ChatColorCommands;
 import net.new_liberty.tweaks.EasySpawners;
 import net.new_liberty.tweaks.HeadDrop;
 import net.new_liberty.specialeggs.SpecialEggs;
-import net.new_liberty.tweaks.MobTamer;
 import net.new_liberty.tweaks.NerfStrengthPots;
 import net.new_liberty.tweaks.NoEnderpearls;
 import net.new_liberty.tweaks.NoInvisibilityPots;
