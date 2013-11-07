@@ -51,6 +51,7 @@ public class Itemconomy extends Module {
 
         // Commands
         plugin.getCommand("icbalance").setExecutor(new ICBalance());
+        plugin.getCommand("icgrant").setExecutor(new ICBalance());
 
         plugin.getCommand("icsignbalance").setExecutor(new ICSignBalance());
         plugin.getCommand("icsignbuy").setExecutor(new ICSignBuy());

@@ -27,6 +27,9 @@ commands:
   icbalance:
     description: Check someone''s balance
     usage: /icbalance <player>
+  icgrant:
+    description: Grant someone emeralds
+    usage: /icgrant <player> <amt>
   icsignbalance:
     description: Check yo balance
     usage: /icsignbalance <player>
