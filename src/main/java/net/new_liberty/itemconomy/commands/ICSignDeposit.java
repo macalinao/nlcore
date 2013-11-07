@@ -6,6 +6,7 @@ package net.new_liberty.itemconomy.commands;
 
 import net.new_liberty.itemconomy.BankAccount;
 import net.new_liberty.itemconomy.CurrencyInventory;
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -45,14 +46,22 @@ public class ICSignDeposit implements CommandExecutor {
             return true;
         }
 
-        CurrencyInventory c = new CurrencyInventory(p);
+        NLPlayer n = new NLPlayer(p);
+        CurrencyInventory c = n.getEmeraldInventory();
         int holding = c.balance();
         if (holding < amt) {
             p.sendMessage(ChatColor.RED + "You don't have " + amt + " emeralds in your inventory to deposit!");
             return true;
         }
 
-        BankAccount b = new BankAccount(p);
+        BankAccount b = n.getEmeraldAccount();
+        int bal = b.balance();
+        int max = n.getEmeraldAccountCapacity();
+        if (bal + amt > max) {
+            p.sendMessage(ChatColor.RED + "You don't have enough capacity in your account to store more emeralds! (Max capacity is " + max + "; you would have " + (bal + amt) + ")");
+            return true;
+        }
+
         c.remove(amt);
         b.add(amt);
 
