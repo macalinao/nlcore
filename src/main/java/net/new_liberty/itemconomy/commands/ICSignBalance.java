@@ -5,7 +5,7 @@
 package net.new_liberty.itemconomy.commands;
 
 import net.new_liberty.itemconomy.BankAccount;
-import net.new_liberty.itemconomy.CurrencyInventory;
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,9 +37,10 @@ public class ICSignBalance implements CommandExecutor {
             return true;
         }
 
-        BankAccount b = new BankAccount(p);
+        NLPlayer n = new NLPlayer(p);
+        BankAccount b = n.getEmeraldAccount();
 
-        p.sendMessage(ChatColor.YELLOW + "Your balance is " + b.balance() + " emeralds.");
+        p.sendMessage(ChatColor.YELLOW + "Your balance is " + b.balance() + " emeralds. Your account can hold a maximum of " + n.getEmeraldAccountCapacity() + " emeralds.");
         return true;
     }
 
