@@ -33,6 +33,7 @@ public class Itemconomy extends Module {
     public void onEnable() {
         _instance = this;
 
+        addPermission("itemconomy.admin", "Admin permission.");
         addPermission("itemconomy.console", "Console-only permission used for signs.");
 
         // Our currency - TODO config
