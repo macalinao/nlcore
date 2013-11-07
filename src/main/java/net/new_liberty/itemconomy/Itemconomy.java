@@ -47,6 +47,11 @@ public class Itemconomy extends Module {
                     + "player varchar(16) NOT NULL,"
                     + "balance INT(10) NOT NULL,"
                     + "PRIMARY KEY (id));");
+
+            EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS icmarket ("
+                    + "date TIMESTAMP NOT NULL,"
+                    + "value INT(10) NOT NULL," // This'll be the value multiplied by 1000.
+                    + "PRIMARY KEY (date));");
         }
 
         // Commands
