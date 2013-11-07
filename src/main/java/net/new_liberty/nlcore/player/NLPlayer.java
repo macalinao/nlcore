@@ -57,4 +57,26 @@ public class NLPlayer {
         return new CurrencyInventory(p);
     }
 
+    /**
+     * Gets the capacity of this player's emerald account.
+     * 
+     * @return 
+     */
+    public int getEmeraldAccountCapacity() {
+        switch (getDonorRank()) {
+            case PREMIUM:
+                return 1000;
+            case HERO:
+                return 2000;
+            case ELITE:
+                return 5000;
+            case GUARDIAN:
+                return 20000;
+            case CHAMPION:
+                return 10000000;
+            default:
+                return 500;
+        }
+    }
+
 }
