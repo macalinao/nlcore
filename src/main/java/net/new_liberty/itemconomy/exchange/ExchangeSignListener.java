@@ -4,6 +4,8 @@
  */
 package net.new_liberty.itemconomy.exchange;
 
+import net.new_liberty.itemconomy.CurrencyInventory;
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -36,7 +38,9 @@ public class ExchangeSignListener implements Listener {
             return;
         }
 
-        
+        NLPlayer p = new NLPlayer(e.getPlayer());
+        double balance = p.balance();
+        CurrencyInventory inv = p.getEmeraldInventory();
     }
 
 }

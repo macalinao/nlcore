@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.nlcore.module.Module;
 import java.util.logging.Level;
+import net.milkbowl.vault.economy.Economy;
 import net.new_liberty.enderchestprotect.EnderChestProtect;
 import net.new_liberty.itemconomy.Itemconomy;
 import net.new_liberty.nlcore.player.PlayerModule;
@@ -35,9 +36,14 @@ public class NLCore extends JavaPlugin implements Listener {
 
     private Map<String, Module> modules = new HashMap<String, Module>();
 
+    private Economy economy;
+
     @Override
     public void onEnable() {
         instance = this;
+
+        // Vault integration
+        economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
         // Core modules
         addModule(new PlayerModule());
@@ -87,6 +93,10 @@ public class NLCore extends JavaPlugin implements Listener {
         module.onEnable();
         module.getLogger().log(Level.INFO, "Tweak enabled.");
         modules.put(module.getName(), module);
+    }
+
+    public Economy getEconomy() {
+        return economy;
     }
 
     public static NLCore i() {

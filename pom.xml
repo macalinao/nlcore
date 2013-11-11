@@ -85,6 +85,11 @@
             <version>1.6.1</version>
         </dependency>
         <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>Vault</artifactId>
+            <version>1.2.27</version>
+        </dependency>
+        <dependency>
             <groupId>com.trc202</groupId>
             <artifactId>CombatTag</artifactId>
             <version>5.9.3</version>

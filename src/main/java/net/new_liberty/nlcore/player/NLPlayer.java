@@ -6,6 +6,7 @@ package net.new_liberty.nlcore.player;
 
 import net.new_liberty.itemconomy.BankAccount;
 import net.new_liberty.itemconomy.CurrencyInventory;
+import net.new_liberty.nlcore.NLCore;
 import org.bukkit.entity.Player;
 
 /**
@@ -40,6 +41,33 @@ public class NLPlayer {
     }
 
     /**
+     * Gets this player's balance.
+     *
+     * @return
+     */
+    public double balance() {
+        return NLCore.i().getEconomy().getBalance(p.getName());
+    }
+
+    /**
+     * Deposits civs into this player's account.
+     *
+     * @param amt
+     */
+    public void deposit(double amt) {
+        NLCore.i().getEconomy().depositPlayer(p.getName(), amt);
+    }
+
+    /**
+     * Withdraws civs from this player's account.
+     *
+     * @param amt
+     */
+    public void withdraw(double amt) {
+        NLCore.i().getEconomy().withdrawPlayer(p.getName(), amt);
+    }
+
+    /**
      * Gets this player's emerald account.
      *
      * @return
@@ -59,8 +87,8 @@ public class NLPlayer {
 
     /**
      * Gets the capacity of this player's emerald account.
-     * 
-     * @return 
+     *
+     * @return
      */
     public int getEmeraldAccountCapacity() {
         switch (getDonorRank()) {
