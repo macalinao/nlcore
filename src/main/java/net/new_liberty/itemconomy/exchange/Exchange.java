@@ -4,8 +4,7 @@
  */
 package net.new_liberty.itemconomy.exchange;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 import net.new_liberty.itemconomy.Itemconomy;
 
 /**
@@ -15,10 +14,23 @@ public class Exchange {
 
     private final Itemconomy ic;
 
-    private List<ExchangeSign> signs = new ArrayList<ExchangeSign>();
+    private ExchangeSigns signs;
+
+    private double exchangeRate;
 
     public Exchange(Itemconomy ic) {
         this.ic = ic;
+
+        signs = new ExchangeSigns(new File(ic.getDataFolder(), "exchange-signs.yml"));
+    }
+
+    /**
+     * Gets the number of civs each emerald is worth.
+     *
+     * @return
+     */
+    public double getExchangeRate() {
+        return exchangeRate;
     }
 
 }
