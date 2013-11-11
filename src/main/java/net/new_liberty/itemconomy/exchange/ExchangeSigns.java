@@ -56,7 +56,6 @@ public class ExchangeSigns {
         YamlConfiguration conf = new YamlConfiguration();
         conf.set("signs", smap);
         try {
-            file.createNewFile();
             conf.save(file);
         } catch (IOException ex) {
             Itemconomy.i().getLogger().log(Level.SEVERE, "Could not save exchange signs!", ex);
