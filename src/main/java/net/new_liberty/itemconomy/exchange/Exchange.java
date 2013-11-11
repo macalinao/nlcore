@@ -14,14 +14,19 @@ public class Exchange {
 
     private final Itemconomy ic;
 
-    private ExchangeSigns signs;
+    private final ExchangeSigns signs;
+
+    private final ExchangeSignListener esl;
 
     private double exchangeRate;
 
     public Exchange(Itemconomy ic) {
         this.ic = ic;
 
-        signs = new ExchangeSigns(new File(ic.getDataFolder(), "exchange-signs.yml"));
+        signs = new ExchangeSigns(this, new File(ic.getDataFolder(), "exchange-signs.yml"));
+        esl = new ExchangeSignListener(this);
+
+        ic.addListener(esl);
     }
 
     /**
@@ -31,6 +36,10 @@ public class Exchange {
      */
     public double getExchangeRate() {
         return exchangeRate;
+    }
+
+    public ExchangeSigns getSigns() {
+        return signs;
     }
 
 }

@@ -38,7 +38,7 @@ public class NLCore extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         instance = this;
-        
+
         // Core modules
         addModule(new PlayerModule());
 
@@ -84,7 +84,6 @@ public class NLCore extends JavaPlugin implements Listener {
             }
         }
         module.initialize(this);
-        Bukkit.getPluginManager().registerEvents(module, this);
         module.onEnable();
         module.getLogger().log(Level.INFO, "Tweak enabled.");
         modules.put(module.getName(), module);

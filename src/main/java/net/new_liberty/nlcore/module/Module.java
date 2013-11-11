@@ -28,6 +28,7 @@ public abstract class Module implements Listener {
         }
         this.plugin = plugin;
         logger = new ModuleLogger(this);
+        addListener(this);
         initialized = true;
     }
 
@@ -91,6 +92,15 @@ public abstract class Module implements Listener {
         File f = new File(plugin.getDataFolder(), getName() + "/");
         f.mkdirs();
         return f;
+    }
+
+    /**
+     * Adds a listener to this Module.
+     *
+     * @param l
+     */
+    public void addListener(Listener l) {
+        plugin.getServer().getPluginManager().registerEvents(l, plugin);
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import net.new_liberty.itemconomy.Itemconomy;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
@@ -24,12 +25,25 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class ExchangeSigns {
 
+    private final Exchange exchange;
+
     private final File file;
 
     private Map<Location, ExchangeSign> signs;
 
-    public ExchangeSigns(File file) {
+    public ExchangeSigns(Exchange exchange, File file) {
+        this.exchange = exchange;
         this.file = file;
+    }
+
+    /**
+     * Gets the exchange sign corresponding with a block.
+     *
+     * @param b
+     * @return
+     */
+    public ExchangeSign getSign(Block b) {
+        return signs.get(b.getLocation());
     }
 
     /**
@@ -55,7 +69,7 @@ public class ExchangeSigns {
             Location loc = (Location) esign.get("loc");
             boolean buy = (Boolean) esign.get("buy");
             int amt = (Integer) esign.get("amt");
-            signs.put(loc, new ExchangeSign(loc.getBlock(), buy, amt));
+            signs.put(loc, new ExchangeSign(exchange, loc.getBlock(), buy, amt));
         }
     }
 
