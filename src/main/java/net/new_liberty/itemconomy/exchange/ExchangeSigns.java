@@ -8,8 +8,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import net.new_liberty.itemconomy.Itemconomy;
 import org.bukkit.Location;
@@ -27,6 +30,20 @@ public class ExchangeSigns {
 
     public ExchangeSigns(File file) {
         this.file = file;
+    }
+
+    /**
+     * Updates all of the signs in the exchange.
+     */
+    public void update() {
+        Set<Entry<Location, ExchangeSign>> set = signs.entrySet();
+        Iterator<Entry<Location, ExchangeSign>> i = set.iterator();
+
+        while (i.hasNext()) {
+            if (!i.next().getValue().update()) {
+                i.remove();
+            }
+        }
     }
 
     public void load() {
