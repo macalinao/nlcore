@@ -5,17 +5,21 @@ import java.util.Random;
 import net.new_liberty.nlcore.NLCore;
 import net.new_liberty.nlcore.module.Module;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -53,6 +57,31 @@ public class EasySpawners extends Module {
 
         CreatureSpawner s = (CreatureSpawner) b.getState();
         s.setSpawnedType(t);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        if (!(e.getWhoClicked() instanceof Player)) {
+            return;
+        }
+
+        if (e.getInventory().getType() != InventoryType.ANVIL) {
+            return;
+        }
+
+        if (e.getSlotType() != InventoryType.SlotType.RESULT || e.getSlot() != 2) {
+            return;
+        }
+
+        ItemStack i = e.getCurrentItem();
+        if (i == null || i.getType() != Material.MOB_SPAWNER) {
+            return;
+        }
+
+        Player p = (Player) e.getWhoClicked();
+        p.sendMessage(ChatColor.RED + "You can't rename mob spawners.");
+        e.setCancelled(true);
+        p.closeInventory();
     }
 
     @EventHandler
