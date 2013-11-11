@@ -60,13 +60,13 @@ public class Itemconomy extends Module {
         }
 
         // Commands
-        plugin.getCommand("icbalance").setExecutor(new ICBalance());
-        plugin.getCommand("icgrant").setExecutor(new ICBalance());
+        addCommand("icbalance", new ICBalance());
+        addCommand("icgrant", new ICBalance());
 
-        plugin.getCommand("icsignbalance").setExecutor(new ICSignBalance());
-        plugin.getCommand("icsignbuy").setExecutor(new ICSignBuy());
-        plugin.getCommand("icsigndeposit").setExecutor(new ICSignDeposit());
-        plugin.getCommand("icsignwithdraw").setExecutor(new ICSignWithdraw());
+        addCommand("icsignbalance", new ICSignBalance());
+        addCommand("icsignbuy", new ICSignBuy());
+        addCommand("icsigndeposit", new ICSignDeposit());
+        addCommand("icsignwithdraw", new ICSignWithdraw());
     }
 
     @Override

@@ -3,6 +3,7 @@ package net.new_liberty.nlcore.module;
 import java.io.File;
 import java.util.logging.Logger;
 import net.new_liberty.nlcore.NLCore;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 
@@ -101,6 +102,16 @@ public abstract class Module implements Listener {
      */
     public void addListener(Listener l) {
         plugin.getServer().getPluginManager().registerEvents(l, plugin);
+    }
+
+    /**
+     * Adds a command to the module.
+     *
+     * @param cmd
+     * @param executor
+     */
+    public void addCommand(String cmd, CommandExecutor executor) {
+        plugin.getCommand(cmd).setExecutor(executor);
     }
 
 }
