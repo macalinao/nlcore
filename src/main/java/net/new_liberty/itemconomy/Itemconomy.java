@@ -17,13 +17,18 @@ import net.new_liberty.itemconomy.commands.ICSignDeposit;
 import net.new_liberty.itemconomy.commands.ICSignWithdraw;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.permissions.Permission;
 
 /**
+ * Our item based economy, based on emeralds.
  *
  * @author simplyianm
  */
 public class Itemconomy extends Module {
+
+    /**
+     * Represents the change of price per emerald bought/sold.
+     */
+    public static final double PRICE_CHANGE = 0.005;
 
     private static Itemconomy _instance;
 

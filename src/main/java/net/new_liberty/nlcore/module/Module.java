@@ -1,5 +1,6 @@
 package net.new_liberty.nlcore.module;
 
+import java.io.File;
 import java.util.logging.Logger;
 import net.new_liberty.nlcore.NLCore;
 import org.bukkit.event.Listener;
@@ -79,6 +80,17 @@ public abstract class Module implements Listener {
      */
     public Logger getLogger() {
         return logger;
+    }
+
+    /**
+     * Gets this module's data folder.
+     *
+     * @return
+     */
+    public File getDataFolder() {
+        File f = new File(plugin.getDataFolder(), getName() + "/");
+        f.mkdirs();
+        return f;
     }
 
 }
