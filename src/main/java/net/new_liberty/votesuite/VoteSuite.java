@@ -15,12 +15,12 @@ import org.bukkit.Bukkit;
 public class VoteSuite extends Module {
 
     public static final List<String> CMDS = Arrays.asList(
-            "icgrant %name% 64");
+            "icgrant %name% 32");
 
     public static final List<String> ALL_CMDS = Arrays.asList(
             "tell %name% Thank you for voting for New Liberty. You have been rewarded! Remember to vote again tomorrow!",
             "tell %name% You now regain health when you kill another player and break blocks faster for the next 24 hours.",
-            "icgrant %name% 64");
+            "icgrant %name% 32");
 
     public static final int VOTES_HOME = 3;
 
