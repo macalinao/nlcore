@@ -16,6 +16,7 @@ import net.new_liberty.itemconomy.commands.ICSignBalance;
 import net.new_liberty.itemconomy.commands.ICSignBuy;
 import net.new_liberty.itemconomy.commands.ICSignDeposit;
 import net.new_liberty.itemconomy.commands.ICSignWithdraw;
+import net.new_liberty.itemconomy.exchange.Exchange;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
@@ -35,6 +36,8 @@ public class Itemconomy extends Module {
 
     private Map<Material, Integer> currency = new EnumMap<Material, Integer>(Material.class);
 
+    private Exchange exchange;
+
     @Override
     public void onEnable() {
         _instance = this;
@@ -45,6 +48,9 @@ public class Itemconomy extends Module {
         // Our currency - TODO config
         currency.put(Material.EMERALD, 1);
         currency.put(Material.EMERALD_BLOCK, 9);
+
+        // Exchange
+        exchange = new Exchange(this);
 
         // Database stuff
         if (Bukkit.getPluginManager().getPlugin("EasyDB") != null) {
@@ -68,7 +74,7 @@ public class Itemconomy extends Module {
         addCommand("icsignbuy", new ICSignBuy());
         addCommand("icsigndeposit", new ICSignDeposit());
         addCommand("icsignwithdraw", new ICSignWithdraw());
-        
+
         addCommand("icexchangesign", new ICExchangeSign(this));
     }
 
@@ -104,6 +110,10 @@ public class Itemconomy extends Module {
     public int getValue(Material m) {
         Integer r = currency.get(m);
         return (r == null) ? 0 : r;
+    }
+
+    public Exchange getExchange() {
+        return exchange;
     }
 
 }
