@@ -1,4 +1,4 @@
-package net.new_liberty.enderchestprotect;
+package net.new_liberty.util;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
