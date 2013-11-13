@@ -30,8 +30,14 @@ public class BCManager {
         this.e = e;
     }
 
+    /**
+     * Gets a player's bank chest.
+     *
+     * @param owner
+     * @return
+     */
     public BankChest getChest(final String owner) {
-        return EasyDB.getDb().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<BankChest>() {
+        BankChest b = EasyDB.getDb().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<BankChest>() {
             @Override
             public BankChest handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -44,6 +50,13 @@ public class BCManager {
             }
 
         }, owner);
+
+        if (b != null) {
+            return b;
+        }
+
+        EasyDB.getDb().update("INSERT INTO bankchests (owner) VALUES (?)", owner);
+        return new BankChest(owner);
     }
 
 }
