@@ -32,7 +32,7 @@ import org.bukkit.metadata.MetadataValue;
  */
 public class EasySpawners extends Module {
 
-    public static final double DROP_CHANCE = 0.01;
+    public static final double DROP_CHANCE = 0.8;
 
     private Random r = new Random();
 
