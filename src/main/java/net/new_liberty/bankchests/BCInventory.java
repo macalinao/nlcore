@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.new_liberty.enderchestbank;
+package net.new_liberty.bankchests;
 
 import com.simplyian.easydb.EasyDB;
 import java.sql.ResultSet;
@@ -12,13 +12,13 @@ import org.apache.commons.dbutils.ResultSetHandler;
 /**
  * Represents a player's ender chest inventory.
  */
-public class BankInventory {
+public class BCInventory {
 
     private final String owner;
 
     private String contents;
 
-    public BankInventory(String owner) {
+    public BCInventory(String owner) {
         this.owner = owner;
     }
 

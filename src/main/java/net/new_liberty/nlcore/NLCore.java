@@ -5,7 +5,7 @@ import java.util.Map;
 import net.new_liberty.nlcore.module.Module;
 import java.util.logging.Level;
 import net.milkbowl.vault.economy.Economy;
-import net.new_liberty.enderchestbank.EnderChestBank;
+import net.new_liberty.bankchests.BankChests;
 import net.new_liberty.enderchestprotect.EnderChestProtect;
 import net.new_liberty.itemconomy.Itemconomy;
 import net.new_liberty.nlcore.player.PlayerModule;
@@ -50,7 +50,7 @@ public class NLCore extends JavaPlugin implements Listener {
         addModule(new PlayerModule());
 
         // Modules
-        addModule(new EnderChestBank());
+        addModule(new BankChests());
         addModule(new EnderChestProtect());
         addModule(new Itemconomy());
         addModule(new SpecialEggs());
