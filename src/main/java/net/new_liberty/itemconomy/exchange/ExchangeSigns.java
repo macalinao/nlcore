@@ -37,6 +37,20 @@ public class ExchangeSigns {
     }
 
     /**
+     * Creates a new ExchangeSign.
+     *
+     * @param b
+     * @param buy
+     * @param amt
+     * @return
+     */
+    public ExchangeSign createSign(Block b, boolean buy, int amt) {
+        ExchangeSign e = new ExchangeSign(exchange, b, buy, amt);
+        signs.put(b.getLocation(), e);
+        return e;
+    }
+
+    /**
      * Gets the exchange sign corresponding with a block.
      *
      * @param b
