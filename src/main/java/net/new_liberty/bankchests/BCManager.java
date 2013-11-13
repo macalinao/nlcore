@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.new_liberty.enderchestprotect.EnderChest;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -57,6 +58,11 @@ public class BCManager {
 
         EasyDB.getDb().update("INSERT INTO bankchests (owner) VALUES (?)", owner);
         return new BankChest(owner);
+    }
+
+    public Inventory createInventory(BankChest chest) {
+        Inventory inv = Bukkit.createInventory(null, 9, chest.getOwner() + "'s bank chest");
+        return inv;
     }
 
 }

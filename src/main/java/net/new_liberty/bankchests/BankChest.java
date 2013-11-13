@@ -34,6 +34,10 @@ public class BankChest {
         }, owner);
     }
 
+    public String getOwner() {
+        return owner;
+    }
+
     void setContents(String contents) {
         this.contents = contents;
     }
