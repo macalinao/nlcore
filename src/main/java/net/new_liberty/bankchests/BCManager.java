@@ -4,8 +4,13 @@
  */
 package net.new_liberty.bankchests;
 
+import com.simplyian.easydb.EasyDB;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import net.new_liberty.enderchestprotect.EnderChest;
+import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -23,6 +28,22 @@ public class BCManager {
 
     public BCManager(BankChests e) {
         this.e = e;
+    }
+
+    public BankChest getChest(final String owner) {
+        return EasyDB.getDb().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<BankChest>() {
+            @Override
+            public BankChest handle(ResultSet rs) throws SQLException {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                BankChest bc = new BankChest(owner);
+                bc.setContents(rs.getString("contents"));
+                return bc;
+            }
+
+        }, owner);
     }
 
 }
