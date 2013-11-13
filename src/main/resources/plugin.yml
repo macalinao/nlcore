@@ -42,6 +42,9 @@ commands:
   icsignwithdraw:
     description: Withdraw emeralds
     usage: /icsignwithdraw <player> <amt>
+  icexchangesign:
+    description: Creates an exchange sign
+    usage: /icexchangesign <buy/sell> <amt>
   ecclear:
     description: Clears Ender Chests.
     usage: /ecclear [player]

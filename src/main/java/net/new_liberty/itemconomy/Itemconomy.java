@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import net.new_liberty.nlcore.module.Module;
 import net.new_liberty.itemconomy.commands.ICBalance;
+import net.new_liberty.itemconomy.commands.ICExchangeSign;
 import net.new_liberty.itemconomy.commands.ICSignBalance;
 import net.new_liberty.itemconomy.commands.ICSignBuy;
 import net.new_liberty.itemconomy.commands.ICSignDeposit;
@@ -67,6 +68,8 @@ public class Itemconomy extends Module {
         addCommand("icsignbuy", new ICSignBuy());
         addCommand("icsigndeposit", new ICSignDeposit());
         addCommand("icsignwithdraw", new ICSignWithdraw());
+        
+        addCommand("icexchangesign", new ICExchangeSign(this));
     }
 
     @Override
