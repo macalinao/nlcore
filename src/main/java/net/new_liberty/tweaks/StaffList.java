@@ -36,6 +36,9 @@ public class StaffList extends Module implements CommandExecutor {
 
         for (Player p : players) {
             StaffRank r = (new NLPlayer(p)).getStaffRank();
+            if (r == null) {
+                continue;
+            }
             switch (r) {
                 case ADMIN:
                     if (canSee(sender, p)) {
