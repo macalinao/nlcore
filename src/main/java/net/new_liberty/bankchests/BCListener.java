@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 /**
@@ -36,6 +37,21 @@ public class BCListener implements Listener {
         }
 
         p.sendMessage(ChatColor.YELLOW + "You have placed an ender chest (bank chest).");
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        if (e.getBlock().getType() != Material.ENDER_CHEST) {
+            return;
+        }
+
+        Player p = e.getPlayer();
+        if (!p.hasPermission("bankchests.admin")) {
+            e.setCancelled(true);
+            return;
+        }
+
+        p.sendMessage(ChatColor.YELLOW + "You have broken a bank chest.");
     }
 
 }
