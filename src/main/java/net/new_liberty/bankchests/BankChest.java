@@ -8,17 +8,21 @@ import com.simplyian.easydb.EasyDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Represents a player's ender chest inventory.
  */
 public class BankChest {
 
+    private final BCManager bcm;
+
     private final String owner;
 
-    private String contents;
+    private String contents = null;
 
-    public BankChest(String owner) {
+    public BankChest(BCManager bcm, String owner) {
+        this.bcm = bcm;
         this.owner = owner;
     }
 
@@ -38,8 +42,16 @@ public class BankChest {
         return owner;
     }
 
+    public String getContents() {
+        return contents;
+    }
+
     void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public Inventory getInventory() {
+        return bcm.getInventory(this);
     }
 
 }
