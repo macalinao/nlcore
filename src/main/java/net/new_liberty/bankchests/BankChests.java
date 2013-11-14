@@ -14,6 +14,8 @@ public class BankChests extends Module {
 
     private BCListener l;
 
+    private BCManager chests;
+
     @Override
     public String[] getDependencies() {
         return new String[]{"EasyDB"};
@@ -24,12 +26,18 @@ public class BankChests extends Module {
         l = new BCListener(this);
         addListener(l);
 
+        chests = new BCManager(this);
+
         EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS ecb_inventories ("
                 + "owner VARCHAR(16) NOT NULL,"
                 + "contents TEXT,"
                 + "PRIMARY KEY (owner));");
 
         addPermission("bankchests.admin", "Allows placement of ender chests.");
+    }
+
+    public BCManager getChests() {
+        return chests;
     }
 
 }
