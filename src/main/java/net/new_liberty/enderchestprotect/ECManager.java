@@ -1,7 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
 import net.new_liberty.util.InventorySerializer;
-import com.simplyian.easydb.EasyDB;
+import net.new_liberty.nlcore.database.EasyDB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

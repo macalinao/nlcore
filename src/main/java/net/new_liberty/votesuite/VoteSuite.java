@@ -1,7 +1,7 @@
 package net.new_liberty.votesuite;
 
 import net.new_liberty.votesuite.command.VoteCommand;
-import com.simplyian.easydb.EasyDB;
+import net.new_liberty.nlcore.database.EasyDB;
 import java.util.*;
 import java.util.logging.Level;
 import net.new_liberty.nlcore.module.Module;

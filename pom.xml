@@ -75,11 +75,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.simplyian</groupId>
-            <artifactId>easydb</artifactId>
-            <version>0.1.0</version>
-        </dependency>     
-        <dependency>
             <groupId>com.massivecraft.factions</groupId>
             <artifactId>Factions</artifactId>
             <version>1.6.1</version>
@@ -100,6 +95,18 @@
             <artifactId>worldguard</artifactId>
             <version>5.8-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <!-- Database is E.Z. with this -->
+        <dependency>
+            <groupId>commons-dbutils</groupId>
+            <artifactId>commons-dbutils</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <!-- This is already part of CraftBukkit. This plugin won't work on Spout -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.25</version>
         </dependency>
 
         <dependency>
@@ -170,6 +177,29 @@
                             <generatePom>false</generatePom>
                             <pomFile>pom.xml</pomFile>
                             <version>${my.version}</version>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <includes>
+                                    <include>commons-dbutils:commons-dbutils</include>
+                                </includes>
+                            </artifactSet>
+                            <minimizeJar>false</minimizeJar>
                         </configuration>
                     </execution>
                 </executions>

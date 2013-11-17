@@ -4,7 +4,7 @@
  */
 package net.new_liberty.itemconomy;
 
-import com.simplyian.easydb.EasyDB;
+import net.new_liberty.nlcore.database.EasyDB;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;

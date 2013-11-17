@@ -1,6 +1,6 @@
 package net.new_liberty.enderchestprotect;
 
-import com.simplyian.easydb.EasyDB;
+import net.new_liberty.nlcore.database.EasyDB;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

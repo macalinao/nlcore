@@ -1,6 +1,6 @@
 package net.new_liberty.votesuite;
 
-import com.simplyian.easydb.EasyDB;
+import net.new_liberty.nlcore.database.EasyDB;
 import java.util.List;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
