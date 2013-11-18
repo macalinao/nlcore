@@ -99,14 +99,7 @@ public class HorseKeep extends JavaPlugin implements Listener {
                     return true;
                 }
 
-                Boolean hasWhiteSpace = false;
-                for (char c : args[2].toCharArray()) {
-                    if (Character.isWhitespace(c)) {
-                        hasWhiteSpace = true;
-                    }
-                }
-
-                if (hasWhiteSpace) {
+                if (args[2].contains(" ")) {
                     sender.sendMessage(prefix + ChatColor.GOLD + "Identifier may not contain whitespace");
                     return true;
                 }
