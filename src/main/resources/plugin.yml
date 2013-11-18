@@ -72,3 +72,6 @@ commands:
   dbreload:
     description: Reloads the database
     usage: /dbreload
+  horse:
+    description: Manage your horses
+    aliases: [h, khorse, keephorse]
