@@ -45,8 +45,6 @@ public class HorseKeep extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-
         khorse = new KHorse(this, this.getConfig());
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -241,7 +239,6 @@ public class HorseKeep extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamage(EntityDamageEvent e) {
-
         if (this.khorse.isHorse(e.getEntity())) {
             LivingEntity horse = (LivingEntity) e.getEntity();
 
@@ -252,10 +249,7 @@ public class HorseKeep extends JavaPlugin implements Listener {
                     if (e1.getDamager() instanceof Player) {
                         Player damager = (Player) e1.getDamager();
 
-                        if (getConfig().getBoolean("disableHorseDamage")) {
-                            damager.sendMessage(prefix + ChatColor.GOLD + "You can't attack an owned horse");
-                            e1.setCancelled(true);
-                        } else if (this.khorse.canMountHorse(damager, horse) && getConfig().getBoolean("disableHorseDamageFromMembers")) {
+                        if (this.khorse.canMountHorse(damager, horse)) {
                             damager.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
                             e1.setCancelled(true);
                         }
@@ -265,21 +259,12 @@ public class HorseKeep extends JavaPlugin implements Listener {
                         if (projectile.getShooter() instanceof Player) {
                             Player shooter = (Player) projectile.getShooter();
 
-                            if (getConfig().getBoolean("disableHorseDamage")) {
-                                shooter.sendMessage(prefix + ChatColor.GOLD + "You can't attack an owned horse");
-                                e.setCancelled(true);
-                            } else if (this.khorse.canMountHorse(shooter, horse) && getConfig().getBoolean("disableHorseDamageFromMembers")) {
+                            if (this.khorse.canMountHorse(shooter, horse)) {
                                 shooter.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
                                 e.setCancelled(true);
                             }
-                        } else if (getConfig().getBoolean("disableHorseEnvironmentalDamage")) {
-                            e.setCancelled(true);
                         }
-                    } else if (getConfig().getBoolean("disableHorseEnvironmentalDamage")) {
-                        e.setCancelled(true);
                     }
-                } else if (getConfig().getBoolean("disableHorseEnvironmentalDamage")) {
-                    e.setCancelled(true);
                 }
             }
         }
@@ -301,10 +286,7 @@ public class HorseKeep extends JavaPlugin implements Listener {
                 LivingEntity entity = it.next();
                 if (this.khorse.isHorse(entity)) {
                     if (this.khorse.isOwnedHorse(entity.getUniqueId())) {
-                        if (getConfig().getBoolean("disableHorseDamage")) {
-                            message = prefix + ChatColor.GOLD + "You can't attack an owned horse";
-                            cancelEvent = true;
-                        } else if (this.khorse.canMountHorse(thrower, entity) && getConfig().getBoolean("disableHorseDamageFromMembers")) {
+                        if (this.khorse.canMountHorse(thrower, entity)) {
                             message = prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it";
                             cancelEvent = true;
                         }
