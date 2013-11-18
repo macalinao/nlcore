@@ -268,41 +268,29 @@ public class HorseKeep extends JavaPlugin implements Listener {
                 }
             }
         }
-
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPotionSplash(PotionSplashEvent e) {
-        if (e.getEntity().getShooter() instanceof Player) {
-            Player thrower = (Player) e.getEntity().getShooter();
-            Collection<LivingEntity> AffectedEntities = e.getAffectedEntities();
-            Iterator<LivingEntity> it = AffectedEntities.iterator();
-
-            boolean cancelEvent = false;
-
-            String message = null;
-
-            while (it.hasNext()) {
-                LivingEntity entity = it.next();
-                if (this.khorse.isHorse(entity)) {
-                    if (this.khorse.isOwnedHorse(entity.getUniqueId())) {
-                        if (this.khorse.canMountHorse(thrower, entity)) {
-                            message = prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it";
-                            cancelEvent = true;
-                        }
-                    }
+        Entity ent = e.getEntity().getShooter();
+        if (!(ent instanceof Player)) {
+            return;
+        }
+        Player p = (Player) ent;
+        for (LivingEntity entity : e.getAffectedEntities()) {
+            if (this.khorse.isHorse(entity) && this.khorse.isOwnedHorse(entity.getUniqueId())) {
+                if (this.khorse.canMountHorse(p, entity)) {
+                    p.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse if you are the owner or member of it");
+                    e.setCancelled(true);
+                    return;
                 }
             }
-
-            if (cancelEvent) {
-                thrower.sendMessage(message);
-                e.setCancelled(true);
-            }
         }
+
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onDeath(EntityDeathEvent e) {
+    public void onEntityDeath(EntityDeathEvent e) {
         Entity entity = e.getEntity();
 
         if (this.khorse.isHorse(entity)) {

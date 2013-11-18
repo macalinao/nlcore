@@ -63,11 +63,7 @@ public class KHorse {
     }
 
     public boolean isOwnedHorse(UUID uuid) {
-        if (this.config.isConfigurationSection("horses." + uuid)) {
-            return true;
-        }
-
-        return false;
+        return this.config.isConfigurationSection("horses." + uuid);
     }
 
     public boolean horseIdentifierExists(String horseIdentifier) {
