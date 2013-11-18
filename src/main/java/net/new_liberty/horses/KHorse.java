@@ -1,6 +1,6 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package net.new_liberty.horses;
 
-import com.gmail.falistos.HorseKeep.HorseKeep;
+import net.new_liberty.horses.HorseKeep;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

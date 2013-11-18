@@ -1,4 +1,4 @@
-package main.java.com.gmail.falistos.HorseKeep;
+package net.new_liberty.horses;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,4 @@
-package com.gmail.falistos.HorseKeep;
+package net.new_liberty.horses;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.Map.Entry;
-import main.java.com.gmail.falistos.HorseKeep.HorseTeleportResponse;
-import main.java.com.gmail.falistos.HorseKeep.KHorse;
-import main.java.com.gmail.falistos.HorseKeep.MetricsLite;
+import net.new_liberty.horses.HorseTeleportResponse;
+import net.new_liberty.horses.KHorse;
+import net.new_liberty.horses.MetricsLite;
 
 import net.milkbowl.vault.permission.Permission;
 
