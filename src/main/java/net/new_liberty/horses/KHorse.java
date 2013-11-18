@@ -145,10 +145,7 @@ public class KHorse {
 
     public void setHorseOwner(Player player, Entity horse) {
         this.config.set("horses." + horse.getUniqueId() + ".owner", player.getName());
-
         this.config.set("horses." + horse.getUniqueId() + ".identifier", getNewHorseIdentifier());
-
-        this.config.set("horses." + horse.getUniqueId() + ".members", null);
 
         this.plugin.saveConfig();
     }
@@ -263,10 +260,6 @@ public class KHorse {
     }
 
     public HorseTeleportResponse teleportHorse(UUID horseUUID, Location loc) {
-        if (this.config.getBoolean("horses." + horseUUID + ".stored")) {
-            return HorseTeleportResponse.NOT_TELEPORTED_STORED;
-        }
-
         for (World w : this.plugin.getServer().getWorlds()) {
             for (LivingEntity e : w.getLivingEntities()) {
 

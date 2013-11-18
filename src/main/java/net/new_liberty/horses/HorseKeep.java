@@ -1,11 +1,8 @@
 package net.new_liberty.horses;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.Map.Entry;
+import net.new_liberty.nlcore.database.Database;
 import static net.new_liberty.nlcore.player.DonorRank.PREMIUM;
 
 import net.new_liberty.nlcore.player.NLPlayer;
@@ -45,6 +42,17 @@ public class HorseKeep extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        Database.i().update("CREATE TABLE IF NOT EXISTS horses ("
+                + "id INT(10) NOT NULL AUTO_INCREMENT,"
+                + "uuid VARCHAR(40) NOT NULL,"
+                + "owner VARCHAR(16) NOT NULL,"
+                + "name VARCHAR(16),"
+                + "last_world VARCHAR(16),"
+                + "last_x INT(10),"
+                + "last_y INT(10),"
+                + "last_z INT(10),"
+                + "PRIMARY KEY (id))");
+
         khorse = new KHorse(this, this.getConfig());
 
         getServer().getPluginManager().registerEvents(this, this);
@@ -61,7 +69,6 @@ public class HorseKeep extends JavaPlugin implements Listener {
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse id|setid <identifier> <new-identifier>");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse tpall");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse unprotect|up <identifier>");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse reload");
             } else if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
                 if (!(sender instanceof Player)) {
                     sender.sendMessage("This command can only be executed by a player");
