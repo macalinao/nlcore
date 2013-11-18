@@ -1,0 +1,22 @@
+# Default horse protection limit by player
+horsesDefaultLimit: 3
+
+# Disable horse damage from mobs & environment (fall, suffocation...)
+disableHorseEnvironmentalDamage: true
+
+# Disable horse damage from any player
+disableHorseDamage: false
+
+# Disable horse damage from horse members and owner
+disableHorseDamageFromMembers: true
+
+# Used for setting default identifier to horses **don't change this**
+internalIncrementalIdentifier: 1
+
+# Custom horse protection limit, with permission horsekeep.group.<group-name>
+groups:
+  - vip: 5
+  - staff: 10
+  
+# Horses data
+horses:
