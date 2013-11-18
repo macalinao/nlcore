@@ -1,6 +1,6 @@
 package net.new_liberty.horses;
 
-import net.new_liberty.horses.HorseKeep;
+import net.new_liberty.horses.Horses;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class KHorse {
 
     private Configuration config;
 
-    private HorseKeep plugin;
+    private Horses plugin;
 
     // TODO: Change to HORSE when available
     private EntityType[] horseEntityTypes = {EntityType.HORSE, EntityType.UNKNOWN};
@@ -43,7 +43,7 @@ public class KHorse {
         return instance;
     }
 
-    public KHorse(HorseKeep plugin, Configuration config) {
+    public KHorse(Horses plugin, Configuration config) {
         this.plugin = plugin;
         this.config = config;
     }

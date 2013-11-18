@@ -34,11 +34,13 @@ import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class HorseKeep extends JavaPlugin implements Listener {
+public class Horses extends JavaPlugin implements Listener {
 
     public String prefix = ChatColor.RED + "[" + ChatColor.GOLD + "HorseKeep" + ChatColor.RED + "] " + ChatColor.GREEN;
 
     public KHorse khorse;
+
+    private HorsesListener hl;
 
     @Override
     public void onEnable() {
@@ -54,10 +56,8 @@ public class HorseKeep extends JavaPlugin implements Listener {
                 + "PRIMARY KEY (id))");
 
         khorse = new KHorse(this, this.getConfig());
-
-        getServer().getPluginManager().registerEvents(this, this);
-
-        getLogger().info("Enabled");
+        hl = new HorsesListener(this);
+        getServer().getPluginManager().registerEvents(hl, this);
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -242,166 +242,6 @@ public class HorseKeep extends JavaPlugin implements Listener {
             return true;
         }
         return false;
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (this.khorse.isHorse(e.getEntity())) {
-            LivingEntity horse = (LivingEntity) e.getEntity();
-
-            if (this.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (e instanceof EntityDamageByEntityEvent) {
-                    EntityDamageByEntityEvent e1 = (EntityDamageByEntityEvent) e;
-
-                    if (e1.getDamager() instanceof Player) {
-                        Player damager = (Player) e1.getDamager();
-
-                        if (this.khorse.canMountHorse(damager, horse)) {
-                            damager.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
-                            e1.setCancelled(true);
-                        }
-                    } else if (e1.getDamager() instanceof Projectile) {
-                        Projectile projectile = (Projectile) e1.getDamager();
-
-                        if (projectile.getShooter() instanceof Player) {
-                            Player shooter = (Player) projectile.getShooter();
-
-                            if (this.khorse.canMountHorse(shooter, horse)) {
-                                shooter.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
-                                e.setCancelled(true);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPotionSplash(PotionSplashEvent e) {
-        Entity ent = e.getEntity().getShooter();
-        if (!(ent instanceof Player)) {
-            return;
-        }
-        Player p = (Player) ent;
-        for (LivingEntity entity : e.getAffectedEntities()) {
-            if (this.khorse.isHorse(entity) && this.khorse.isOwnedHorse(entity.getUniqueId())) {
-                if (this.khorse.canMountHorse(p, entity)) {
-                    p.sendMessage(prefix + ChatColor.GOLD + "You can't attack this horse if you are the owner or member of it");
-                    e.setCancelled(true);
-                    return;
-                }
-            }
-        }
-
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onEntityDeath(EntityDeathEvent e) {
-        Entity entity = e.getEntity();
-
-        if (this.khorse.isHorse(entity)) {
-            if (this.khorse.isOwnedHorse(entity.getUniqueId())) {
-                String ownerName = this.khorse.getHorseOwner(entity);
-                Player owner = Bukkit.getPlayerExact(ownerName);
-
-                if (owner.isOnline()) {
-                    owner.sendMessage(prefix + ChatColor.RED + "One of your horses is dead (" + this.khorse.getHorseIdentifier(entity.getUniqueId()) + ")");
-                }
-
-                this.khorse.removeHorse(this.khorse.getHorseIdentifier(entity.getUniqueId()));
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onChunkUnloaded(ChunkUnloadEvent event) {
-        Chunk c = event.getChunk();
-
-        Entity[] entities = c.getEntities();
-
-        for (Entity e : entities) {
-            if (this.khorse.isHorse(e)) {
-                if (this.khorse.isOwnedHorse(e.getUniqueId())) {
-                    // We save horse location
-                    Location loc = e.getLocation();
-                    getConfig().set("horses." + e.getUniqueId() + ".lastpos", loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getYaw() + ":" + loc.getPitch());
-
-                    this.saveConfig();
-                }
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (this.khorse.isHorse(event.getRightClicked())) {
-
-            Entity horse = event.getRightClicked();
-
-            if (!this.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (event.getPlayer().getItemInHand().getType() == Material.SADDLE) {
-                    int limit = getHorseLimit(event.getPlayer());
-
-                    if (this.khorse.getOwnedHorses(event.getPlayer()).size() >= limit) {
-                        event.getPlayer().sendMessage(prefix + ChatColor.GOLD + "You have reached the maximum limit of horses you can protect - This horse will not be protected");
-                        return;
-                    }
-
-                    if (event.getPlayer().getName().isEmpty()) {
-                        event.getPlayer().sendMessage(prefix + ChatColor.RED + "Error while setting up protection");
-                        return;
-                    }
-
-                    this.khorse.setHorseOwner(event.getPlayer(), horse);
-
-                    horse.getWorld().playSound(horse.getLocation(), Sound.LEVEL_UP, 10.0F, 1.0F);
-
-                    event.getPlayer().sendMessage(prefix + "You protected this horse! Now use " + ChatColor.GOLD + "/horse id " + this.khorse.getHorseIdentifier(this.khorse.getHorseUUID(horse)) + ChatColor.AQUA + " <new-name>");
-                }
-            } else {
-                if (!this.khorse.canMountHorse(event.getPlayer(), horse)) {
-                    event.getPlayer().sendMessage(prefix + ChatColor.RED + "This horse belongs to " + ChatColor.AQUA + this.khorse.getHorseOwner(horse));
-
-                    if (event.getPlayer().hasPermission("horsekeep.admin")) {
-                        event.getPlayer().sendMessage(prefix + "Horse Identifier: " + this.khorse.getHorseIdentifier(this.khorse.getHorseUUID(horse)));
-                    }
-
-                    event.setCancelled(true);
-                }
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onAnimalTame(EntityTameEvent e) {
-        LivingEntity tamedAnimal = e.getEntity();
-        Player player = (Player) e.getOwner();
-
-        if (this.khorse.isHorse(tamedAnimal)) {
-            player.sendMessage(prefix + "You tamed a horse! Now right-click with a saddle on horse to protect it");
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onVehicleEnter(VehicleEnterEvent event) {
-        if (!(event.getEntered() instanceof Player)) {
-            return;
-        }
-
-        Player player = (Player) event.getEntered();
-
-        if (this.khorse.isHorse(event.getVehicle())) {
-            Horse horse = (Horse) event.getVehicle();
-
-            if (this.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (!this.khorse.canMountHorse(player, horse)) {
-                    player.sendMessage(prefix + "This horse belongs to " + ChatColor.AQUA + this.khorse.getHorseOwner(horse));
-
-                    event.setCancelled(true);
-                }
-            }
-        }
     }
 
     /**
