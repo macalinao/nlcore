@@ -4,7 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class BCManager {
      * @return
      */
     public BankChest getChest(final String owner) {
-        BankChest b = EasyDB.getDb().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<BankChest>() {
+        BankChest b = Database.i().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<BankChest>() {
             @Override
             public BankChest handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -59,7 +59,7 @@ public class BCManager {
             return b;
         }
 
-        EasyDB.getDb().update("INSERT INTO bankchests (owner) VALUES (?)", owner);
+        Database.i().update("INSERT INTO bankchests (owner) VALUES (?)", owner);
         return new BankChest(this, owner);
     }
 

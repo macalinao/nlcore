@@ -4,7 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import net.new_liberty.nlcore.module.Module;
 
 /**
@@ -17,18 +17,13 @@ public class BankChests extends Module {
     private BCManager chests;
 
     @Override
-    public String[] getDependencies() {
-        return new String[]{"EasyDB"};
-    }
-
-    @Override
     public void onEnable() {
         l = new BCListener(this);
         addListener(l);
 
         chests = new BCManager(this);
 
-        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS ecb_inventories ("
+        Database.i().update("CREATE TABLE IF NOT EXISTS ecb_inventories ("
                 + "owner VARCHAR(16) NOT NULL,"
                 + "contents TEXT,"
                 + "PRIMARY KEY (owner));");

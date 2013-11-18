@@ -114,4 +114,8 @@ public abstract class Module implements Listener {
         plugin.getCommand(cmd).setExecutor(executor);
     }
 
+    public NLCore getPlugin() {
+        return plugin;
+    }
+
 }

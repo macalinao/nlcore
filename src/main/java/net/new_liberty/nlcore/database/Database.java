@@ -12,13 +12,16 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
  * Database stuff. MySQL sucks.
  */
 public final class Database {
+
     private static final ResultSetHandler SCALAR_HANDLER = new ScalarHandler();
 
-    private final EasyDBPlugin plugin;
+    private static Database instance = null;
+
+    private final DatabaseModule plugin;
 
     private final MysqlDataSource source;
 
-    public Database(EasyDBPlugin plugin, String user, String pass, String host, int port, String database) {
+    public Database(DatabaseModule plugin, String user, String pass, String host, int port, String database) {
         this.plugin = plugin;
 
         source = new MysqlDataSource();
@@ -27,6 +30,18 @@ public final class Database {
         source.setServerName(host);
         source.setPort(port);
         source.setDatabaseName(database);
+
+        instance = this;
+    }
+
+    public static Database i() {
+        return instance;
+    }
+
+    public static void setInstance(Database db) {
+        if (instance == null) {
+            instance = db;
+        }
     }
 
     /**
@@ -112,4 +127,5 @@ public final class Database {
         }
         return ret;
     }
+
 }

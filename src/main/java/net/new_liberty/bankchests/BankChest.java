@@ -4,7 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -27,7 +27,7 @@ public class BankChest {
     }
 
     public void populate() {
-        EasyDB.getDb().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<Object>() {
+        Database.i().query("SELECT * FROM bankchests WHERE owner = ?", new ResultSetHandler<Object>() {
             @Override
             public Object handle(ResultSet rs) throws SQLException {
                 rs.next();

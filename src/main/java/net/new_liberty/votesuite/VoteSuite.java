@@ -1,7 +1,7 @@
 package net.new_liberty.votesuite;
 
 import net.new_liberty.votesuite.command.VoteCommand;
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.util.*;
 import java.util.logging.Level;
 import net.new_liberty.nlcore.module.Module;
@@ -28,13 +28,13 @@ public class VoteSuite extends Module {
 
     @Override
     public String[] getDependencies() {
-        return new String[]{"EasyDB", "Votifier"};
+        return new String[]{"Votifier"};
     }
 
     @Override
     public void onEnable() {
-        if (!EasyDB.getDb().isValid()) {
-            getLogger().log(Level.WARNING, "EasyDB isn't connected; plugin loading halted.");
+        if (!Database.i().isValid()) {
+            getLogger().log(Level.WARNING, "Database isn't connected; module loading halted.");
             return;
         }
 
@@ -46,7 +46,7 @@ public class VoteSuite extends Module {
         VoteService d = new VoteService("MinecraftServers.org", "MinecraftServers.org");
         addServices(a, b, c, d);
 
-        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes ("
+        Database.i().update("CREATE TABLE IF NOT EXISTS votes ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
                 + "name varchar(16) NOT NULL,"
                 + "service varchar(50) NOT NULL,"
@@ -54,12 +54,12 @@ public class VoteSuite extends Module {
                 + "time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
                 + "PRIMARY KEY (id));");
 
-        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes_recent ("
+        Database.i().update("CREATE TABLE IF NOT EXISTS votes_recent ("
                 + "name varchar(16) NOT NULL,"
                 + "service varchar(50) NOT NULL,"
                 + "PRIMARY KEY (name, service));");
 
-        EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS votes_homes ("
+        Database.i().update("CREATE TABLE IF NOT EXISTS votes_homes ("
                 + "name varchar(16) NOT NULL,"
                 + "world varchar(32) NOT NULL,"
                 + "x DOUBLE NOT NULL,"

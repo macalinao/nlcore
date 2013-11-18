@@ -4,7 +4,7 @@
  */
 package net.new_liberty.itemconomy;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,18 +53,16 @@ public class Itemconomy extends Module {
         exchange = new Exchange(this);
 
         // Database stuff
-        if (Bukkit.getPluginManager().getPlugin("EasyDB") != null) {
-            EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS icbank ("
-                    + "id INT(10) NOT NULL AUTO_INCREMENT,"
-                    + "player varchar(16) NOT NULL,"
-                    + "balance INT(10) NOT NULL,"
-                    + "PRIMARY KEY (id));");
+        Database.i().update("CREATE TABLE IF NOT EXISTS icbank ("
+                + "id INT(10) NOT NULL AUTO_INCREMENT,"
+                + "player varchar(16) NOT NULL,"
+                + "balance INT(10) NOT NULL,"
+                + "PRIMARY KEY (id));");
 
-            EasyDB.getDb().update("CREATE TABLE IF NOT EXISTS icmarket ("
-                    + "date TIMESTAMP NOT NULL,"
-                    + "value INT(10) NOT NULL," // This'll be the value multiplied by 1000.
-                    + "PRIMARY KEY (date));");
-        }
+        Database.i().update("CREATE TABLE IF NOT EXISTS icmarket ("
+                + "date TIMESTAMP NOT NULL,"
+                + "value INT(10) NOT NULL," // This'll be the value multiplied by 1000.
+                + "PRIMARY KEY (date));");
 
         // Commands
         addCommand("icbalance", new ICBalance());

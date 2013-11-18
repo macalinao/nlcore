@@ -6,7 +6,7 @@ website: ${project.url}
 
 main: ${mainClass}
 depend: [WorldGuard, Vault]
-softdepend: [CombatTag, EasyDB, Votifier]
+softdepend: [CombatTag, Votifier]
 
 commands:
   list:
@@ -66,3 +66,9 @@ commands:
   vsethome:
     description: Sets your vote home.
     usage: /vote
+  dbconfig:
+    description: Configures the database
+    usage: /dbconfig
+  dbreload:
+    description: Reloads the database
+    usage: /dbreload

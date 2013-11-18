@@ -8,6 +8,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.new_liberty.bankchests.BankChests;
 import net.new_liberty.enderchestprotect.EnderChestProtect;
 import net.new_liberty.itemconomy.Itemconomy;
+import net.new_liberty.nlcore.database.DatabaseModule;
 import net.new_liberty.nlcore.player.PlayerModule;
 
 import net.new_liberty.tweaks.ChatColorCommands;
@@ -47,6 +48,7 @@ public class NLCore extends JavaPlugin implements Listener {
         economy = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
 
         // Core modules
+        addModule(new DatabaseModule());
         addModule(new PlayerModule());
 
         // Modules

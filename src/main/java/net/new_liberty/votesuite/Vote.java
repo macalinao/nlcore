@@ -1,6 +1,6 @@
 package net.new_liberty.votesuite;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.util.List;
 import java.util.logging.Level;
 import org.bukkit.Bukkit;
@@ -59,11 +59,11 @@ public class Vote {
 
         // Timestamp has a different format for each voting website, so we are
         // using our own which depends on the time it was received
-        EasyDB.getDb().update("INSERT INTO votes (name, service, address) VALUES (?, ?, ?) ",
+        Database.i().update("INSERT INTO votes (name, service, address) VALUES (?, ?, ?) ",
                 name, service.getId(), address);
 
         // Insert vote into our recent votes db
-        EasyDB.getDb().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
+        Database.i().update("INSERT IGNORE INTO votes_recent (name, service) VALUES (?, ?) ",
                 name, service.getId());
     }
 

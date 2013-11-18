@@ -1,7 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
 import net.new_liberty.util.InventorySerializer;
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -41,7 +41,7 @@ public class EnderChest {
     }
 
     public void repopulate() {
-        EasyDB.getDb().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<Object>() {
+        Database.i().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<Object>() {
             @Override
             public Object handle(ResultSet rs) throws SQLException {
                 rs.next();
@@ -114,7 +114,7 @@ public class EnderChest {
      * Updates the expiry time of this Ender Chest.
      */
     public void updateAccessTime() {
-        EasyDB.getDb().update("UPDATE enderchests SET access_time = CURRENT_TIMESTAMP WHERE id = ?", id);
+        Database.i().update("UPDATE enderchests SET access_time = CURRENT_TIMESTAMP WHERE id = ?", id);
         dirty = true;
     }
 
@@ -176,7 +176,7 @@ public class EnderChest {
     public void save() {
         Inventory inv = getInventory();
         String theContents = (inv == null ? null : InventorySerializer.writeToString(inv));
-        EasyDB.getDb().update("UPDATE enderchests SET contents = ? WHERE id = ?", theContents, id);
+        Database.i().update("UPDATE enderchests SET contents = ? WHERE id = ?", theContents, id);
         dirty = true;
     }
 
@@ -184,7 +184,7 @@ public class EnderChest {
      * Destroys the Ender Chest.
      */
     public void destroy() {
-        EasyDB.getDb().update("DELETE FROM enderchests WHERE id = ?", id);
+        Database.i().update("DELETE FROM enderchests WHERE id = ?", id);
         plugin.getECManager().deleteInventory(id);
     }
 

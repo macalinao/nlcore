@@ -4,7 +4,7 @@
  */
 package net.new_liberty.itemconomy;
 
-import net.new_liberty.nlcore.database.EasyDB;
+import net.new_liberty.nlcore.database.Database;
 import org.bukkit.entity.Player;
 
 /**
@@ -34,18 +34,18 @@ public class BankAccount implements CurrencyHolder {
 
     @Override
     public int balance() {
-        return (Integer) EasyDB.getDb().get("SELECT balance FROM icbank WHERE player = ?", 0, owner);
+        return (Integer) Database.i().get("SELECT balance FROM icbank WHERE player = ?", 0, owner);
     }
 
     @Override
     public boolean add(int amt) {
-        EasyDB.getDb().update("UPDATE icbank SET balance = balance + ? WHERE player = ?", amt, owner);
+        Database.i().update("UPDATE icbank SET balance = balance + ? WHERE player = ?", amt, owner);
         return true;
     }
 
     @Override
     public int remove(int amt) {
-        EasyDB.getDb().update("UPDATE icbank SET balance = balance - ? WHERE player = ?", amt, owner);
+        Database.i().update("UPDATE icbank SET balance = balance - ? WHERE player = ?", amt, owner);
         return 0;
     }
 

@@ -3,18 +3,17 @@ package net.new_liberty.nlcore.database;
 import net.new_liberty.nlcore.database.command.DBConfigCommand;
 import net.new_liberty.nlcore.database.command.DBReloadCommand;
 import net.new_liberty.nlcore.database.event.DBConfigReloadEvent;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import net.new_liberty.nlcore.module.Module;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * EasyDBPlugin Main class.
+ * Database module.
  */
-public class EasyDBPlugin extends JavaPlugin {
+public class DatabaseModule extends Module {
 
     public static final List<String> FIELDS = Arrays.asList("host", "port", "user", "pass", "name");
 
@@ -22,37 +21,34 @@ public class EasyDBPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Make sure the config has been made
-        saveDefaultConfig();
-
-        EasyDB.setInstance(this);
         reloadDb();
+        plugin.saveConfig();
 
-        getCommand("dbconfig").setExecutor(new DBConfigCommand(this));
-        getCommand("dbreload").setExecutor(new DBReloadCommand(this));
+        addCommand("dbconfig", new DBConfigCommand(this));
+        addCommand("dbreload", new DBReloadCommand(this));
 
         if (!db.isValid()) {
             getLogger().log(Level.WARNING, "Database credentials are invalid. Please check your credentials and run /dbreload.");
         } else {
             getLogger().log(Level.INFO, "Connected to database at " + db.getSource().getServerName() + ":" + db.getSource().getPort() + " successfully.");
         }
-        getLogger().log(Level.INFO, "Plugin loaded.");
+
+        Database.setInstance(db);
     }
 
     @Override
     public void onDisable() {
-        EasyDB.setInstance(null);
-        getLogger().log(Level.INFO, "Plugin unloaded.");
+        Database.setInstance(null);
     }
 
     /**
      * Loads the database.
      */
     public void reloadDb() {
-        reloadConfig();
-        ConfigurationSection s = getConfig().getConfigurationSection("db");
+        plugin.reloadConfig();
+        ConfigurationSection s = plugin.getConfig().getConfigurationSection("db");
         if (s == null) {
-            s = getConfig().createSection("db");
+            s = plugin.getConfig().createSection("db");
         }
 
         String dbHost = s.getString("host");
