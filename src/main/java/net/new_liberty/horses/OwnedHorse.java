@@ -71,7 +71,7 @@ public class OwnedHorse {
         }
     }
 
-    public void updateLastLocation() {
+    public void saveLastLocation() {
         Location l = e.getLocation();
         Database.i().update("UPDATE horses SET last_world = ?, last_x = ?, last_y = ?, last_z = ? WHERE id = ?",
                 l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());

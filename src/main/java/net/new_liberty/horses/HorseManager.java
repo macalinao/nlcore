@@ -10,6 +10,7 @@ import net.new_liberty.nlcore.database.Database;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Horse;
 
 /**
  * Manages our horse stuff.
@@ -38,6 +39,10 @@ public class HorseManager {
      * @return
      */
     public OwnedHorse getHorse(final Entity e) {
+        if (!(e instanceof Horse)) {
+            return null;
+        }
+
         return Database.i().query("SELECT * FROM horses WHERE uuid = ?", new ResultSetHandler<OwnedHorse>() {
             @Override
             public OwnedHorse handle(ResultSet rs) throws SQLException {

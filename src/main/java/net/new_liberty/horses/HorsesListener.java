@@ -39,36 +39,32 @@ public class HorsesListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (h.khorse.isHorse(e.getEntity())) {
-            LivingEntity horse = (LivingEntity) e.getEntity();
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        OwnedHorse o = h.getHorses().getHorse(e.getEntity());
+        if (o == null) {
+            return;
+        }
 
-            if (h.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (e instanceof EntityDamageByEntityEvent) {
-                    EntityDamageByEntityEvent e1 = (EntityDamageByEntityEvent) e;
+        if (e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
 
-                    if (e1.getDamager() instanceof Player) {
-                        Player damager = (Player) e1.getDamager();
+            if (o.getOwner().equals(damager.getName())) {
+                damager.sendMessage(ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
+                e.setCancelled(true);
+            }
+        } else if (e.getDamager() instanceof Projectile) {
+            Projectile projectile = (Projectile) e.getDamager();
 
-                        if (h.khorse.canMountHorse(damager, horse)) {
-                            damager.sendMessage(ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
-                            e1.setCancelled(true);
-                        }
-                    } else if (e1.getDamager() instanceof Projectile) {
-                        Projectile projectile = (Projectile) e1.getDamager();
+            if (projectile.getShooter() instanceof Player) {
+                Player shooter = (Player) projectile.getShooter();
 
-                        if (projectile.getShooter() instanceof Player) {
-                            Player shooter = (Player) projectile.getShooter();
-
-                            if (h.khorse.canMountHorse(shooter, horse)) {
-                                shooter.sendMessage(ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
-                                e.setCancelled(true);
-                            }
-                        }
-                    }
+                if (o.getOwner().equals(shooter.getName())) {
+                    shooter.sendMessage(ChatColor.GOLD + "You can't attack this horse, if you are the owner or member of it");
+                    e.setCancelled(true);
                 }
             }
         }
+
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -78,13 +74,17 @@ public class HorsesListener implements Listener {
             return;
         }
         Player p = (Player) ent;
+
         for (LivingEntity entity : e.getAffectedEntities()) {
-            if (h.khorse.isHorse(entity) && h.khorse.isOwnedHorse(entity.getUniqueId())) {
-                if (h.khorse.canMountHorse(p, entity)) {
-                    p.sendMessage(ChatColor.GOLD + "You can't attack this horse if you are the owner or member of it");
-                    e.setCancelled(true);
-                    return;
-                }
+            OwnedHorse o = h.getHorses().getHorse(entity);
+            if (o == null) {
+                continue;
+            }
+
+            if (o.getOwner().equals(p.getName())) {
+                p.sendMessage(ChatColor.RED + "You can't attack this horse if you are the owner of it.");
+                e.setCancelled(true);
+                return;
             }
         }
 
@@ -94,38 +94,39 @@ public class HorsesListener implements Listener {
     public void onEntityDeath(EntityDeathEvent e) {
         Entity entity = e.getEntity();
 
-        if (h.khorse.isHorse(entity)) {
-            if (h.khorse.isOwnedHorse(entity.getUniqueId())) {
-                String ownerName = h.khorse.getHorseOwner(entity);
-                Player owner = Bukkit.getPlayerExact(ownerName);
+        OwnedHorse o = h.getHorses().getHorse(entity);
+        if (o == null) {
+            return;
+        }
 
-                if (owner.isOnline()) {
-                    owner.sendMessage(ChatColor.RED + "One of your horses is dead (" + h.khorse.getHorseIdentifier(entity.getUniqueId()) + ")");
-                }
-
-                h.khorse.removeHorse(h.khorse.getHorseIdentifier(entity.getUniqueId()));
+        Player owner = Bukkit.getPlayerExact(o.getOwner());
+        if (owner != null && owner.isOnline()) {
+            String name = o.getName();
+            if (name != null) {
+                owner.sendMessage(ChatColor.YELLOW + "Your horse '" + o.getName() + "' has died.");
+            } else {
+                owner.sendMessage(ChatColor.YELLOW + "One of your horses has died.");
             }
         }
+
+        o.delete();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onChunkUnloaded(ChunkUnloadEvent event) {
         Chunk c = event.getChunk();
 
         Entity[] entities = c.getEntities();
 
         for (Entity e : entities) {
-            if (h.khorse.isHorse(e)) {
-                if (h.khorse.isOwnedHorse(e.getUniqueId())) {
-                    // We save horse location
-                    Location loc = e.getLocation();
-                    // TODO save horse location
-                }
+            OwnedHorse o = h.getHorses().getHorse(e);
+            if (o != null) {
+                o.saveLastLocation();
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
         if (h.khorse.isHorse(event.getRightClicked())) {
 
@@ -170,7 +171,7 @@ public class HorsesListener implements Listener {
         LivingEntity tamedAnimal = e.getEntity();
         Player player = (Player) e.getOwner();
 
-        if (h.khorse.isHorse(tamedAnimal)) {
+        if (tamedAnimal instanceof Horse) {
             player.sendMessage("You tamed a horse! Now right-click with a saddle on horse to protect it");
         }
     }
@@ -183,16 +184,15 @@ public class HorsesListener implements Listener {
 
         Player player = (Player) event.getEntered();
 
-        if (h.khorse.isHorse(event.getVehicle())) {
-            Horse horse = (Horse) event.getVehicle();
+        OwnedHorse o = h.getHorses().getHorse(event.getVehicle());
+        if (o == null) {
+            return;
+        }
 
-            if (h.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (!h.khorse.canMountHorse(player, horse)) {
-                    player.sendMessage("This horse belongs to " + ChatColor.AQUA + h.khorse.getHorseOwner(horse));
-
-                    event.setCancelled(true);
-                }
-            }
+        if (!o.getOwner().equals(player.getName())) {
+            player.sendMessage(ChatColor.RED
+                    + "You cannot ride this horse as it belongs to " + ChatColor.YELLOW + o.getOwner() + ChatColor.RED + ".");
+            event.setCancelled(true);
         }
     }
 

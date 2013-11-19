@@ -8,30 +8,12 @@ import static net.new_liberty.nlcore.player.DonorRank.PREMIUM;
 import net.new_liberty.nlcore.player.NLPlayer;
 import net.new_liberty.nlcore.player.StaffRank;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTameEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.vehicle.VehicleEnterEvent;
-import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Horses extends JavaPlugin implements Listener {
@@ -41,6 +23,8 @@ public class Horses extends JavaPlugin implements Listener {
     public KHorse khorse;
 
     private HorsesListener hl;
+
+    private HorseManager horses;
 
     @Override
     public void onEnable() {
@@ -58,6 +42,8 @@ public class Horses extends JavaPlugin implements Listener {
         khorse = new KHorse(this, this.getConfig());
         hl = new HorsesListener(this);
         getServer().getPluginManager().registerEvents(hl, this);
+
+        horses = new HorseManager();
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -242,6 +228,10 @@ public class Horses extends JavaPlugin implements Listener {
             return true;
         }
         return false;
+    }
+
+    public HorseManager getHorses() {
+        return horses;
     }
 
     /**
