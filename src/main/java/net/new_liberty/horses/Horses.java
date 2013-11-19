@@ -53,18 +53,6 @@ public class Horses extends JavaPlugin implements Listener {
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse list|l");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse tp <identifier>");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse unprotect|up <identifier>");
-            } else if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
-                if (!(sender instanceof Player)) {
-                    sender.sendMessage("This command can only be executed by a player");
-                    return true;
-                }
-
-                sender.sendMessage("=== " + ChatColor.GOLD + "[" + ChatColor.GREEN + "Owned Horses" + ChatColor.GOLD + "] " + ChatColor.RESET + "===");
-
-                List<String> horsesList = this.khorse.getOwnedHorses((Player) sender);
-                for (String horseId : horsesList) {
-                    sender.sendMessage("- Identifier: " + ChatColor.AQUA + this.khorse.getHorseIdentifier(UUID.fromString(horseId)));
-                }
             } else if (args[0].equalsIgnoreCase("tp")) {
                 if (!(sender instanceof Player)) {
                     sender.sendMessage("This command can only be executed by a player");
@@ -158,33 +146,6 @@ public class Horses extends JavaPlugin implements Listener {
                 }
 
                 player.sendMessage(prefix + "Horse identifier: " + this.khorse.getHorseIdentifier(horse.getUniqueId()));
-            } else if (args[0].equalsIgnoreCase("admin")) {
-                if (!sender.hasPermission("horsekeep.admin")) {
-                    sender.sendMessage(prefix + ChatColor.RED + "You don't have permission to do this");
-                    return true;
-                }
-
-                if (args.length < 2) {
-                    return true;
-                }
-
-                if (args[1].equalsIgnoreCase("list")) {
-                    if (args.length < 3) {
-                        sender.sendMessage(prefix + ChatColor.GOLD + "Missing player name");
-                        return true;
-                    }
-
-                    String playerName = args[2];
-
-                    sender.sendMessage("=== " + ChatColor.GOLD + "[" + ChatColor.GREEN + playerName + " Horses" + ChatColor.GOLD + "] " + ChatColor.RESET + "===");
-
-                    List<String> horsesList = this.khorse.getOwnedHorses(playerName);
-
-                    for (String horseId : horsesList) {
-                        sender.sendMessage("- Identifier: " + ChatColor.AQUA + this.khorse.getHorseIdentifier(this.khorse.getHorseUUID(horseId)));
-                    }
-                }
-
             }
             return true;
         }
