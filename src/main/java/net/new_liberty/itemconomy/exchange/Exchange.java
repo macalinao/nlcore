@@ -20,6 +20,12 @@ public class Exchange {
 
     private double exchangeRate;
 
+    /**
+     * Markup on the asking price. This keeps people from immediately trading
+     * when the price is favorable.
+     */
+    private double askMarkup = 0.02;
+
     public Exchange(Itemconomy ic) {
         this.ic = ic;
 
@@ -30,12 +36,21 @@ public class Exchange {
     }
 
     /**
-     * Gets the number of civs each emerald is worth.
+     * Gets the number of civs each emerald can be sold for.
      *
      * @return
      */
     public double getExchangeRate() {
         return exchangeRate;
+    }
+
+    /**
+     * Gets the asking price.
+     *
+     * @return
+     */
+    public double getAskingPrice() {
+        return exchangeRate * (1.0 + askMarkup);
     }
 
     public ExchangeSigns getSigns() {

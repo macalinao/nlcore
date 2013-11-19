@@ -51,7 +51,9 @@ public class ExchangeSign {
      * @return
      */
     public double price() {
-        return exchange.getExchangeRate() * amt;
+        return (buy)
+                ? ExchangeMath.buyPrice(exchange.getAskingPrice(), amt)
+                : ExchangeMath.sellPrice(exchange.getExchangeRate(), amt);
     }
 
     /**
