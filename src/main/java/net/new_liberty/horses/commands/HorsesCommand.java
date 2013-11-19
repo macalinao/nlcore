@@ -46,13 +46,13 @@ public class HorsesCommand implements CommandExecutor {
         sender.sendMessage("=== " + ChatColor.GOLD + "[" + ChatColor.GREEN + owner + "'s Horses" + ChatColor.GOLD + "] " + ChatColor.RESET + "===");
 
         List<OwnedHorse> horses = h.getHorses().getHorses(owner);
-        if (horses.size() == 0) {
+        if (horses.isEmpty()) {
             sender.sendMessage(ChatColor.RED + "You don't own any horses.");
             return true;
         }
 
         for (OwnedHorse o : horses) {
-            sender.sendMessage(ChatColor.YELLOW + "- " + o.getName());
+            sender.sendMessage(ChatColor.YELLOW + "- " + o.getCallName());
         }
 
         return true;

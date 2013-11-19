@@ -164,7 +164,7 @@ public class HorsesListener implements Listener {
 
         h.getHorses().createHorse(e, p.getName());
         e.getWorld().playSound(e.getLocation(), Sound.LEVEL_UP, 10.0F, 1.0F);
-        p.sendMessage(ChatColor.YELLOW + "You protected this horse!");
+        p.sendMessage(ChatColor.YELLOW + "You protected this horse! You should name it with a nametag.");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -173,7 +173,7 @@ public class HorsesListener implements Listener {
         Player player = (Player) e.getOwner();
 
         if (tamedAnimal instanceof Horse) {
-            player.sendMessage("You tamed a horse! Now right-click with a saddle on horse to protect it");
+            player.sendMessage("You tamed a horse! Now right-click with a saddle on horse to protect it.");
         }
     }
 

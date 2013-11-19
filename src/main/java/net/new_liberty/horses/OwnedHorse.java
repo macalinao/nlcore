@@ -61,6 +61,10 @@ public class OwnedHorse {
         return null;
     }
 
+    public String getCallName() {
+        return name != null ? name : Integer.toString(id);
+    }
+
     public int getId() {
         return id;
     }
