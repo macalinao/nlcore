@@ -6,8 +6,10 @@ package net.new_liberty.horses;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import net.new_liberty.nlcore.database.Database;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -18,9 +20,11 @@ import org.bukkit.entity.Entity;
  */
 public class OwnedHorse {
 
-    private final Entity e;
+    private Entity e;
 
     private int id;
+
+    private UUID uuid;
 
     private String owner;
 
@@ -28,13 +32,41 @@ public class OwnedHorse {
 
     private Location lastLocation;
 
+    public OwnedHorse(ResultSet rs) {
+        setData(rs);
+    }
+
     public OwnedHorse(Entity e, ResultSet rs) {
         this.e = e;
         setData(rs);
     }
 
+    public Entity getEntity() {
+        if (e != null) {
+            return e;
+        }
+
+        Chunk last = lastLocation.getChunk();
+        if (!last.isLoaded()) {
+            last.load();
+        }
+
+        for (Entity ent : last.getEntities()) {
+            if (e.getUniqueId().toString().equalsIgnoreCase(uuid.toString())) {
+                e = ent;
+                return e;
+            }
+        }
+
+        return null;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public UUID getUniqueId() {
+        return uuid;
     }
 
     public String getOwner() {
@@ -52,6 +84,7 @@ public class OwnedHorse {
     private void setData(ResultSet rs) {
         try {
             id = rs.getInt("id");
+            uuid = UUID.fromString(rs.getString("uuid"));
             owner = rs.getString("owner");
             name = rs.getString("name");
 

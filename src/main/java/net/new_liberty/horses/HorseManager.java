@@ -6,6 +6,8 @@ package net.new_liberty.horses;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import net.new_liberty.nlcore.database.Database;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.Location;
@@ -54,6 +56,26 @@ public class HorseManager {
             }
 
         }, e.getUniqueId());
+    }
+
+    /**
+     * Gets all the horses owned by a player.
+     *
+     * @param owner
+     * @return
+     */
+    public List<OwnedHorse> getHorses(String owner) {
+        return Database.i().query("SELECT * FROM horses WHERE owner = ?", new ResultSetHandler<List<OwnedHorse>>() {
+            @Override
+            public List<OwnedHorse> handle(ResultSet rs) throws SQLException {
+                List<OwnedHorse> horses = new ArrayList<OwnedHorse>();
+                while (rs.next()) {
+                    horses.add(new OwnedHorse(rs));
+                }
+                return horses;
+            }
+
+        }, owner);
     }
 
 }

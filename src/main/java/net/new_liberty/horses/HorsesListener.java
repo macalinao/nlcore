@@ -128,42 +128,43 @@ public class HorsesListener implements Listener {
 
     @EventHandler
     public void onEntityInteract(PlayerInteractEntityEvent event) {
-        if (h.khorse.isHorse(event.getRightClicked())) {
-
-            Entity horse = event.getRightClicked();
-
-            if (!h.khorse.isOwnedHorse(horse.getUniqueId())) {
-                if (event.getPlayer().getItemInHand().getType() == Material.SADDLE) {
-                    int limit = h.getHorseLimit(event.getPlayer());
-
-                    if (h.khorse.getOwnedHorses(event.getPlayer()).size() >= limit) {
-                        event.getPlayer().sendMessage(ChatColor.GOLD + "You have reached the maximum limit of horses you can protect - This horse will not be protected");
-                        return;
-                    }
-
-                    if (event.getPlayer().getName().isEmpty()) {
-                        event.getPlayer().sendMessage(ChatColor.RED + "Error while setting up protection");
-                        return;
-                    }
-
-                    h.khorse.setHorseOwner(event.getPlayer(), horse);
-
-                    horse.getWorld().playSound(horse.getLocation(), Sound.LEVEL_UP, 10.0F, 1.0F);
-
-                    event.getPlayer().sendMessage("You protected this horse! Now use " + ChatColor.GOLD + "/horse id " + h.khorse.getHorseIdentifier(h.khorse.getHorseUUID(horse)) + ChatColor.AQUA + " <new-name>");
-                }
-            } else {
-                if (!h.khorse.canMountHorse(event.getPlayer(), horse)) {
-                    event.getPlayer().sendMessage(ChatColor.RED + "This horse belongs to " + ChatColor.AQUA + h.khorse.getHorseOwner(horse));
-
-                    if (event.getPlayer().hasPermission("horsekeep.admin")) {
-                        event.getPlayer().sendMessage("Horse Identifier: " + h.khorse.getHorseIdentifier(h.khorse.getHorseUUID(horse)));
-                    }
-
-                    event.setCancelled(true);
-                }
-            }
+        Entity e = event.getRightClicked();
+        OwnedHorse o = h.getHorses().getHorse(event.getRightClicked());
+        if (!(e instanceof Horse)) {
+            return;
         }
+
+        Player p = event.getPlayer();
+
+        if (o != null) {
+            // Check if owner of horse
+            if (!o.getOwner().equals(p.getName())) {
+                p.sendMessage(ChatColor.RED + "You can't mount this horse as it belongs to " + ChatColor.YELLOW + o.getOwner() + ChatColor.RED + ".");
+
+                if (p.hasPermission("horsekeep.admin")) {
+                    p.sendMessage("Horse Identifier: " + o.getId());
+                }
+
+                event.setCancelled(true);
+            }
+            return;
+        }
+
+        if (p.getItemInHand().getType() != Material.SADDLE) {
+            return;
+        }
+
+        int limit = h.getHorseLimit(p);
+        int amt = h.getHorses().getHorses(p.getName()).size();
+
+        if (amt >= limit) {
+            p.sendMessage(ChatColor.RED + "You have reached the maximum limit of horses you can protect (" + amt + "). This horse will not be protected.");
+            return;
+        }
+
+        h.getHorses().createHorse(e, p.getName());
+        e.getWorld().playSound(e.getLocation(), Sound.LEVEL_UP, 10.0F, 1.0F);
+        p.sendMessage(ChatColor.YELLOW + "You protected this horse!");
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
