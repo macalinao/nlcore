@@ -1,15 +1,18 @@
 package net.new_liberty.horses;
 
+import net.new_liberty.horses.commands.DisownHorseCommand;
+import net.new_liberty.horses.commands.HorsesCommand;
+import net.new_liberty.horses.commands.TPHorseCommand;
 import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.module.Module;
 
 import net.new_liberty.nlcore.player.NLPlayer;
 import net.new_liberty.nlcore.player.StaffRank;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class Horses extends JavaPlugin implements Listener {
+public class Horses extends Module implements Listener {
 
     private HorsesListener hl;
 
@@ -29,7 +32,13 @@ public class Horses extends JavaPlugin implements Listener {
                 + "PRIMARY KEY (id))");
 
         hl = new HorsesListener(this);
-        getServer().getPluginManager().registerEvents(hl, this);
+        addListener(hl);
+
+        addPermission("nlhorses.admin", "Admin permission for NL horses.");
+
+        addCommand("disownhorse", new DisownHorseCommand(this));
+        addCommand("horses", new HorsesCommand(this));
+        addCommand("tphorse", new TPHorseCommand(this));
 
         horses = new HorseManager();
     }

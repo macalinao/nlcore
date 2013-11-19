@@ -34,7 +34,7 @@ public class HorsesCommand implements CommandExecutor {
             owner = sender.getName();
         }
 
-        if (sender.hasPermission("horsekeep.admin") && args.length > 0) {
+        if (sender.hasPermission("nlhorses.admin") && args.length > 0) {
             owner = args[0];
         }
 

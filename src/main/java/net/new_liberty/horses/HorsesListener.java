@@ -141,7 +141,7 @@ public class HorsesListener implements Listener {
             if (!o.getOwner().equals(p.getName())) {
                 p.sendMessage(ChatColor.RED + "You can't mount this horse as it belongs to " + ChatColor.YELLOW + o.getOwner() + ChatColor.RED + ".");
 
-                if (p.hasPermission("horsekeep.admin")) {
+                if (p.hasPermission("nlhorses.admin")) {
                     p.sendMessage("Horse Identifier: " + o.getId());
                 }
 
