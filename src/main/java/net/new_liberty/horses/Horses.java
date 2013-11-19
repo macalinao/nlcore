@@ -52,8 +52,6 @@ public class Horses extends JavaPlugin implements Listener {
                 sender.sendMessage("=== " + ChatColor.GOLD + "[" + ChatColor.GREEN + "Commands List" + ChatColor.GOLD + "] " + ChatColor.RESET + "===");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse list|l");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse tp <identifier>");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse id|setid <identifier> <new-identifier>");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse tpall");
                 sender.sendMessage("- " + ChatColor.AQUA + "/horse unprotect|up <identifier>");
             } else if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
                 if (!(sender instanceof Player)) {
@@ -67,43 +65,6 @@ public class Horses extends JavaPlugin implements Listener {
                 for (String horseId : horsesList) {
                     sender.sendMessage("- Identifier: " + ChatColor.AQUA + this.khorse.getHorseIdentifier(UUID.fromString(horseId)));
                 }
-            } else if (args[0].equalsIgnoreCase("setid") || args[0].equalsIgnoreCase("id")) {
-                if (args.length < 2) {
-                    sender.sendMessage(prefix + ChatColor.GOLD + "Missing horse identifier");
-                    return true;
-                }
-
-                String horseIdentifier = args[1];
-
-                if (!this.khorse.horseIdentifierExists(horseIdentifier)) {
-                    sender.sendMessage(prefix + ChatColor.GOLD + "This horse doesn't exist");
-                    return true;
-                }
-
-                if (!this.khorse.isHorseOwner(horseIdentifier, sender.getName())) {
-                    sender.sendMessage(prefix + ChatColor.GOLD + "You don't own this horse");
-                    return true;
-                }
-
-                if (args.length < 3) {
-                    sender.sendMessage(prefix + ChatColor.GOLD + "Missing horse new identifier");
-                    return true;
-                }
-
-                if (args[2].contains(" ")) {
-                    sender.sendMessage(prefix + ChatColor.GOLD + "Identifier may not contain whitespace");
-                    return true;
-                }
-
-                if (this.khorse.isHorseIdentifierTaken(args[2])) {
-                    sender.sendMessage(prefix + "Identifier has already been taken, please choose another.");
-                    return true;
-                }
-
-                getConfig().set("horses." + this.khorse.getHorseUUID(args[1]) + ".identifier", args[2]);
-                saveConfig();
-
-                sender.sendMessage(prefix + "New identifier set to " + args[2]);
             } else if (args[0].equalsIgnoreCase("tp")) {
                 if (!(sender instanceof Player)) {
                     sender.sendMessage("This command can only be executed by a player");
