@@ -58,6 +58,44 @@ public class HorseManager {
         }, e.getUniqueId());
     }
 
+    public OwnedHorse getHorse(String owner, String callName) {
+        OwnedHorse o = Database.i().query("SELECT * FROM horses WHERE owner = ? AND LOWER(name) LIKE ?", new ResultSetHandler<OwnedHorse>() {
+            @Override
+            public OwnedHorse handle(ResultSet rs) throws SQLException {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                return new OwnedHorse(rs);
+            }
+
+        }, owner, callName.toLowerCase() + "%");
+
+        if (o != null) {
+            return o;
+        }
+
+        // A horse with no name
+        int id;
+        try {
+            id = Integer.parseInt(callName);
+        } catch (NumberFormatException ex) {
+            return null;
+        }
+
+        return Database.i().query("SELECT * FROM horses WHERE id = ? AND owner = ?", new ResultSetHandler<OwnedHorse>() {
+            @Override
+            public OwnedHorse handle(ResultSet rs) throws SQLException {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                return new OwnedHorse(rs);
+            }
+
+        }, id, owner);
+    }
+
     /**
      * Gets all the horses owned by a player.
      *

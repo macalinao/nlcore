@@ -146,6 +146,10 @@ public class HorsesListener implements Listener {
                 }
 
                 event.setCancelled(true);
+            } else {
+                p.sendMessage(ChatColor.YELLOW + "You've mounted one of your owned horses. "
+                        + "You can teleport this horse to you from any location with the command "
+                        + ChatColor.GREEN + "/tphorse " + o.getCallName() + ChatColor.YELLOW + ".");
             }
             return;
         }
