@@ -1,24 +1,15 @@
 package net.new_liberty.horses;
 
-import java.util.List;
-import java.util.UUID;
 import net.new_liberty.nlcore.database.Database;
-import static net.new_liberty.nlcore.player.DonorRank.PREMIUM;
 
 import net.new_liberty.nlcore.player.NLPlayer;
 import net.new_liberty.nlcore.player.StaffRank;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Horses extends JavaPlugin implements Listener {
-
-    public KHorse khorse;
 
     private HorsesListener hl;
 
@@ -37,45 +28,10 @@ public class Horses extends JavaPlugin implements Listener {
                 + "last_z INT(10),"
                 + "PRIMARY KEY (id))");
 
-        khorse = new KHorse(this, this.getConfig());
         hl = new HorsesListener(this);
         getServer().getPluginManager().registerEvents(hl, this);
 
         horses = new HorseManager();
-    }
-
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("horse")) {
-            if (args.length == 0) {
-                sender.sendMessage("=== " + ChatColor.GOLD + "[" + ChatColor.GREEN + "Commands List" + ChatColor.GOLD + "] " + ChatColor.RESET + "===");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse list|l");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse tp <identifier>");
-                sender.sendMessage("- " + ChatColor.AQUA + "/horse unprotect|up <identifier>");
-            } else if (args[0].equalsIgnoreCase("unprotect") || args[0].equalsIgnoreCase("up")) {
-                if (args.length < 2) {
-                    sender.sendMessage(ChatColor.GOLD + "Missing horse identifier");
-                    return true;
-                }
-
-                String horseIdentifier = args[1];
-
-                if (!this.khorse.horseIdentifierExists(horseIdentifier)) {
-                    sender.sendMessage(ChatColor.GOLD + "This horse doesn't exist");
-                    return true;
-                }
-
-                if (!this.khorse.isHorseOwner(horseIdentifier, sender.getName())) {
-                    sender.sendMessage(ChatColor.GOLD + "You don't own this horse");
-                    return true;
-                }
-
-                this.khorse.removeHorse(horseIdentifier);
-
-                sender.sendMessage("Horse is now un-protected");
-            }
-            return true;
-        }
-        return false;
     }
 
     public HorseManager getHorses() {
