@@ -25,29 +25,29 @@ public class ExchangeMath {
     /**
      * The buy price of a given number of emeralds.
      *
-     * <p>This is the integral of S*x dx from x=P/S to P/S+Q.
-     * <p>0.5Q(2P+QS)
+     * <p>This is the integral of S*x dx from x=P/S-0.5 to P/S+Q-0.5.
+     * <p>PQ+(0.5Q^2-0.5Q)S
      *
      * @param p
      * @param q
      * @return
      */
     public static double buyPrice(double p, int q) {
-        return 0.5 * q * (2 * p + q * S);
+        return p * q + (0.5 * q * q - 0.5 * q) * S;
     }
 
     /**
      * The sell price of a given number of emeralds.
      *
-     * <p>This is the integral of S*x dx from x=P/S-Q to P/S.
-     * <p>PQ-((Q^2)S)/2
+     * <p>This is the integral of S*x dx from x=P/S-Q+0.5 to P/S+0.5.
+     * <p>PQ-(0.5Q^2-0.5Q)S
      *
      * @param p
      * @param q
      * @return
      */
     public static double sellPrice(double p, int q) {
-        return p * q - ((q * q * S) / 2);
+        return p * q - (0.5 * q * q - 0.5 * q) * S;
     }
 
 }
