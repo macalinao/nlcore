@@ -6,7 +6,38 @@ website: ${project.url}
 
 main: ${mainClass}
 depend: [WorldGuard, Vault]
+<<<<<<< HEAD
 softdepend: [CombatTag, Votifier]
+=======
+softdepend: [CombatTag]
+
+permissions:
+  noenderpearls.bypass:
+    description: Allows bypassing of Ender Pearl restrictions.
+  chatcolorcommands.setcolors:
+    description: Allows setting your prefix colors.
+  chatcolorcommands.setchatcolor:
+    description: Allows setting your chat color.
+  chatcolorcommands.ranks.guardian:
+    description: The Guardian rank on New Liberty.
+    children:
+      - chatcolorcommands.setcolors
+  chatcolorcommands.ranks.champion:
+    description: The Champion rank on New Liberty.
+    children:
+      - chatcolorcommands.setcolors
+      - chatcolorcommands.setchatcolor
+  specialeggs.segive:
+    description: Gives an egg to the user or a target.
+  stafflist.admin:
+    description: Admin permission
+  stafflist.mod:
+    description: Mod permission
+  stafflist.helper:
+    description: Helper permission
+  nl.admin:
+    description: Admin permission
+>>>>>>> nl-1.x
 
 commands:
   list:

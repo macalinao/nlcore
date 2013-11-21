@@ -16,6 +16,7 @@ import net.new_liberty.tweaks.ChatColorCommands;
 import net.new_liberty.tweaks.EasySpawners;
 import net.new_liberty.tweaks.HeadDrop;
 import net.new_liberty.specialeggs.SpecialEggs;
+import net.new_liberty.tweaks.ChatHandler;
 import net.new_liberty.tweaks.NerfStrengthPots;
 import net.new_liberty.tweaks.NoEnderpearls;
 import net.new_liberty.tweaks.NoInvisibilityPots;
@@ -60,6 +61,7 @@ public class NLCore extends JavaPlugin implements Listener {
         addModule(new SpecialEggs());
 
         // Tweaks
+        addModule(new ChatHandler());
         addModule(new ChatColorCommands());
         addModule(new EasySpawners());
         addModule(new HeadDrop());
