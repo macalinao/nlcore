@@ -5,7 +5,7 @@ author: ${author}
 website: ${project.url}
 
 main: ${mainClass}
-depend: [WorldGuard]
+depend: [WorldGuard, Vault]
 softdepend: [CombatTag]
 
 permissions:

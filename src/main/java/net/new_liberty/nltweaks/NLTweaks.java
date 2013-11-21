@@ -3,6 +3,7 @@ package net.new_liberty.nltweaks;
 import java.util.logging.Level;
 
 import net.new_liberty.nltweaks.tweak.ChatColorCommands;
+import net.new_liberty.nltweaks.tweak.ChatHandler;
 import net.new_liberty.nltweaks.tweak.EasySpawners;
 import net.new_liberty.nltweaks.tweak.HeadDrop;
 import net.new_liberty.nltweaks.tweak.specialeggs.SpecialEggs;
@@ -32,6 +33,7 @@ public class NLTweaks extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
 
+        addTweak(new ChatHandler());
         addTweak(new ChatColorCommands());
         addTweak(new EasySpawners());
         addTweak(new HeadDrop());
