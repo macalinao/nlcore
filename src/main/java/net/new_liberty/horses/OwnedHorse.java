@@ -7,7 +7,7 @@ package net.new_liberty.horses;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -110,7 +110,7 @@ public class OwnedHorse {
 
     public void saveLastLocation() {
         Location l = e.getLocation();
-        Database.i().update("UPDATE horses SET last_world = ?, last_x = ?, last_y = ?, last_z = ? WHERE id = ?",
+        DB.i().update("UPDATE horses SET last_world = ?, last_x = ?, last_y = ?, last_z = ? WHERE id = ?",
                 l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
     }
 
@@ -119,7 +119,7 @@ public class OwnedHorse {
      * mind after using this method.
      */
     public void delete() {
-        Database.i().update("DELETE FROM horses WHERE id = ?", id);
+        DB.i().update("DELETE FROM horses WHERE id = ?", id);
     }
 
 }

@@ -4,7 +4,7 @@
  */
 package net.new_liberty.itemconomy;
 
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,13 +54,13 @@ public class Itemconomy extends Module {
         exchange.load();
 
         // Database stuff
-        Database.i().update("CREATE TABLE IF NOT EXISTS icbank ("
+        DB.i().update("CREATE TABLE IF NOT EXISTS icbank ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
                 + "player varchar(16) NOT NULL,"
                 + "balance INT(10) NOT NULL,"
                 + "PRIMARY KEY (id));");
 
-        Database.i().update("CREATE TABLE IF NOT EXISTS icexchange ("
+        DB.i().update("CREATE TABLE IF NOT EXISTS icexchange ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT"
                 + "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                 + "rate INT(10) NOT NULL," // This'll be the value multiplied by 1000.

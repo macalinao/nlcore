@@ -1,6 +1,6 @@
 package net.new_liberty.votesuite;
 
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -41,7 +41,7 @@ public class Voter {
      * @return
      */
     public Set<VoteService> getMissingServices() {
-        List<String> voteSvcIds = Database.i().query("SELECT service FROM votes_recent WHERE name = ?", new ColumnListHandler<String>(), player);
+        List<String> voteSvcIds = DB.i().query("SELECT service FROM votes_recent WHERE name = ?", new ColumnListHandler<String>(), player);
         Set<VoteService> missingServices = plugin.getServices();
         for (String voteSvcId : voteSvcIds) {
             VoteService rm = null;
@@ -60,7 +60,7 @@ public class Voter {
      * Clears the recent votes of this Voter.
      */
     public void clearRecentVotes() {
-        Database.i().update("DELETE FROM votes_recent WHERE name = ?", player);
+        DB.i().update("DELETE FROM votes_recent WHERE name = ?", player);
     }
 
     /**
@@ -71,7 +71,7 @@ public class Voter {
      */
     public int countDayVotes() {
         String query = "SELECT COUNT(*) FROM votes WHERE name = ? AND time > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 DAY)";
-        Object ret = Database.i().get(query, this, player);
+        Object ret = DB.i().get(query, this, player);
         if (ret != null) {
             return ((Number) ret).intValue();
         }
@@ -85,7 +85,7 @@ public class Voter {
      */
     public Location getHome() {
         String query = "SELECT * FROM votes_homes WHERE name = ?";
-        return Database.i().query(query, new ResultSetHandler<Location>() {
+        return DB.i().query(query, new ResultSetHandler<Location>() {
             @Override
             public Location handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -116,7 +116,7 @@ public class Voter {
     public void setHome(Location loc) {
         String query = "INSERT INTO votes_homes (name, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?) "
                 + "ON DUPLICATE KEY UPDATE world = ?, x = ?, y = ?, z = ?, yaw = ?, pitch = ?";
-        Database.i().update(query, player, loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(),
+        DB.i().update(query, player, loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(),
                 loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
     }
 }

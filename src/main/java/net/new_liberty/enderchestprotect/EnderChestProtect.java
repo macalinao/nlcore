@@ -1,6 +1,6 @@
 package net.new_liberty.enderchestprotect;
 
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,7 +24,7 @@ public class EnderChestProtect extends Module {
 
     @Override
     public void onEnable() {
-        if (!Database.i().isValid()) {
+        if (!DB.i().isValid()) {
             getLogger().log(Level.SEVERE, "Invalid database credentials; plugin loading halted.");
             return;
         }
@@ -33,7 +33,7 @@ public class EnderChestProtect extends Module {
 
         ecManager = new ECManager(this);
 
-        Database.i().update("CREATE TABLE IF NOT EXISTS enderchests ("
+        DB.i().update("CREATE TABLE IF NOT EXISTS enderchests ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
                 + "owner VARCHAR(16) NOT NULL,"
                 + "world VARCHAR(255) NOT NULL,"

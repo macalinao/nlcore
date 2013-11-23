@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -28,7 +28,7 @@ public class HorseManager {
      */
     public void createHorse(Entity e, String owner) {
         Location l = e.getLocation();
-        Database.i().update("INSERT INTO horses "
+        DB.i().update("INSERT INTO horses "
                 + "(uuid, owner, last_world, last_x, last_y, last_z) "
                 + "VALUES (?, ?, ?, ?, ?, ?)", e.getUniqueId().toString(), owner,
                 l.getWorld().getName(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
@@ -45,7 +45,7 @@ public class HorseManager {
             return null;
         }
 
-        return Database.i().query("SELECT * FROM horses WHERE uuid = ?", new ResultSetHandler<OwnedHorse>() {
+        return DB.i().query("SELECT * FROM horses WHERE uuid = ?", new ResultSetHandler<OwnedHorse>() {
             @Override
             public OwnedHorse handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -59,7 +59,7 @@ public class HorseManager {
     }
 
     public OwnedHorse getHorse(String owner, String callName) {
-        OwnedHorse o = Database.i().query("SELECT * FROM horses WHERE owner = ? AND LOWER(name) LIKE ?", new ResultSetHandler<OwnedHorse>() {
+        OwnedHorse o = DB.i().query("SELECT * FROM horses WHERE owner = ? AND LOWER(name) LIKE ?", new ResultSetHandler<OwnedHorse>() {
             @Override
             public OwnedHorse handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -83,7 +83,7 @@ public class HorseManager {
             return null;
         }
 
-        return Database.i().query("SELECT * FROM horses WHERE id = ? AND owner = ?", new ResultSetHandler<OwnedHorse>() {
+        return DB.i().query("SELECT * FROM horses WHERE id = ? AND owner = ?", new ResultSetHandler<OwnedHorse>() {
             @Override
             public OwnedHorse handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -103,7 +103,7 @@ public class HorseManager {
      * @return
      */
     public List<OwnedHorse> getHorses(String owner) {
-        return Database.i().query("SELECT * FROM horses WHERE owner = ?", new ResultSetHandler<List<OwnedHorse>>() {
+        return DB.i().query("SELECT * FROM horses WHERE owner = ?", new ResultSetHandler<List<OwnedHorse>>() {
             @Override
             public List<OwnedHorse> handle(ResultSet rs) throws SQLException {
                 List<OwnedHorse> horses = new ArrayList<OwnedHorse>();

@@ -11,17 +11,17 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 /**
  * Database stuff. MySQL sucks.
  */
-public final class Database {
+public final class DB {
 
     private static final ResultSetHandler SCALAR_HANDLER = new ScalarHandler();
 
-    private static Database instance = null;
+    private static DB instance = null;
 
     private final DatabaseModule plugin;
 
     private final MysqlDataSource source;
 
-    public Database(DatabaseModule plugin, String user, String pass, String host, int port, String database) {
+    public DB(DatabaseModule plugin, String user, String pass, String host, int port, String database) {
         this.plugin = plugin;
 
         source = new MysqlDataSource();
@@ -34,11 +34,11 @@ public final class Database {
         instance = this;
     }
 
-    public static Database i() {
+    public static DB i() {
         return instance;
     }
 
-    public static void setInstance(Database db) {
+    public static void setInstance(DB db) {
         if (instance == null) {
             instance = db;
         }

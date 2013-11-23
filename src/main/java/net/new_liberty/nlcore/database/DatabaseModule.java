@@ -17,7 +17,7 @@ public class DatabaseModule extends Module {
 
     public static final List<String> FIELDS = Arrays.asList("host", "port", "user", "pass", "name");
 
-    private Database db;
+    private DB db;
 
     @Override
     public void onEnable() {
@@ -33,12 +33,12 @@ public class DatabaseModule extends Module {
             getLogger().log(Level.INFO, "Connected to database at " + db.getSource().getServerName() + ":" + db.getSource().getPort() + " successfully.");
         }
 
-        Database.setInstance(db);
+        DB.setInstance(db);
     }
 
     @Override
     public void onDisable() {
-        Database.setInstance(null);
+        DB.setInstance(null);
     }
 
     /**
@@ -56,7 +56,7 @@ public class DatabaseModule extends Module {
         String dbUser = s.getString("user");
         String dbPass = s.getString("pass", "");
         String dbName = s.getString("name");
-        db = new Database(this, dbUser, dbPass, dbHost, dbPort, dbName);
+        db = new DB(this, dbUser, dbPass, dbHost, dbPort, dbName);
 
         Bukkit.getPluginManager().callEvent(new DBConfigReloadEvent(db.isValid()));
     }
@@ -66,7 +66,7 @@ public class DatabaseModule extends Module {
      *
      * @return
      */
-    public Database getDb() {
+    public DB getDb() {
         return db;
     }
 

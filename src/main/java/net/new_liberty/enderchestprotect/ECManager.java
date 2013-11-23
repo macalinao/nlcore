@@ -1,7 +1,7 @@
 package net.new_liberty.enderchestprotect;
 
 import net.new_liberty.util.InventorySerializer;
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class ECManager {
      * @return
      */
     public EnderChest createChest(String owner, Location loc) {
-        Database.i().update("INSERT INTO enderchests (owner, world, x, y, z, access_time) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
+        DB.i().update("INSERT INTO enderchests (owner, world, x, y, z, access_time) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)",
                 owner, loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
         return getChest(loc);
     }
@@ -51,7 +51,7 @@ public class ECManager {
      * @return
      */
     public EnderChest getChest(final int id) {
-        return Database.i().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<EnderChest>() {
+        return DB.i().query("SELECT * FROM enderchests WHERE id = ?", new ResultSetHandler<EnderChest>() {
             @Override
             public EnderChest handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -72,7 +72,7 @@ public class ECManager {
      * @return
      */
     public EnderChest getChest(final Location loc) {
-        return Database.i().query("SELECT * FROM enderchests WHERE world = ? AND x = ? AND y = ? AND z = ?", new ResultSetHandler<EnderChest>() {
+        return DB.i().query("SELECT * FROM enderchests WHERE world = ? AND x = ? AND y = ? AND z = ?", new ResultSetHandler<EnderChest>() {
             @Override
             public EnderChest handle(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -92,7 +92,7 @@ public class ECManager {
      * @return
      */
     public List<EnderChest> getChests(String p) {
-        return Database.i().query("SELECT * FROM enderchests WHERE owner = ?", new ResultSetHandler<List<EnderChest>>() {
+        return DB.i().query("SELECT * FROM enderchests WHERE owner = ?", new ResultSetHandler<List<EnderChest>>() {
             @Override
             public List<EnderChest> handle(ResultSet rs) throws SQLException {
                 List<EnderChest> ret = new ArrayList<EnderChest>();
@@ -113,7 +113,7 @@ public class ECManager {
      * @return
      */
     public int getChestCount(String p) {
-        return ((Number) Database.i().get("SELECT COUNT(*) AS chests FROM enderchests WHERE owner = ?", 0, p)).intValue();
+        return ((Number) DB.i().get("SELECT COUNT(*) AS chests FROM enderchests WHERE owner = ?", 0, p)).intValue();
     }
 
     public Inventory createInventory(EnderChest chest) {

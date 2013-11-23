@@ -3,7 +3,7 @@ package net.new_liberty.horses;
 import net.new_liberty.horses.commands.DisownHorseCommand;
 import net.new_liberty.horses.commands.HorsesCommand;
 import net.new_liberty.horses.commands.TPHorseCommand;
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import net.new_liberty.nlcore.module.Module;
 
 import net.new_liberty.nlcore.player.NLPlayer;
@@ -20,7 +20,7 @@ public class Horses extends Module implements Listener {
 
     @Override
     public void onEnable() {
-        Database.i().update("CREATE TABLE IF NOT EXISTS horses ("
+        DB.i().update("CREATE TABLE IF NOT EXISTS horses ("
                 + "id INT(10) NOT NULL AUTO_INCREMENT,"
                 + "uuid VARCHAR(40) NOT NULL,"
                 + "owner VARCHAR(16) NOT NULL,"

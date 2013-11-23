@@ -4,7 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
-import net.new_liberty.nlcore.database.Database;
+import net.new_liberty.nlcore.database.DB;
 import net.new_liberty.nlcore.module.Module;
 
 /**
@@ -23,7 +23,7 @@ public class BankChests extends Module {
 
         chests = new BCManager(this);
 
-        Database.i().update("CREATE TABLE IF NOT EXISTS ecb_inventories ("
+        DB.i().update("CREATE TABLE IF NOT EXISTS ecb_inventories ("
                 + "owner VARCHAR(16) NOT NULL,"
                 + "contents TEXT,"
                 + "PRIMARY KEY (owner));");
