@@ -47,6 +47,7 @@ public class ExchangeSigns {
     public ExchangeSign createSign(Block b, boolean buy, int amt) {
         ExchangeSign e = new ExchangeSign(exchange, b, buy, amt);
         signs.put(b.getLocation(), e);
+        save();
         return e;
     }
 

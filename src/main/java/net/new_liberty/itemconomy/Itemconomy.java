@@ -51,6 +51,7 @@ public class Itemconomy extends Module {
 
         // Exchange
         exchange = new Exchange(this);
+        exchange.load();
 
         // Database stuff
         Database.i().update("CREATE TABLE IF NOT EXISTS icbank ("
@@ -79,6 +80,8 @@ public class Itemconomy extends Module {
     @Override
     public void onDisable() {
         _instance = null;
+
+        exchange.save();
     }
 
     /**

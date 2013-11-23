@@ -5,7 +5,11 @@
 package net.new_liberty.itemconomy.exchange;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.new_liberty.itemconomy.Itemconomy;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * Represents the emerald exchange.
@@ -18,7 +22,7 @@ public class Exchange {
 
     private final ExchangeSignListener esl;
 
-    private double exchangeRate;
+    private final ExchangeRate rate;
 
     /**
      * Markup on the asking price. This keeps people from immediately trading
@@ -31,8 +35,24 @@ public class Exchange {
 
         signs = new ExchangeSigns(this, new File(ic.getDataFolder(), "exchange-signs.yml"));
         esl = new ExchangeSignListener(this);
+        rate = new ExchangeRate(this);
+        rate.runTaskTimer(ic.getPlugin(), 20 * 60, 20 * 60);
 
         ic.addListener(esl);
+    }
+
+    public void load() {
+        rate.load();
+        signs.load();
+    }
+
+    public void save() {
+        rate.save();
+        signs.save();
+    }
+
+    public Itemconomy getIc() {
+        return ic;
     }
 
     /**
@@ -41,7 +61,7 @@ public class Exchange {
      * @return
      */
     public double getExchangeRate() {
-        return exchangeRate;
+        return rate.getRate();
     }
 
     /**
@@ -50,7 +70,20 @@ public class Exchange {
      * @return
      */
     public double getAskingPrice() {
-        return exchangeRate * (1.0 + askMarkup);
+        return rate.getRate() * (1.0 + askMarkup);
+    }
+
+    /**
+     * Updates the rate of exchange in the exchange.
+     *
+     * @param e
+     */
+    public void updateRate(ExchangeSign e) {
+        double diff = e.getAmt() * ExchangeMath.S;
+        if (e.isSell()) {
+            diff *= -1;
+        }
+        rate.alterRate(diff);
     }
 
     public ExchangeSigns getSigns() {
