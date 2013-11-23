@@ -60,10 +60,11 @@ public class Itemconomy extends Module {
                 + "balance INT(10) NOT NULL,"
                 + "PRIMARY KEY (id));");
 
-        Database.i().update("CREATE TABLE IF NOT EXISTS icmarket ("
-                + "date TIMESTAMP NOT NULL,"
-                + "value INT(10) NOT NULL," // This'll be the value multiplied by 1000.
-                + "PRIMARY KEY (date));");
+        Database.i().update("CREATE TABLE IF NOT EXISTS icexchange ("
+                + "id INT(10) NOT NULL AUTO_INCREMENT"
+                + "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                + "rate INT(10) NOT NULL," // This'll be the value multiplied by 1000.
+                + "PRIMARY KEY (id));");
 
         // Commands
         addCommand("icbalance", new ICBalance());

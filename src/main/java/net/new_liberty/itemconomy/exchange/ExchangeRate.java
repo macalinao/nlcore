@@ -7,6 +7,7 @@ package net.new_liberty.itemconomy.exchange;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
+import net.new_liberty.nlcore.database.Database;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -61,6 +62,7 @@ public class ExchangeRate extends BukkitRunnable {
         } catch (IOException ex) {
             x.getIc().getLogger().log(Level.SEVERE, "Could not save exchange rate to data file!", ex);
         }
+        Database.i().update("INSERT INTO icexchange (rate) VALUES (?)", rate);
     }
 
     /**
