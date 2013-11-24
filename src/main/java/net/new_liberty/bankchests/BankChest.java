@@ -7,6 +7,7 @@ package net.new_liberty.bankchests;
 import net.new_liberty.nlcore.database.DB;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.new_liberty.util.InventorySerializer;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.bukkit.inventory.Inventory;
 
@@ -69,6 +70,17 @@ public class BankChest {
 
     public Inventory getInventory() {
         return bcm.getInventory(this);
+    }
+
+    /**
+     * Saves the chest.
+     *
+     * @param inv
+     */
+    public void save() {
+        Inventory inv = getInventory();
+        String theContents = (inv == null ? null : InventorySerializer.writeToString(inv));
+        DB.i().update("UPDATE bankchests SET contents = ? WHERE owner = ?", theContents, owner);
     }
 
 }

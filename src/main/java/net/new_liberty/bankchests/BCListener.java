@@ -4,6 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
+import net.new_liberty.enderchestprotect.EnderChest;
 import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,7 +14,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 
 /**
  * Bank chest listener
@@ -77,6 +81,26 @@ public class BCListener implements Listener {
         }
 
         p.openInventory(c.getInventory());
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        checkInventory(e.getInventory());
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e) {
+        checkInventory(e.getInventory());
+    }
+
+    private void checkInventory(Inventory inv) {
+        String title = inv.getTitle();
+        if (!title.startsWith("Bank of ")) {
+            return;
+        }
+        String owner = title.substring("Bank of ".length());
+        BankChest c = b.getChests().getChest(owner);
+        c.save();
     }
 
 }
