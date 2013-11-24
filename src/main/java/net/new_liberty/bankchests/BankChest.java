@@ -21,6 +21,8 @@ public class BankChest {
 
     private String contents = null;
 
+    private int rows = 1;
+
     public BankChest(BCManager bcm, String owner) {
         this.bcm = bcm;
         this.owner = owner;
@@ -32,6 +34,7 @@ public class BankChest {
             public Object handle(ResultSet rs) throws SQLException {
                 rs.next();
                 setContents(rs.getString("contents"));
+                rows = rs.getInt("rows");
                 return null;
             }
 
@@ -48,6 +51,20 @@ public class BankChest {
 
     void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    /**
+     * Updates the number of rows this bank chest has in the database.
+     *
+     * @param rows
+     */
+    public void updateRows(int rows) {
+        this.rows = rows;
+        DB.i().update("UPDATE bankchests SET rows = ? WHERE owner = ?", rows, owner);
     }
 
     public Inventory getInventory() {

@@ -75,7 +75,7 @@ public class BCManager {
             return inv;
         }
 
-        inv = Bukkit.createInventory(null, 9, chest.getOwner() + "'s bank chest");
+        inv = Bukkit.createInventory(null, chest.getRows(), chest.getOwner() + "'s bank chest");
         if (chest.getContents() != null) {
             try {
                 InventorySerializer.loadFromString(chest.getContents(), inv);

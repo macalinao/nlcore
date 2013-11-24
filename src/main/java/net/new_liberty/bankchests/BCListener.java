@@ -4,6 +4,7 @@
  */
 package net.new_liberty.bankchests;
 
+import net.new_liberty.nlcore.player.NLPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -67,7 +68,14 @@ public class BCListener implements Listener {
         }
 
         Player p = e.getPlayer();
+        NLPlayer n = new NLPlayer(p);
         BankChest c = b.getChests().getChest(p.getName());
+        int rows = b.getAllowedRows(n);
+        int current = c.getRows();
+        if (rows != current) {
+            c.updateRows(rows);
+        }
+
         p.openInventory(c.getInventory());
     }
 
