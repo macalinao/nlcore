@@ -88,4 +88,8 @@ public class BCManager {
         return inv;
     }
 
+    public void invalidateInventory(BankChest c) {
+        inventories.remove(c.getOwner());
+    }
+
 }

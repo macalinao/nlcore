@@ -78,6 +78,7 @@ public class BCListener implements Listener {
         int current = c.getRows();
         if (rows != current) {
             c.updateRows(rows);
+            b.getChests().invalidateInventory(c);
         }
 
         p.openInventory(c.getInventory());
